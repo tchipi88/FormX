@@ -10,6 +10,7 @@
         android:label="Onboarding">
         <action
             android:id="@+id/action_onboardingFragment_to_mainFragment"
+            app:destination="@+id/clusterFragment"
             app:popUpTo="@+id/onboardingFragment"
             app:popUpToInclusive="true" />
 

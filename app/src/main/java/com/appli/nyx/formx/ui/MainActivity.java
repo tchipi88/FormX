@@ -28,6 +28,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
@@ -151,6 +155,35 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 		NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
 		bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+		navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+
+			toolbar.setLogo(null);
+			toolbar.setVisibility(View.VISIBLE);
+			setBottomNavigationVisibility(true);
+
+			switch (destination.getId()) {
+
+				case R.id.termsFragment:
+				case R.id.privacyTermsFragment:
+				case R.id.privacyFragment:{
+					setBottomNavigationVisibility(false);
+					break;
+				}
+				case R.id.signInFragment:
+				case R.id.signUpFragment:
+				case R.id.resetPasswordRequestFragment:
+				case R.id.onboardingFragment: {
+					bottomNavigationView.setVisibility(View.GONE);
+					toolbar.setVisibility(View.GONE);
+					break;
+				}
+
+
+			}
+		});
+
+		mFirestore = FirebaseFirestore.getInstance();
 
 	}
 

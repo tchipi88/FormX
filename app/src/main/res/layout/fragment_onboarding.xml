@@ -46,7 +46,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <com.ganeo.appli.common.ui.onboarding.CircleIndicatorView
+            <com.appli.nyx.formx.ui.onboarding.CircleIndicatorView
                 android:id="@+id/circle_indicator_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
