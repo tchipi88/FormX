@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card1"
+            style="@style/CardViewStyle"
+            app:layout_constraintBottom_toTopOf="@+id/card2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+
+                <include layout="@layout/layout_logo" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/description"
+                    style="@style/TextCardView"
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+            containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card2"
+            style="@style/CardViewStyle"
+            app:layout_constraintBottom_toTopOf="@+id/copyright"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/version"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@null"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Version 6.2" />
+
+                <include layout="@layout/layout_separator" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/contact"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:drawableStart="@drawable/about_icon_email"
+                    android:drawableLeft="@drawable/about_icon_email"
+                    android:drawablePadding="10dp"
+                    android:text="@string/contact_us"
+                    app:layout_constraintBottom_toTopOf="@id/website"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <include layout="@layout/layout_separator" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/website"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/about_icon_link"
+                    android:drawableLeft="@drawable/about_icon_link"
+                    android:drawablePadding="10dp"
+                    android:text="@string/visit_our_website"
+                    app:layout_constraintBottom_toTopOf="@id/facebook"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <include layout="@layout/layout_separator" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/facebook"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/about_icon_facebook"
+                    android:drawableLeft="@drawable/about_icon_facebook"
+                    android:drawablePadding="10dp"
+                    android:text="@string/like_us_on_facebook"
+                    app:layout_constraintBottom_toTopOf="@id/twitter"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <include layout="@layout/layout_separator" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/twitter"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/about_icon_twitter"
+                    android:drawableLeft="@drawable/about_icon_twitter"
+                    android:drawablePadding="10dp"
+                    android:text="@string/follow_us_on_twitter"
+                    app:layout_constraintBottom_toTopOf="@id/youtube"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <include layout="@layout/layout_separator" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/youtube"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/about_icon_youtube"
+                    android:drawableLeft="@drawable/about_icon_youtube"
+                    android:drawablePadding="10dp"
+                    android:text="@string/watch_us_on_youtube"
+                    app:layout_constraintBottom_toTopOf="@id/rate"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <include layout="@layout/layout_separator" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rate"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/about_icon_google_play"
+                    android:drawableLeft="@drawable/about_icon_google_play"
+                    android:drawablePadding="10dp"
+                    android:text="@string/rate_us_on_play_store"
+                    app:layout_constraintBottom_toTopOf="@id/copyright"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/copyright"
+            style="@style/TextCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8dp"
+            android:drawableStart="@drawable/about_icon_copy_right"
+            android:drawableLeft="@drawable/about_icon_copy_right"
+            android:drawablePadding="10dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Hi Elixa" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

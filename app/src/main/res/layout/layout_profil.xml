@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardViewStyle">
+
+    <RelativeLayout
+        android:id="@+id/profil_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profil_img"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_account_circle_black_64dp" />
+
+        <TextView
+            android:id="@+id/profil"
+            style="@style/TextCardViewHeaderMenu"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/profil_img"
+            tools:text="@string/sign_in" />
+
+        <TextView
+            android:id="@+id/profil_subtitle"
+            style="@style/TextCardView"
+            android:layout_below="@+id/profil"
+            android:layout_toRightOf="@+id/profil_img"
+            tools:text="Fullnamm" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

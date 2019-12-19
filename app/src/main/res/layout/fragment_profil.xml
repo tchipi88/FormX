@@ -1,0 +1,222 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView style="@style/CardViewStyle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageName"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_account_circle_black_64dp" />
+
+                    <TextView
+                        android:id="@+id/titleName"
+                        android:layout_width="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageName"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        tools:text="Ngansop Artur" />
+
+                    <TextView
+                        android:id="@+id/titleGender"
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/titleName"
+                        android:layout_toRightOf="@+id/imageName"
+                        android:drawableStart="@drawable/ic_human_male_female"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        tools:text="F" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageMail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_email_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/titleMail"
+                        style="@style/TextCardView"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageMail"
+                        android:textStyle="bold"
+                        tools:text="ngansop.arthur@gmail.com" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/titleMail"
+                        android:layout_toRightOf="@+id/imageMail"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imagePhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_phone_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/titlePhone"
+                        style="@style/TextCardView"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imagePhone"
+                        android:textStyle="bold"
+                        tools:text="689568956" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/titlePhone"
+                        android:layout_toRightOf="@+id/imagePhone"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageBirthDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_cake_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/titleBirthDay"
+                        style="@style/TextCardView"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageBirthDay"
+                        android:textStyle="bold"
+                        tools:text="10/10/1988" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/titleBirthDay"
+                        android:layout_toRightOf="@+id/imageBirthDay"
+                        android:layout_height="wrap_content"
+                        android:text="@string/birthday"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageBirthPlace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_location_on_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/titleBirthPlace"
+                        style="@style/TextCardView"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageBirthPlace"
+                        android:textStyle="bold"
+                        tools:text="Yaounde" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/titleBirthPlace"
+                        android:layout_toRightOf="@+id/imageBirthPlace"
+                        android:layout_height="wrap_content"
+                        android:text="@string/birthplace"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView style="@style/CardViewStyle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/menu_profilComplete"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:text="@string/complete_profil"
+                    android:textColor="@android:color/holo_red_dark" />
+
+
+                <TextView
+                    android:id="@+id/menu_changepwd"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:drawableStart="@drawable/ic_lock_black_24dp"
+                    android:drawableLeft="@drawable/ic_lock_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/change_password" />
+
+                <TextView
+                    android:id="@+id/menu_signout"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:layout_marginTop="@dimen/margin_layout"
+                    android:drawableStart="@drawable/ic_power_settings_new_black_24dp"
+                    android:drawableLeft="@drawable/ic_power_settings_new_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:text="@string/sign_out" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

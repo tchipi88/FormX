@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="inactive_indicator">#CFC0E3</color>
+
+    <color name="about_facebook_color">#3b5998</color>
+    <color name="about_twitter_color">#55acee</color>
+    <color name="about_play_store_color">#689F38</color>
+    <color name="about_youtube_color">#cd201f</color>
 </resources>

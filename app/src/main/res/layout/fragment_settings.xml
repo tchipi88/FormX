@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_profil" />
+
+
+        <androidx.cardview.widget.CardView style="@style/CardViewStyle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+
+                <TextView
+                    android:id="@+id/settings_general"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:drawableStart="@drawable/ic_settings_black_24dp"
+                    android:drawableLeft="@drawable/ic_settings_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:text="General" />
+
+
+                <TextView
+                    android:id="@+id/settings_notifications"
+                    style="@style/TextCardViewHeaderMenu"
+                    android:drawableStart="@drawable/ic_notifications_black_24dp"
+                    android:drawableLeft="@drawable/ic_notifications_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:text="Notifications" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <include layout="@layout/layout_terms_privacy" />
+
+        <include layout="@layout/layout_share" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

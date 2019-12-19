@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "781158880273",
+    "firebase_url": "https://formx-8a197.firebaseio.com",
+    "project_id": "formx-8a197",
+    "storage_bucket": "formx-8a197.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781158880273:android:3ce26d434e6a86cdac0db0",
+        "android_client_info": {
+          "package_name": "com.appli.nyx.formx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781158880273-ulac9ncs1dupclofdpj3lk3u31soaaeb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcW4YKMZa1ZgooGxF9V0oH3iZgDNuun6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781158880273-ulac9ncs1dupclofdpj3lk3u31soaaeb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
