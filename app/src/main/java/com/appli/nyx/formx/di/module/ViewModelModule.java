@@ -1,12 +1,14 @@
 package com.appli.nyx.formx.di.module;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.appli.nyx.formx.ui.viewmodel.NetworkErrorViewModel;
 import com.appli.nyx.formx.ui.viewmodel.SignInViewModel;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.ui.viewmodel.ViewModelFactory;
 
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
@@ -31,6 +33,12 @@ public abstract class ViewModelModule {
 	@ViewModelKey(NetworkErrorViewModel.class)
 	@SuppressWarnings("unused")
 	abstract ViewModel bindsNetworkErrorViewModel(NetworkErrorViewModel networkErrorViewModel);
+
+	@Binds
+	@IntoMap
+	@ViewModelKey(FormViewModel.class)
+	@SuppressWarnings("unused")
+	abstract ViewModel bindsFormViewModel(FormViewModel formViewModel);
 
 	@Binds
 	@SuppressWarnings("unused")

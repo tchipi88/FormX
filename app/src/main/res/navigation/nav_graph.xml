@@ -164,4 +164,67 @@
         android:id="@+id/clusterFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.ClusterFragment"
         android:label="ClusterFragment" />
+    <fragment
+        android:id="@+id/formListFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.FormListFragment"
+        android:label="@string/forms" >
+        <action
+            android:id="@+id/action_formListFragment_to_formFragment"
+            app:destination="@id/formFragment" />
+        <action
+            android:id="@+id/action_formListFragment_to_formAddDialog"
+            app:destination="@id/formAddDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/formFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.FormFragment"
+        android:label="@string/forms" >
+        <action
+            android:id="@+id/action_formFragment_to_sectionFragment"
+            app:destination="@id/sectionFragment" />
+        <action
+            android:id="@+id/action_formFragment_to_sectionAddDialog"
+            app:destination="@id/sectionAddDialog" />
+        <action
+            android:id="@+id/action_formFragment_to_formEditDialog"
+            app:destination="@id/formEditDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/sectionFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionFragment"
+        android:label="@string/sections" >
+        <action
+            android:id="@+id/action_sectionFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_sectionFragment_to_questionAddDialog"
+            app:destination="@id/questionAddDialogFragment" />
+        <action
+            android:id="@+id/action_sectionFragment_to_sectionEditDialog"
+            app:destination="@id/sectionEditDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.QuestionFragment"
+        android:label="QuestionFragment" />
+    <fragment
+        android:id="@+id/questionAddDialogFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.QuestionAddDialog"
+        android:label="QuestionAddDialogFragment" />
+    <fragment
+        android:id="@+id/formAddDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog"
+        android:label="@string/forms" />
+    <fragment
+        android:id="@+id/sectionAddDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog"
+        android:label="SectionAddDialog" />
+    <fragment
+        android:id="@+id/formEditDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog"
+        android:label="FormEditDialog" />
+    <fragment
+        android:id="@+id/sectionEditDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog"
+        android:label="SectionEditDialog" />
 </navigation>

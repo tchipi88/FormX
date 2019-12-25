@@ -90,4 +90,10 @@
     <string name="lorem">Lorem ipsum dolor sit amet, class proin phasellus ac donec a laoreet, pellentesque sapien. Aliquam vestibulum scelerisque feugiat ante. Magna sed, in vestibulum risus facilisis tellus,</string>
     <string name="name">Name</string>
     <string name="my_investigation">My Investigation</string>
+    <string name="txt_no">No</string>
+    <string name="txt_yes">Yes</string>
+    <string name="forms">Forms</string>
+    <string name="sections">Sections</string>
+    <string name="libelle">Libelle</string>
+    <string name="question_type">Question Type</string>
 </resources>

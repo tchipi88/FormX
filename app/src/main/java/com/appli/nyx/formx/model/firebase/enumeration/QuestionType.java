@@ -5,5 +5,7 @@ public enum QuestionType {
     TEXT,
     NUMBER,
     BOOLEAN,
-    SELECT;
+    SPINNER,
+    DATE_PICKER,
+    TIME_PICKER,
 }

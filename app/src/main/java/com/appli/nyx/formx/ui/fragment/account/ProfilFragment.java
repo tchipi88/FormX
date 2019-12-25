@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
@@ -16,9 +20,6 @@ import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 
 public class ProfilFragment extends ViewModelFragment<UserViewModel> {
@@ -99,7 +100,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.profil, menu);
+		inflater.inflate(R.menu.edit, menu);
 	}
 
 	@Override
