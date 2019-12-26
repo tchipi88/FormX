@@ -7,51 +7,79 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import androidx.fragment.app.DialogFragment;
-
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
+import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
+import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.tiper.MaterialSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionAddDialog extends DialogFragment {
+import androidx.navigation.Navigation;
+import butterknife.BindView;
 
-    //@BindView(R.id.question_type)
-    MaterialSpinner question_type;
+public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected Class<FormViewModel> getViewModel() {
+        return FormViewModel.class;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_question_add, container, false);
+    protected int getLayoutRes() {
+        return R.layout.dialog_question_add;
+    }
 
-        List<String> optons=new ArrayList<>();
+    @BindView(R.id.question_type)
+    MaterialSpinner question_type;
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        List<String> options = new ArrayList<>();
         for(QuestionType questionType :QuestionType.values()){
-            optons.add(questionType.name());
+            options.add(questionType.name());
         }
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
                 getContext(),
-                android.R.layout.simple_spinner_item,
-                optons
+                android.R.layout.simple_spinner_item, options
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         question_type.setAdapter(spinnerAdapter);
 
-
-        v.findViewById(R.id.btn_save).setOnClickListener(view ->{
-            if(TextUtils.isEmpty(question_type.getPrompt())){
+        view.findViewById(R.id.btn_save).setOnClickListener(v -> {
+            if (TextUtils.isEmpty((String) question_type.getSelectedItem())) {
                 question_type.setError(getResources().getText(R.string.error_field_required));
             }else{
-
+                switch (QuestionType.valueOf((String) question_type.getSelectedItem())) {
+                    case TEXT:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_textDialog);
+                        break;
+                    case NUMBER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_numberDialog);
+                        break;
+                    case BOOLEAN:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_booleanDialog);
+                        break;
+                    case SPINNER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_spinnerDialog);
+                        break;
+                    case DATE_PICKER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_dateDialog);
+                        break;
+                    case TIME_PICKER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_timeDialog);
+                        break;
+                    default:
+                }
             }
         });
 
-        return v;
+        return view;
     }
 }

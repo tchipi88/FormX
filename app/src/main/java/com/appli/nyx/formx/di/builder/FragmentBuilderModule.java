@@ -8,6 +8,23 @@ import com.appli.nyx.formx.ui.fragment.account.SignInFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
 import com.appli.nyx.formx.ui.fragment.business.ClusterFragment;
 import com.appli.nyx.formx.ui.fragment.business.EnqueteFragment;
+import com.appli.nyx.formx.ui.fragment.business.ReportsFragment;
+import com.appli.nyx.formx.ui.fragment.business.StatsFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.FormListFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.QuestionAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.QuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.BooleanDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.DateDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.NumberDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.SpinnerDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.TextDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.TimeDialog;
 import com.appli.nyx.formx.ui.fragment.settings.SettingsFragment;
 
 import dagger.Module;
@@ -42,6 +59,59 @@ public abstract class FragmentBuilderModule {
 
 	@ContributesAndroidInjector
 	abstract EnqueteFragment enqueteFragment();
+
+	@ContributesAndroidInjector
+	abstract FormListFragment formListFragment();
+
+	@ContributesAndroidInjector
+	abstract FormFragment formFragment();
+
+	@ContributesAndroidInjector
+	abstract SectionFragment sectionFragment();
+
+	@ContributesAndroidInjector
+	abstract QuestionFragment questionFragment();
+
+	@ContributesAndroidInjector
+	abstract ReportsFragment reportsFragment();
+
+	@ContributesAndroidInjector
+	abstract StatsFragment statsFragment();
+
+	@ContributesAndroidInjector
+	abstract FormAddDialog formAddDialog();
+
+	@ContributesAndroidInjector
+	abstract FormEditDialog formEditDialog();
+
+	@ContributesAndroidInjector
+	abstract SectionAddDialog sectionAddDialog();
+
+	@ContributesAndroidInjector
+	abstract SectionEditDialog sectionEditDialog();
+
+	@ContributesAndroidInjector
+	abstract QuestionAddDialog questionAddDialog();
+
+	@ContributesAndroidInjector
+	abstract BooleanDialog booleanDialog();
+
+	@ContributesAndroidInjector
+	abstract TimeDialog timeDialog();
+
+	@ContributesAndroidInjector
+	abstract DateDialog dateDialog();
+
+	@ContributesAndroidInjector
+	abstract SpinnerDialog spinnerDialog();
+
+	@ContributesAndroidInjector
+	abstract TextDialog textDialog();
+
+	@ContributesAndroidInjector
+	abstract NumberDialog numberDialog();
+
+
 }
 
 

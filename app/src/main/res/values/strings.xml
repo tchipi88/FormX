@@ -96,4 +96,8 @@
     <string name="sections">Sections</string>
     <string name="libelle">Libelle</string>
     <string name="question_type">Question Type</string>
+    <string name="reports">Reports</string>
+    <string name="cluster">Cluster</string>
+    <string name="description">Description</string>
+    <string name="mandatory">Mandatory</string>
 </resources>

@@ -5,20 +5,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.DialogFragment;
-
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
+import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 
-public class SectionEditDialog extends DialogFragment {
+public class SectionEditDialog extends BaseDialogFragment<FormViewModel> {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	protected Class<FormViewModel> getViewModel() {
+		return FormViewModel.class;
+	}
+
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.dialog_section_edit;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_section_edit, container, false);
+		View v = super.onCreateView(inflater, container, savedInstanceState);
 
         // Do all the stuff to initialize your custom view
 

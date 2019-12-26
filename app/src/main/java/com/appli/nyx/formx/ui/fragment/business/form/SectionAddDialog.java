@@ -6,23 +6,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.DialogFragment;
-
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Section;
+import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
+import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class SectionAddDialog extends DialogFragment {
+public class SectionAddDialog extends BaseDialogFragment<FormViewModel> {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	protected Class<FormViewModel> getViewModel() {
+		return FormViewModel.class;
     }
 
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.dialog_section_add;
+	}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_section_add, container, false);
+		View v = super.onCreateView(inflater, container, savedInstanceState);
 
         v.findViewById(R.id.btn_save).setOnClickListener(view ->{
             String libelle=((TextInputEditText)v.findViewById(R.id.libelle_tiet)).getText().toString();

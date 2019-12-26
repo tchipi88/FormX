@@ -8,14 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
@@ -24,6 +18,13 @@ import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
@@ -81,13 +82,11 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_sectionFragment_to_sectionEditDialog);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+		if (item.getItemId() == R.id.action_edit) {
+			NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_sectionFragment_to_sectionEditDialog);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
     }
 
     private class SimpleItemRecyclerViewAdapter
@@ -114,13 +113,16 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         public void onBindViewHolder(final SimpleItemRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mLibelleView.setText(holder.mItem.getLibelle());
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    viewModel.setQuestion(holder.mItem);
-                    Navigation.findNavController(v).navigate(R.id.action_sectionFragment_to_questionFragment);
+			holder.mView.setOnClickListener(v -> {
+				viewModel.setQuestion(holder.mItem);
+				Navigation.findNavController(v).navigate(R.id.action_sectionFragment_to_questionFragment);
 
-                }
+			});
+			holder.deleteButton.setOnClickListener(v -> {
+
+			});
+			holder.duplicateButton.setOnClickListener(v -> {
+
             });
         }
 
@@ -139,6 +141,8 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mLibelleView;
+			public final ImageButton duplicateButton;
+			public final ImageButton deleteButton;
 
             public AbstractQuestion mItem;
 
@@ -146,6 +150,8 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
                 super(view);
                 mView = view;
                 mLibelleView = view.findViewById(R.id.libelle);
+				duplicateButton = view.findViewById(R.id.duplicate_button);
+				deleteButton = view.findViewById(R.id.delete_button);
 
             }
 

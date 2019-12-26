@@ -28,10 +28,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
@@ -191,13 +187,13 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.navigation_cluster:
-				navController.navigate(R.id.action_global_settingsFragment);
+				navController.navigate(R.id.action_global_clusterFragment);
 				break;
-			case R.id.navigation_stat:
-				navController.navigate(R.id.action_global_settingsFragment);
+			case R.id.navigation_form:
+				navController.navigate(R.id.action_global_formListFragment);
 				break;
 			case R.id.navigation_report:
-				navController.navigate(R.id.action_global_settingsFragment);
+				navController.navigate(R.id.action_global_reportsFragment);
 				break;
 
 			case R.id.navigation_settings:

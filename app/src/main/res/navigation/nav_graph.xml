@@ -13,6 +13,9 @@
             app:destination="@+id/clusterFragment"
             app:popUpTo="@+id/onboardingFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onboardingFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
 
     </fragment>
 
@@ -210,7 +213,26 @@
     <fragment
         android:id="@+id/questionAddDialogFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.QuestionAddDialog"
-        android:label="QuestionAddDialogFragment" />
+        android:label="QuestionAddDialogFragment">
+        <action
+            android:id="@+id/action_questionAddDialogFragment_to_spinnerDialog"
+            app:destination="@id/spinnerDialog" />
+        <action
+            android:id="@+id/action_questionAddDialogFragment_to_textDialog"
+            app:destination="@id/textDialog" />
+        <action
+            android:id="@+id/action_questionAddDialogFragment_to_numberDialog"
+            app:destination="@id/numberDialog" />
+        <action
+            android:id="@+id/action_questionAddDialogFragment_to_booleanDialog"
+            app:destination="@id/booleanDialog" />
+        <action
+            android:id="@+id/action_questionAddDialogFragment_to_dateDialog"
+            app:destination="@id/dateDialog" />
+        <action
+            android:id="@+id/action_questionAddDialogFragment_to_timeDialog"
+            app:destination="@id/timeDialog" />
+    </fragment>
     <fragment
         android:id="@+id/formAddDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog"
@@ -227,4 +249,41 @@
         android:id="@+id/sectionEditDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog"
         android:label="SectionEditDialog" />
+    <action
+        android:id="@+id/action_global_formListFragment"
+        app:destination="@id/formListFragment" />
+    <action
+        android:id="@+id/action_global_clusterFragment"
+        app:destination="@id/clusterFragment" />
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.ReportsFragment"
+        android:label="ReportsFragment" />
+    <action
+        android:id="@+id/action_global_reportsFragment"
+        app:destination="@id/reportsFragment" />
+    <fragment
+        android:id="@+id/spinnerDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.SpinnerDialog"
+        android:label="SpinnerDialog" />
+    <fragment
+        android:id="@+id/textDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.TextDialog"
+        android:label="TextDialog" />
+    <fragment
+        android:id="@+id/numberDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.NumberDialog"
+        android:label="NumberDialog" />
+    <fragment
+        android:id="@+id/booleanDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.BooleanDialog"
+        android:label="BooleanDialog" />
+    <fragment
+        android:id="@+id/dateDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.DateDialog"
+        android:label="DateDialog" />
+    <fragment
+        android:id="@+id/timeDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.TimeDialog"
+        android:label="TimeDialog" />
 </navigation>
