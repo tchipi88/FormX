@@ -23,7 +23,7 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
 
 	@Override
 	protected int getLayoutRes() {
-		return R.layout.dialog_form_edit;
+		return R.layout.dialog_form_add;
 	}
 
 	@BindView(R.id.libelle_tiet)
@@ -33,12 +33,13 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = super.onCreateView(inflater, container, savedInstanceState);
+		View view = super.onCreateView(inflater, container, savedInstanceState);
 
-		//TODO
-		libelleTiet.setText("");
+		viewModel.getFormMutableLiveData().observe(this, form -> {
+			libelleTiet.setText(form.libelle);
+		});
 
-		v.findViewById(R.id.btn_save).setOnClickListener(view -> {
+		view.findViewById(R.id.btn_save).setOnClickListener(v -> {
 			String libelle = libelleTiet.getText().toString();
 			if (TextUtils.isEmpty(libelle)) {
 				libelleTil.setError(getResources().getText(R.string.error_field_required));
@@ -47,7 +48,7 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
 			}
 		});
 
-        return v;
+		return view;
     }
 
 }

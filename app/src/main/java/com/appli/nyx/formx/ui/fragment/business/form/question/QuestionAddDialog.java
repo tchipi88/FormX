@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business.form;
+package com.appli.nyx.formx.ui.fragment.business.form.question;
 
 import android.os.Bundle;
 import android.text.TextUtils;

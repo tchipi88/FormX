@@ -115,7 +115,27 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
             holder.mLibelleView.setText(holder.mItem.getLibelle());
 			holder.mView.setOnClickListener(v -> {
 				viewModel.setQuestion(holder.mItem);
-				Navigation.findNavController(v).navigate(R.id.action_sectionFragment_to_questionFragment);
+                switch ((holder.mItem.getQuestionType())) {
+                    case TEXT:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_textDialog);
+                        break;
+                    case NUMBER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_numberDialog);
+                        break;
+                    case BOOLEAN:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_booleanDialog);
+                        break;
+                    case SPINNER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_spinnerDialog);
+                        break;
+                    case DATE_PICKER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_dateDialog);
+                        break;
+                    case TIME_PICKER:
+                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_timeDialog);
+                        break;
+                    default:
+                }
 
 			});
 			holder.deleteButton.setOnClickListener(v -> {

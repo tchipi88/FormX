@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business.form.dialog;
+package com.appli.nyx.formx.ui.fragment.business.form.question.dialog;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
@@ -8,7 +8,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import butterknife.BindView;
 
-public abstract class CommonDialog extends BaseDialogFragment<FormViewModel> {
+public abstract class CommonQuestionDialog extends BaseDialogFragment<FormViewModel> {
 
 	@Override
 	protected Class<FormViewModel> getViewModel() {
@@ -36,10 +36,6 @@ public abstract class CommonDialog extends BaseDialogFragment<FormViewModel> {
 			valid = false;
 		}
 
-		if (description_tiet.getText().toString().isEmpty()) {
-			description_til.setError(getResources().getText(R.string.error_field_required));
-			valid = false;
-		}
 
 		return valid;
 	}

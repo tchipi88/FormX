@@ -14,17 +14,16 @@ import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormListFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.QuestionAddDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.QuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.dialog.BooleanDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.dialog.DateDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.dialog.NumberDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.dialog.SpinnerDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.dialog.TextDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.dialog.TimeDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.BooleanQuestionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.DateQuestionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.NumberQuestionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.SpinnerQuestionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.TextQuestionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.TimeQuestionDialog;
 import com.appli.nyx.formx.ui.fragment.settings.SettingsFragment;
 
 import dagger.Module;
@@ -70,9 +69,6 @@ public abstract class FragmentBuilderModule {
 	abstract SectionFragment sectionFragment();
 
 	@ContributesAndroidInjector
-	abstract QuestionFragment questionFragment();
-
-	@ContributesAndroidInjector
 	abstract ReportsFragment reportsFragment();
 
 	@ContributesAndroidInjector
@@ -94,22 +90,22 @@ public abstract class FragmentBuilderModule {
 	abstract QuestionAddDialog questionAddDialog();
 
 	@ContributesAndroidInjector
-	abstract BooleanDialog booleanDialog();
+	abstract BooleanQuestionDialog booleanDialog();
 
 	@ContributesAndroidInjector
-	abstract TimeDialog timeDialog();
+	abstract TimeQuestionDialog timeDialog();
 
 	@ContributesAndroidInjector
-	abstract DateDialog dateDialog();
+	abstract DateQuestionDialog dateDialog();
 
 	@ContributesAndroidInjector
-	abstract SpinnerDialog spinnerDialog();
+	abstract SpinnerQuestionDialog spinnerDialog();
 
 	@ContributesAndroidInjector
-	abstract TextDialog textDialog();
+	abstract TextQuestionDialog textDialog();
 
 	@ContributesAndroidInjector
-	abstract NumberDialog numberDialog();
+	abstract NumberQuestionDialog numberDialog();
 
 
 }

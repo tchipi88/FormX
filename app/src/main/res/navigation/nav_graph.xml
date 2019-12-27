@@ -208,11 +208,11 @@
     </fragment>
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.QuestionFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.QuestionFragment"
         android:label="QuestionFragment" />
     <fragment
         android:id="@+id/questionAddDialogFragment"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.QuestionAddDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog"
         android:label="QuestionAddDialogFragment">
         <action
             android:id="@+id/action_questionAddDialogFragment_to_spinnerDialog"
@@ -264,26 +264,26 @@
         app:destination="@id/reportsFragment" />
     <fragment
         android:id="@+id/spinnerDialog"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.SpinnerDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.dialog.SpinnerQuestionDialog"
         android:label="SpinnerDialog" />
     <fragment
         android:id="@+id/textDialog"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.TextDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.dialog.TextQuestionDialog"
         android:label="TextDialog" />
     <fragment
         android:id="@+id/numberDialog"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.NumberDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.dialog.NumberQuestionDialog"
         android:label="NumberDialog" />
     <fragment
         android:id="@+id/booleanDialog"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.BooleanDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.dialog.BooleanQuestionDialog"
         android:label="BooleanDialog" />
     <fragment
         android:id="@+id/dateDialog"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.DateDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.dialog.DateQuestionDialog"
         android:label="DateDialog" />
     <fragment
         android:id="@+id/timeDialog"
-        android:name="com.appli.nyx.formx.ui.fragment.business.form.dialog.TimeDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.question.dialog.TimeQuestionDialog"
         android:label="TimeDialog" />
 </navigation>
