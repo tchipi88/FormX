@@ -80,7 +80,7 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.edit_libelle, menu);
+        inflater.inflate(R.menu.section, menu);
     }
 
     @Override
@@ -145,12 +145,7 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
                 }
 
 			});
-			holder.deleteButton.setOnClickListener(v -> {
 
-			});
-			holder.duplicateButton.setOnClickListener(v -> {
-
-            });
         }
 
         @Override
@@ -168,8 +163,7 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mLibelleView;
-			public final ImageButton duplicateButton;
-			public final ImageButton deleteButton;
+
 
             public AbstractQuestion mItem;
 
@@ -177,9 +171,6 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
                 super(view);
                 mView = view;
                 mLibelleView = view.findViewById(R.id.libelle);
-				duplicateButton = view.findViewById(R.id.duplicate_button);
-				deleteButton = view.findViewById(R.id.delete_button);
-
             }
 
             @Override

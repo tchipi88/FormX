@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business.form.question.dialog;
+package com.appli.nyx.formx.ui.fragment.business.form.question;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,25 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
+import com.appli.nyx.formx.model.firebase.fields.BooleanQuestion;
 
 import butterknife.OnClick;
 
-public class TextQuestionDialog extends CommonQuestionDialog {
+public class BooleanQuestionFragment extends CommonQuestionFragment {
 
 	@Override
 	protected int getLayoutRes() {
-		return R.layout.dialog_question_text;
+		return R.layout.fragment_question_boolean;
 	}
 
-	TextQuestion textQuestion;
+	BooleanQuestion booleanQuestion;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
-		getDialog().setTitle(R.string.question_text);
+
+
 		return view;
 	}
 

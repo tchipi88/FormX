@@ -129,12 +129,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
             });
 
-            holder.deleteButton.setOnClickListener(v -> {
 
-            });
-            holder.duplicateButton.setOnClickListener(v -> {
-
-            });
         }
 
         @Override
@@ -152,8 +147,6 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mLibelleView;
-            public final ImageButton duplicateButton;
-            public final ImageButton deleteButton;
 
             public Section mItem;
 
@@ -161,9 +154,6 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
                 super(view);
                 mView = view;
                 mLibelleView = view.findViewById(R.id.libelle);
-                duplicateButton = view.findViewById(R.id.duplicate_button);
-                deleteButton = view.findViewById(R.id.delete_button);
-
             }
 
             @Override

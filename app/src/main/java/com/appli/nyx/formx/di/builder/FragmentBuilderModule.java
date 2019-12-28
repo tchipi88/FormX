@@ -19,12 +19,12 @@ import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.BooleanQuestionDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.DateQuestionDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.NumberQuestionDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.SpinnerQuestionDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.TextQuestionDialog;
-import com.appli.nyx.formx.ui.fragment.business.form.question.dialog.TimeQuestionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.question.BooleanQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.DateQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.NumberQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.TextQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.TimeQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.settings.SettingsFragment;
 
 import dagger.Module;
@@ -90,22 +90,22 @@ public abstract class FragmentBuilderModule {
 	abstract QuestionAddDialog questionAddDialog();
 
 	@ContributesAndroidInjector
-	abstract BooleanQuestionDialog booleanDialog();
+	abstract BooleanQuestionFragment booleanDialog();
 
 	@ContributesAndroidInjector
-	abstract TimeQuestionDialog timeDialog();
+	abstract TimeQuestionFragment timeDialog();
 
 	@ContributesAndroidInjector
-	abstract DateQuestionDialog dateDialog();
+	abstract DateQuestionFragment dateDialog();
 
 	@ContributesAndroidInjector
-	abstract SpinnerQuestionDialog spinnerDialog();
+	abstract SpinnerQuestionFragment spinnerDialog();
 
 	@ContributesAndroidInjector
-	abstract TextQuestionDialog textDialog();
+	abstract TextQuestionFragment textDialog();
 
 	@ContributesAndroidInjector
-	abstract NumberQuestionDialog numberDialog();
+	abstract NumberQuestionFragment numberDialog();
 
 	@ContributesAndroidInjector
 	abstract EnqueteListFragment enqueteListFragment();

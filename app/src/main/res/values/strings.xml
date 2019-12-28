@@ -112,4 +112,6 @@
     <string name="question_time">Time Question</string>
     <string name="enquetes">Investigation</string>
     <string name="list_of_sections">List of Sections</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="delete">Delete</string>
 </resources>

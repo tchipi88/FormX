@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business.form.question.dialog;
+package com.appli.nyx.formx.ui.fragment.business.form.question;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,24 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.fields.DateQuestion;
+import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
 
 import butterknife.OnClick;
 
-public class DateQuestionDialog extends CommonQuestionDialog {
+public class TextQuestionFragment extends CommonQuestionFragment {
 
 	@Override
 	protected int getLayoutRes() {
-		return R.layout.dialog_question_date;
+		return R.layout.fragment_question_text;
 	}
 
-	DateQuestion dateQuestion;
+	TextQuestion textQuestion;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
-		getDialog().setTitle(R.string.question_date);
 
 		return view;
 	}

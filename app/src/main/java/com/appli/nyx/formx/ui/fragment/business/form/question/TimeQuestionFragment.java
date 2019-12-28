@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business.form.question.dialog;
+package com.appli.nyx.formx.ui.fragment.business.form.question;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,25 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
+import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
 
 import butterknife.OnClick;
 
-public class SpinnerQuestionDialog extends CommonQuestionDialog {
+public class TimeQuestionFragment extends CommonQuestionFragment {
 
 	@Override
 	protected int getLayoutRes() {
-		return R.layout.dialog_question_spinner;
+		return R.layout.fragment_question_time;
 	}
 
-	SpinnerQuestion spinnerQuestion;
+	TimeQuestion timeQuestion;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
-		getDialog().setTitle(R.string.question_spinner);
 		return view;
 	}
 
