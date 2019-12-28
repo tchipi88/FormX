@@ -24,6 +24,8 @@ public class BooleanQuestionDialog extends CommonQuestionDialog {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
+		getDialog().setTitle(R.string.question_boolean);
+
 		return view;
 	}
 

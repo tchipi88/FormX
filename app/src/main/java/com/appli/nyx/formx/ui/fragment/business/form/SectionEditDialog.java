@@ -5,14 +5,19 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SectionEditDialog extends BaseDialogFragment<FormViewModel> {
 
@@ -27,28 +32,64 @@ public class SectionEditDialog extends BaseDialogFragment<FormViewModel> {
     }
 
 	@BindView(R.id.libelle_tiet)
-	TextInputEditText libelleTiet;
+	TextInputEditText libelle_tiet;
 	@BindView(R.id.libelle_til)
-	TextInputLayout libelleTil;
+	TextInputLayout libelle_til;
+
+	@BindView(R.id.description_tiet)
+	TextInputEditText description_tiet;
+	@BindView(R.id.description_til)
+	TextInputLayout description_til;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
 		viewModel.getSectionMutableLiveData().observe(this, section -> {
-			libelleTiet.setText(section.libelle);
+			libelle_tiet.setText(section.libelle);
+			description_tiet.setText(section.description);
 		});
 
-		view.findViewById(R.id.btn_save).setOnClickListener(v -> {
-			String libelle = libelleTiet.getText().toString();
-			if (TextUtils.isEmpty(libelle)) {
-				libelleTil.setError(getResources().getText(R.string.error_field_required));
-			} else {
 
-			}
-		});
 
 		return view;
     }
+
+
+	@OnClick(R.id.save)
+	public void save(View view) {
+		if (!validate()) {
+			return;
+		}
+		//TODO
+
+
+	}
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		libelle_tiet.requestFocus();
+
+		getDialog().getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+		getDialog().setTitle(getResources().getString(R.string.add_form));
+	}
+
+	public boolean validate() {
+		boolean valid = true;
+
+		libelle_til.setError(null);
+		description_til.setError(null);
+
+		if (libelle_tiet.getText().toString().isEmpty()) {
+			libelle_til.setError(getResources().getText(R.string.error_field_required));
+			valid = false;
+		}
+
+
+		return valid;
+	}
 
 }

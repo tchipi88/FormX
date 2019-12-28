@@ -7,6 +7,10 @@
         android:title="@string/cluster" />
 
     <item
+        android:id="@+id/navigation_enquetes"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        android:title="@string/enquetes" />
+    <item
         android:id="@+id/navigation_form"
         android:icon="@drawable/ic_assignment_black_24dp"
         android:title="@string/forms" />

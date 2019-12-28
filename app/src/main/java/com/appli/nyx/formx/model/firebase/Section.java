@@ -8,5 +8,13 @@ import java.util.List;
 public class Section implements Serializable {
 
     public String libelle;
+    public String description;
     public List<AbstractQuestion> fields;
+
+    public Section(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public Section() {
+    }
 }

@@ -1,6 +1,7 @@
 package com.appli.nyx.formx.ui.fragment.business.form;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
@@ -52,17 +54,19 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         recyclerView = view.findViewById(R.id.questions);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
         adapter = new SimpleItemRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
+        viewModel.getSectionMutableLiveData().observe(this, section -> {
+            NavHostFragment.findNavController(SectionFragment.this).getCurrentDestination().setLabel(section.libelle);
+        });
 
         viewModel.loadQuestionBySection().observe(this, questions -> {
             adapter.addAll(questions);
         });
 
         view.findViewById(R.id.add_question).setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_sectionFragment_to_questionAddDialog);
+            NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_sectionFragment_to_questionAddDialog);
         });
 
         return view;
@@ -76,7 +80,7 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.edit, menu);
+        inflater.inflate(R.menu.edit_libelle, menu);
     }
 
     @Override
@@ -113,26 +117,29 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         public void onBindViewHolder(final SimpleItemRecyclerViewAdapter.ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mLibelleView.setText(holder.mItem.getLibelle());
+
+            Drawable drawable = getContext().getResources().getDrawable( getQuestionDrawable(holder.mItem.getQuestionType()) ,null);
+            holder.mLibelleView.setCompoundDrawablesWithIntrinsicBounds( drawable, null, null, null);
 			holder.mView.setOnClickListener(v -> {
 				viewModel.setQuestion(holder.mItem);
                 switch ((holder.mItem.getQuestionType())) {
                     case TEXT:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_textDialog);
+                         NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_global_textDialog);
                         break;
                     case NUMBER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_numberDialog);
+                         NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_global_numberDialog);
                         break;
                     case BOOLEAN:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_booleanDialog);
+                         NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_global_booleanDialog);
                         break;
                     case SPINNER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_spinnerDialog);
+                         NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_global_spinnerDialog);
                         break;
                     case DATE_PICKER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_dateDialog);
+                         NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_global_dateDialog);
                         break;
                     case TIME_PICKER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_timeDialog);
+                         NavHostFragment.findNavController(SectionFragment.this).navigate(R.id.action_global_timeDialog);
                         break;
                     default:
                 }
@@ -179,6 +186,24 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
             public String toString() {
                 return super.toString() + " '" + mLibelleView.getText() + "'";
             }
+        }
+    }
+
+    private int getQuestionDrawable(QuestionType questionType) {
+        switch (questionType){
+            case TEXT:
+                 return  R.drawable.ic_short_text_black_24dp;
+            case NUMBER:
+                return  R.drawable.ic_plus_one_black_24dp;
+            case BOOLEAN:
+                return  R.drawable.ic_check_box_black_24dp;
+            case SPINNER:
+                return  R.drawable.ic_arrow_drop_down_circle_black_24dp;
+            case DATE_PICKER:
+                return  R.drawable.ic_event_black_24dp;
+            case TIME_PICKER:
+                return  R.drawable.ic_access_time_black_24dp;
+                default:return 0;
         }
     }
 

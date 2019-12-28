@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import butterknife.BindView;
 
 public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
@@ -32,7 +35,7 @@ public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
     }
 
     @BindView(R.id.question_type)
-    MaterialSpinner question_type;
+    RadioGroup question_type;
 
 
 
@@ -40,45 +43,34 @@ public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        List<String> options = new ArrayList<>();
-        for(QuestionType questionType :QuestionType.values()){
-            options.add(questionType.name());
-        }
+        getDialog().setTitle(R.string.question_type);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_spinner_item, options
-        );
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        question_type.setAdapter(spinnerAdapter);
+       question_type.setOnCheckedChangeListener((group, checkedId) -> {
 
-        view.findViewById(R.id.btn_save).setOnClickListener(v -> {
-            if (TextUtils.isEmpty((String) question_type.getSelectedItem())) {
-                question_type.setError(getResources().getText(R.string.error_field_required));
-            }else{
-                switch (QuestionType.valueOf((String) question_type.getSelectedItem())) {
-                    case TEXT:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_textDialog);
-                        break;
-                    case NUMBER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_numberDialog);
-                        break;
-                    case BOOLEAN:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_booleanDialog);
-                        break;
-                    case SPINNER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_spinnerDialog);
-                        break;
-                    case DATE_PICKER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_dateDialog);
-                        break;
-                    case TIME_PICKER:
-                        Navigation.findNavController(v).navigate(R.id.action_questionAddDialogFragment_to_timeDialog);
-                        break;
-                    default:
-                }
-            }
-        });
+           switch (checkedId) {
+               case R.id.question_text:
+                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_textDialog);
+                   break;
+               case R.id.question_number:
+                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_numberDialog);
+                   break;
+               case R.id.question_boolean:
+                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_booleanDialog);
+                   break;
+               case R.id.question_spinner:
+                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_spinnerDialog);
+                   break;
+               case R.id.question_date:
+                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_dateDialog);
+                   break;
+               case R.id.question_time:
+                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_timeDialog);
+                   break;
+               default:
+           }
+
+       });
+
 
         return view;
     }

@@ -11,8 +11,9 @@ public class NumberQuestion extends AbstractQuestion {
     private String unit;
 
 
-    public NumberQuestion(QuestionType questionType) {
+    public NumberQuestion(String libelle) {
         super(QuestionType.NUMBER);
+        this.libelle=libelle;
     }
 
     public String getUnit() {

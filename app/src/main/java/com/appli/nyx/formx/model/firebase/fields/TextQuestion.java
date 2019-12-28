@@ -9,8 +9,10 @@ public class TextQuestion extends AbstractQuestion {
 
     private String unit;
 
-    public TextQuestion() {
+
+    public TextQuestion(String libelle) {
         super(QuestionType.TEXT);
+        this.libelle=libelle;
     }
 
     public int getSize() {

@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business;
+package com.appli.nyx.formx.ui.onboarding;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +11,6 @@ import android.widget.ImageButton;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.preference.PrefsManager;
 import com.appli.nyx.formx.preference.PrefsManager_;
-import com.appli.nyx.formx.ui.onboarding.CircleIndicatorView;
-import com.appli.nyx.formx.ui.onboarding.OnboardingItem;
-import com.appli.nyx.formx.ui.onboarding.OnboardingPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

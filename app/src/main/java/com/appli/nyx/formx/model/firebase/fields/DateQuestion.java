@@ -6,7 +6,8 @@ public class DateQuestion extends AbstractQuestion {
 
     public boolean mandatory;
 
-    public DateQuestion() {
+    public DateQuestion(String libelle) {
         super(QuestionType.DATE_PICKER);
+        this.libelle=libelle;
     }
 }

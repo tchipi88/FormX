@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,17 +49,16 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         recyclerView = view.findViewById(R.id.forms);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
         adapter = new SimpleItemRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
 
-        viewModel.loadForm().observe(this, forms -> {
+        viewModel.loadFormByUser().observe(this, forms -> {
             adapter.addAll(forms);
         });
 
         view.findViewById(R.id.add_form).setOnClickListener(v -> {
-             Navigation.findNavController(v).navigate(R.id.action_formListFragment_to_formAddDialog);
+             NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_formListFragment_to_formAddDialog);
         });
 
         return view;
@@ -92,7 +92,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                 @Override
                 public void onClick(View v) {
                     viewModel.setForm(holder.mItem);
-                    Navigation.findNavController(v).navigate(R.id.action_formListFragment_to_formFragment);
+                    NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_formListFragment_to_formFragment);
 
                 }
             });

@@ -24,6 +24,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -88,7 +90,7 @@ public abstract class BaseDialogFragment<V extends ViewModel> extends DialogFrag
 		super.onViewCreated(view, savedInstanceState);
 		networkErrorViewModel = ViewModelProviders.of(requireActivity()).get(NetworkErrorViewModel.class);
 
-		final NavController navController = Navigation.findNavController(view);
+		final NavController navController = NavHostFragment.findNavController(this);
 
 		networkErrorViewModel.getNetworkState().observe(getViewLifecycleOwner(), networkState -> {
 			if (UNCONNECTED.equals(networkState)) {

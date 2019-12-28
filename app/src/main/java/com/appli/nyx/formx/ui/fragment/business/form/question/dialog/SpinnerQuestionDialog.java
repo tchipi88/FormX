@@ -24,6 +24,7 @@ public class SpinnerQuestionDialog extends CommonQuestionDialog {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
+		getDialog().setTitle(R.string.question_spinner);
 		return view;
 	}
 

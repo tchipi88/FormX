@@ -1,24 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     android:orientation="vertical"
     android:padding="8dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:id="@+id/question_type">
 
-    <com.tiper.MaterialSpinner
-        android:id="@+id/question_type"
-        style="@style/TextInputLayout"
-        android:hint="@string/question_type"
-        app:spinnerMode="dropdown" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save"
-        style="@style/ButttonStyle"
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_save" />
+        android:drawableStart="@drawable/ic_short_text_black_24dp"
+        android:drawablePadding="@dimen/_8dp"
+        android:text="Text"/>
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/question_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_plus_one_black_24dp"
+        android:drawablePadding="@dimen/_8dp"
+        android:text="Number" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/question_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_access_time_black_24dp"
+        android:drawablePadding="@dimen/_8dp"
+        android:text="Time" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/question_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_event_black_24dp"
+        android:drawablePadding="@dimen/_8dp"
+        android:text="Date" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/question_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_arrow_drop_down_circle_black_24dp"
+        android:drawablePadding="@dimen/_8dp"
+        android:text="Spinner" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/question_boolean"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_check_box_black_24dp"
+        android:drawablePadding="@dimen/_8dp"
+        android:text="Boolean"/>
 
 
-</LinearLayout>
+</RadioGroup>

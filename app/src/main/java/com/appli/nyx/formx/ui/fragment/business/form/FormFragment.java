@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
-public class FormFragment  extends ViewModelFragment<FormViewModel> {
+public class FormFragment extends ViewModelFragment<FormViewModel> {
 
     @Override
     protected int getLayoutRes() {
@@ -48,7 +48,7 @@ public class FormFragment  extends ViewModelFragment<FormViewModel> {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.edit, menu);
+        inflater.inflate(R.menu.form, menu);
     }
 
     @Override
@@ -58,10 +58,14 @@ public class FormFragment  extends ViewModelFragment<FormViewModel> {
             case R.id.action_edit:
                 NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_formEditDialog);
                 return true;
+            case R.id.action_visibility:
+                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_formViewFragment);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     protected Class<FormViewModel> getViewModel() {
         return FormViewModel.class;
@@ -77,17 +81,19 @@ public class FormFragment  extends ViewModelFragment<FormViewModel> {
         recyclerView = view.findViewById(R.id.sections);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
         adapter = new SimpleItemRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
+        viewModel.getFormMutableLiveData().observe(this, form -> {
+            NavHostFragment.findNavController(FormFragment.this).getCurrentDestination().setLabel(form.libelle);
+        });
 
         viewModel.loadSectionByForm().observe(this, sections -> {
             adapter.addAll(sections);
         });
 
         view.findViewById(R.id.add_section).setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_formFragment_to_sectionAddDialog);
+            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionAddDialog);
         });
 
         return view;
@@ -119,7 +125,7 @@ public class FormFragment  extends ViewModelFragment<FormViewModel> {
             holder.mLibelleView.setText(holder.mItem.libelle);
             holder.mView.setOnClickListener(v -> {
                 viewModel.setSection(holder.mItem);
-                Navigation.findNavController(v).navigate(R.id.action_formFragment_to_sectionFragment);
+                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionFragment);
 
             });
 

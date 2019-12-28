@@ -23,6 +23,7 @@ public class DateQuestionDialog extends CommonQuestionDialog {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
+		getDialog().setTitle(R.string.question_date);
 
 		return view;
 	}

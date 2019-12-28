@@ -9,8 +9,9 @@ public class SpinnerQuestion extends AbstractQuestion {
     public boolean mandatory;
     public List<String> options;
 
-    public SpinnerQuestion() {
+    public SpinnerQuestion(String libelle) {
         super(QuestionType.SPINNER);
+        this.libelle=libelle;
     }
 
     public boolean isMandatory() {

@@ -7,13 +7,14 @@ import com.appli.nyx.formx.ui.fragment.account.ResetPasswordRequestFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignInFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
 import com.appli.nyx.formx.ui.fragment.business.ClusterFragment;
-import com.appli.nyx.formx.ui.fragment.business.EnqueteFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.ReportsFragment;
-import com.appli.nyx.formx.ui.fragment.business.StatsFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormListFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.FormViewFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
@@ -56,8 +57,7 @@ public abstract class FragmentBuilderModule {
 	@ContributesAndroidInjector
 	abstract ClusterFragment clusterFragment();
 
-	@ContributesAndroidInjector
-	abstract EnqueteFragment enqueteFragment();
+
 
 	@ContributesAndroidInjector
 	abstract FormListFragment formListFragment();
@@ -72,7 +72,7 @@ public abstract class FragmentBuilderModule {
 	abstract ReportsFragment reportsFragment();
 
 	@ContributesAndroidInjector
-	abstract StatsFragment statsFragment();
+	abstract FormViewFragment formViewFragment();
 
 	@ContributesAndroidInjector
 	abstract FormAddDialog formAddDialog();
@@ -107,6 +107,11 @@ public abstract class FragmentBuilderModule {
 	@ContributesAndroidInjector
 	abstract NumberQuestionDialog numberDialog();
 
+	@ContributesAndroidInjector
+	abstract EnqueteListFragment enqueteListFragment();
+
+	@ContributesAndroidInjector
+	abstract EnqueteFragment enqueteFragment();
 
 }
 

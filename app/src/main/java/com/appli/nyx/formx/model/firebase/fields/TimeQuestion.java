@@ -6,7 +6,8 @@ public class TimeQuestion extends AbstractQuestion {
 
     public boolean mandatory;
 
-    public TimeQuestion() {
+    public TimeQuestion(String libelle) {
         super(QuestionType.TIME_PICKER);
+        this.libelle=libelle;
     }
 }
