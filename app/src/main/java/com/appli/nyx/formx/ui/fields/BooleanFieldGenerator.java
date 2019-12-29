@@ -20,7 +20,7 @@ public class BooleanFieldGenerator implements  IFieldGenerator<BooleanQuestion>{
 
         // Génération de la vue du champ affichant du texte à partir du layout
         LayoutInflater inflater = LayoutInflater.from(context);
-        final View fieldView = inflater.inflate(R.layout.viewholder_booleanfield, null);
+        final View fieldView = inflater.inflate(R.layout.viewholder_question_boolean, null);
         field.setFieldView(fieldView);
 
         final SwitchMaterial switchCompat = fieldView.findViewById(R.id.booleanfield_swithcompat);

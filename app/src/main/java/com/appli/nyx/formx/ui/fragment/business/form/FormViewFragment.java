@@ -4,10 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.ui.fields.FieldsGenerator;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+
+import butterknife.BindView;
 
 public class FormViewFragment extends ViewModelFragment<FormViewModel> {
     @Override
@@ -20,11 +26,22 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         return R.layout.fragment_form_view;
     }
 
+    @BindView(R.id.fields_container)
+    LinearLayout fieldsContainer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        viewModel.getFormMutableLiveData().observe(this, form -> {
+            NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.libelle);
+        });
+
+        viewModel.loadQuestionBySection().observe(this, questions -> {
+            FieldsGenerator.generateLayoutField(getContext(), fieldsContainer, questions);
+        });
 
         return view;
     }

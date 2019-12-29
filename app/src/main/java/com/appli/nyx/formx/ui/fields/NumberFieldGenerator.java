@@ -23,7 +23,7 @@ public class NumberFieldGenerator implements  IFieldGenerator<NumberQuestion>{
 
         // Génération de la vue du champ de saisie à partir du layout
         LayoutInflater inflater = LayoutInflater.from(context);
-        final View fieldView = inflater.inflate(R.layout.viewholder_textfield, null);
+        final View fieldView = inflater.inflate(R.layout.viewholder_question_text, null);
         field.setFieldView(fieldView);
 
         final TextInputLayout tilInput = fieldView.findViewById(R.id.textfield_til);

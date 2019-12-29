@@ -119,7 +119,7 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
             holder.mLibelleView.setText(holder.mItem.getLibelle());
 
             Drawable drawable = getContext().getResources().getDrawable( getQuestionDrawable(holder.mItem.getQuestionType()) ,null);
-            holder.mLibelleView.setCompoundDrawablesWithIntrinsicBounds( drawable, null, null, null);
+            holder.mLibelleView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, getContext().getResources().getDrawable(R.drawable.ic_chevron_right_black_24dp), null);
 			holder.mView.setOnClickListener(v -> {
 				viewModel.setQuestion(holder.mItem);
                 switch ((holder.mItem.getQuestionType())) {

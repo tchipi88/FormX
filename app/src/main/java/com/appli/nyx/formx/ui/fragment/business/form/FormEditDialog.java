@@ -73,7 +73,7 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
 
 		getDialog().getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-		getDialog().setTitle(getResources().getString(R.string.add_form));
+		getDialog().setTitle(getResources().getString(R.string.edit_form));
 	}
 
 	public boolean validate() {

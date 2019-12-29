@@ -21,7 +21,7 @@ public class SpinnerFieldGenerator implements  IFieldGenerator<SpinnerQuestion>{
 
         // Génération de la vue du champ de saisie à partir du layout
         LayoutInflater inflater = LayoutInflater.from(context);
-        final View fieldView = inflater.inflate(R.layout.viewholder_spinnerfield, null);
+        final View fieldView = inflater.inflate(R.layout.viewholder_question_spinner, null);
         field.setFieldView(fieldView);
 
         final MaterialSpinner materialSpinner = fieldView.findViewById(R.id.spinnerfield_spi);

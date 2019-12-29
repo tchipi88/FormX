@@ -2,6 +2,7 @@ package com.appli.nyx.formx.ui.fields;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
@@ -12,9 +13,11 @@ import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
 
+import java.util.List;
+
 public class FieldsGenerator {
 
-    private static View generateLayoutField(Context context, AbstractQuestion field){
+    public static View generateLayoutField(Context context, AbstractQuestion field) {
         QuestionType questionType = field.getQuestionType();
         IFieldGenerator fieldGenerator;
         switch (questionType) {
@@ -45,5 +48,11 @@ public class FieldsGenerator {
 
         }
         return null;
+    }
+
+    public static void generateLayoutField(Context context, LinearLayout fieldsContainer, List<AbstractQuestion> questions) {
+        for (AbstractQuestion question : questions) {
+            fieldsContainer.addView(generateLayoutField(context, question));
+        }
     }
 }
