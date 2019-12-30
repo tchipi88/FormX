@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/CardViewStyle"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_marginTop="@dimen/_8dp"
+    android:layout_marginBottom="@dimen/_8dp"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Libelle" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-<com.tiper.MaterialSpinner xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/spinnerfield_spi"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:saveEnabled="false"
-    android:singleLine="true" />
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+        android:text="description" />
+
+
+    <com.tiper.MaterialSpinner xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/spinnerfield_spi"
+        style="@style/TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:saveEnabled="false"
+        android:singleLine="true" />
+</LinearLayout>
 

@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/CardViewStyle"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_8dp"
+    android:layout_marginBottom="@dimen/_8dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Libelle" />
 
 
-    <LinearLayout
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="description" />
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/booleanfield_swithcompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        </com.google.android.material.textview.MaterialTextView>
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/booleanfield_swithcompat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:showText="true" />
-
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

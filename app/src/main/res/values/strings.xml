@@ -115,4 +115,6 @@
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
     <string name="next">Next</string>
+    <string name="bf_chosen_date">"Chosen Date - %s"</string>
+    <string name="bf_chosen_time">"Chosen Time - %s"</string>
 </resources>

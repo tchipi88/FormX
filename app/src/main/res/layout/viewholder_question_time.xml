@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/CardViewStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <LinearLayout
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_8dp"
+    android:layout_marginBottom="@dimen/_8dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Libelle" />
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.MaterialComponents.Headline6"
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="description" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textfield_til"
+        style="@style/TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfield_tiet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:saveEnabled="false"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textview.MaterialTextView>
+</LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-        </com.google.android.material.textview.MaterialTextView>
-
-        <com.google.android.material.textfield.TextInputLayout
-
-            android:id="@+id/textfield_til"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textfield_tiet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:saveEnabled="false"
-                android:singleLine="true" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
 
