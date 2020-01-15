@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,8 @@ import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.widget.LinearLayout.VERTICAL;
 
 public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
@@ -46,6 +50,9 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 		recyclerView = view.findViewById(R.id.enquetes);
 		assert recyclerView != null;
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
+		recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
+		
 		adapter = new SimpleItemRecyclerViewAdapter();
 		recyclerView.setAdapter(adapter);
 

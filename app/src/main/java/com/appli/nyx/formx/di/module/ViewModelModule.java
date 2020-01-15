@@ -3,9 +3,11 @@ package com.appli.nyx.formx.di.module;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.appli.nyx.formx.ui.viewmodel.NetworkErrorViewModel;
+import com.appli.nyx.formx.ui.viewmodel.ReportViewModel;
 import com.appli.nyx.formx.ui.viewmodel.SignInViewModel;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.ui.viewmodel.ViewModelFactory;
@@ -46,6 +48,19 @@ public abstract class ViewModelModule {
     @ViewModelKey(EnqueteViewModel.class)
     @SuppressWarnings("unused")
     abstract ViewModel bindsEnqueteViewModel(EnqueteViewModel enqueteViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReportViewModel.class)
+    @SuppressWarnings("unused")
+    abstract ViewModel bindsReportViewModel(ReportViewModel reportViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ClusterViewModel.class)
+    @SuppressWarnings("unused")
+    abstract ViewModel bindsClusterViewModel(ClusterViewModel clusterViewModel);
+
 
     @Binds
     @SuppressWarnings("unused")

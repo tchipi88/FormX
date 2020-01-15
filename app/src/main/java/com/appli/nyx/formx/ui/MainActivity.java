@@ -188,16 +188,16 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.navigation_cluster:
-                navController.navigate(R.id.action_global_clusterFragment);
+                navController.navigate(R.id.action_global_clusterListFragment);
                 break;
             case R.id.navigation_enquetes:
-                navController.navigate(R.id.action_global_enqueteListFragment);
+                navController.navigate(R.id.action_global_enqueteMenuFragment);
                 break;
             case R.id.navigation_form:
                 navController.navigate(R.id.action_global_formListFragment);
                 break;
             case R.id.navigation_report:
-                navController.navigate(R.id.action_global_reportsFragment);
+                navController.navigate(R.id.action_global_reportsListFragment);
                 break;
 
             case R.id.navigation_settings:

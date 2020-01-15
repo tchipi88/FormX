@@ -6,9 +6,11 @@ import com.appli.nyx.formx.ui.fragment.account.ProfilFragment;
 import com.appli.nyx.formx.ui.fragment.account.ResetPasswordRequestFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignInFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
-import com.appli.nyx.formx.ui.fragment.business.ClusterFragment;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
-import com.appli.nyx.formx.ui.fragment.business.ReportsFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
+import com.appli.nyx.formx.ui.fragment.business.reports.ReportsFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
@@ -25,6 +27,7 @@ import com.appli.nyx.formx.ui.fragment.business.form.question.NumberQuestionFrag
 import com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TextQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TimeQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.reports.ReportsListFragment;
 import com.appli.nyx.formx.ui.fragment.settings.SettingsFragment;
 
 import dagger.Module;
@@ -112,6 +115,15 @@ public abstract class FragmentBuilderModule {
 
 	@ContributesAndroidInjector
 	abstract EnqueteFragment enqueteFragment();
+
+	@ContributesAndroidInjector
+	abstract ReportsListFragment reportsListFragment();
+
+	@ContributesAndroidInjector
+	abstract ClusterListFragment clusterListFragment();
+
+	@ContributesAndroidInjector
+	abstract EnqueteMenuFragment enqueteMenuFragment();
 
 }
 

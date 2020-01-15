@@ -7,17 +7,7 @@
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.appli.nyx.formx.ui.onboarding.OnboardingFragment"
-        android:label="Onboarding">
-        <action
-            android:id="@+id/action_onboardingFragment_to_mainFragment"
-            app:destination="@+id/clusterFragment"
-            app:popUpTo="@+id/onboardingFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_onboardingFragment_to_reportsFragment"
-            app:destination="@id/reportsFragment" />
-
-    </fragment>
+        android:label="Onboarding" />
 
     <fragment
         android:id="@+id/privacyTermsFragment"
@@ -165,7 +155,7 @@
         app:destination="@id/settings_graph" />
     <fragment
         android:id="@+id/clusterFragment"
-        android:name="com.appli.nyx.formx.ui.fragment.business.ClusterFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment"
         android:label="ClusterFragment" />
     <fragment
         android:id="@+id/formListFragment"
@@ -231,16 +221,10 @@
     <action
         android:id="@+id/action_global_formListFragment"
         app:destination="@id/formListFragment" />
-    <action
-        android:id="@+id/action_global_clusterFragment"
-        app:destination="@id/clusterFragment" />
     <fragment
         android:id="@+id/reportsFragment"
-        android:name="com.appli.nyx.formx.ui.fragment.business.ReportsFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.reports.ReportsFragment"
         android:label="ReportsFragment" />
-    <action
-        android:id="@+id/action_global_reportsFragment"
-        app:destination="@id/reportsFragment" />
     <fragment
         android:id="@+id/spinnerDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment"
@@ -291,9 +275,6 @@
             android:id="@+id/action_enqueteListFragment_to_enqueteFragment"
             app:destination="@id/enqueteFragment" />
     </fragment>
-    <action
-        android:id="@+id/action_global_enqueteListFragment"
-        app:destination="@id/enqueteListFragment" />
     <fragment
         android:id="@+id/enqueteFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment"
@@ -302,4 +283,37 @@
         android:id="@+id/formViewFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormViewFragment"
         android:label="@string/forms" />
+    <fragment
+        android:id="@+id/reportsListFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.reports.ReportsListFragment"
+        android:label="ReportsListFragment">
+        <action
+            android:id="@+id/action_reportsListFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_reportsListFragment"
+        app:destination="@id/reportsListFragment" />
+    <fragment
+        android:id="@+id/clusterListFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment"
+        android:label="ClusterListFragment">
+        <action
+            android:id="@+id/action_clusterListFragment_to_clusterFragment"
+            app:destination="@id/clusterFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_clusterListFragment"
+        app:destination="@id/clusterListFragment" />
+    <fragment
+        android:id="@+id/enqueteMenuFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment"
+        android:label="EnqueteMenuFragment">
+        <action
+            android:id="@+id/action_enqueteMenuFragment_to_enqueteListFragment"
+            app:destination="@id/enqueteListFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_enqueteMenuFragment"
+        app:destination="@id/enqueteMenuFragment" />
 </navigation>

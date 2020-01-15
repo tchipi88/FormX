@@ -1,10 +1,10 @@
-package com.appli.nyx.formx.ui.fragment.business;
+package com.appli.nyx.formx.ui.fragment.business.reports;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 
-public class ClusterFragment extends ViewModelFragment<UserViewModel> {
+public class ReportsFragment extends ViewModelFragment<UserViewModel> {
 
 	@Override
 	protected Class<UserViewModel> getViewModel() {
@@ -13,6 +13,6 @@ public class ClusterFragment extends ViewModelFragment<UserViewModel> {
 
 	@Override
 	protected int getLayoutRes() {
-		return R.layout.fragment_cluster;
+		return R.layout.fragment_reports;
 	}
 }

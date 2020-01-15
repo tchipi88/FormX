@@ -44,7 +44,7 @@ public class OnboardingFragment extends Fragment {
 
 		prefsManager = PrefsManager_.getInstance_(getActivity());
 		if (!prefsManager.isFirstLaunch()) {
-			NavHostFragment.findNavController(OnboardingFragment.this).navigate(R.id.action_onboardingFragment_to_mainFragment);
+			NavHostFragment.findNavController(OnboardingFragment.this).navigate(R.id.action_global_enqueteMenuFragment);
 		}
 
 		circleIndicatorView = rootView.findViewById(R.id.circle_indicator_view);
@@ -97,8 +97,8 @@ public class OnboardingFragment extends Fragment {
 			}
 		});
 
-		btnSkip.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_onboardingFragment_to_mainFragment));
-		btnFinish.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_onboardingFragment_to_mainFragment));
+		btnSkip.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_global_enqueteMenuFragment));
+		btnFinish.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_global_enqueteMenuFragment));
 
 		ibNext.setOnClickListener(v -> {
 			// checking for last page
@@ -108,7 +108,7 @@ public class OnboardingFragment extends Fragment {
 				// move to next screen
 				screenPager.setCurrentItem(current);
 			} else {
-				NavHostFragment.findNavController(OnboardingFragment.this).navigate(R.id.action_onboardingFragment_to_mainFragment);
+				NavHostFragment.findNavController(OnboardingFragment.this).navigate(R.id.action_global_enqueteMenuFragment);
 			}
 		});
 		return rootView;
