@@ -75,7 +75,7 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-		viewModel.getObservableUser().observe(this, User -> {
+        viewModel.getObservableUser().observe(getViewLifecycleOwner(), User -> {
 			name.setText(User.name);
 			surname.setText(User.firstName);
 			birthplace.setText(User.birthPlace);

@@ -56,7 +56,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-		viewModel.getObservableUser().observe(this, user -> {
+		viewModel.getObservableUser().observe(getViewLifecycleOwner(), user -> {
 
 			user_profile_name.setText(user.name);
 			user_profile_email.setText(user.email);

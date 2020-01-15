@@ -35,11 +35,11 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        viewModel.getFormMutableLiveData().observe(this, form -> {
+        viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
             NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.libelle);
         });
 
-        viewModel.loadQuestionBySection().observe(this, questions -> {
+        viewModel.loadQuestionBySection().observe(getViewLifecycleOwner(), questions -> {
             FieldsGenerator.generateLayoutField(getContext(), fieldsContainer, questions);
         });
 

@@ -45,7 +45,7 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
-		viewModel.getFormMutableLiveData().observe(this, form -> {
+		viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
 			libelle_tiet.setText(form.libelle);
 			description_tiet.setText(form.description);
 		});

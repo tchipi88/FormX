@@ -53,7 +53,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setAdapter(adapter);
 
 
-        viewModel.loadFormByUser().observe(this, forms -> {
+        viewModel.loadFormByUser().observe(getViewLifecycleOwner(), forms -> {
             adapter.addAll(forms);
         });
 

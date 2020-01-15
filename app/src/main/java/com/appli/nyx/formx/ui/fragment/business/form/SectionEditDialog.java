@@ -45,7 +45,7 @@ public class SectionEditDialog extends BaseDialogFragment<FormViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
-		viewModel.getSectionMutableLiveData().observe(this, section -> {
+		viewModel.getSectionMutableLiveData().observe(getViewLifecycleOwner(), section -> {
 			libelle_tiet.setText(section.libelle);
 			description_tiet.setText(section.description);
 		});

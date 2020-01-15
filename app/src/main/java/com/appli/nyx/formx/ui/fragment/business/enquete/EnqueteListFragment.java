@@ -50,7 +50,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 		recyclerView.setAdapter(adapter);
 
 
-		viewModel.loadEnqueteByUser().observe(this, enquetes -> {
+		viewModel.loadEnqueteByUser().observe(getViewLifecycleOwner(), enquetes -> {
 			adapter.addAll(enquetes);
 		});
 
