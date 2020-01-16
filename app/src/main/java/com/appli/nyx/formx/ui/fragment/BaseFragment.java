@@ -1,5 +1,6 @@
 package com.appli.nyx.formx.ui.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -24,6 +26,9 @@ public abstract class BaseFragment extends Fragment {
 	protected ProgressBar progressBar;
 
 	protected PrefsManager prefsManager;
+
+	@BindDrawable(R.drawable.ic_delete_black_24dp)
+	protected Drawable ic_delete;
 
 	@LayoutRes
 	protected abstract int getLayoutRes();
