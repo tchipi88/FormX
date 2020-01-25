@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,8 +19,6 @@ import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
 public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
@@ -65,7 +62,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
     }
 
     private class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.FormViewHolder> {
 
         Context context;
         private List<Form> mValues;
@@ -76,25 +73,36 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public FormViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             context = parent.getContext();
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.viewholder_form
                             , parent, false);
-            return new ViewHolder(view);
+            return new FormViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final FormViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mLibelleView.setText(holder.mItem.libelle);
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    viewModel.setForm(holder.mItem);
-                    NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_formListFragment_to_formFragment);
 
-                }
+            holder.mView.setOnClickListener(v -> {
+                viewModel.setForm(holder.mItem);
+                NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_formListFragment_to_formFragment);
+            });
+
+            holder.delete.setOnClickListener(v -> {
+
+            });
+
+            holder.voir.setOnClickListener(v -> {
+                viewModel.setForm(holder.mItem);
+                NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_global_formViewFragment);
+            });
+
+            holder.edit.setOnClickListener(v -> {
+                viewModel.setForm(holder.mItem);
+                NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_global_formEditDialog);
             });
         }
 
@@ -110,16 +118,26 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         }
 
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class FormViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mLibelleView;
+            public final TextView mDescriptionView;
+
+            public final AppCompatImageView delete;
+            public final AppCompatImageView voir;
+            public final AppCompatImageView edit;
 
             public Form mItem;
 
-            public ViewHolder(View view) {
+            public FormViewHolder(View view) {
                 super(view);
                 mView = view;
                 mLibelleView = view.findViewById(R.id.libelle);
+                mDescriptionView = view.findViewById(R.id.description);
+
+                delete = view.findViewById(R.id.delete);
+                voir = view.findViewById(R.id.voir);
+                edit = view.findViewById(R.id.edit);
 
             }
 

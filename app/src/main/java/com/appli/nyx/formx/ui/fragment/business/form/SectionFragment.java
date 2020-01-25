@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.appli.nyx.formx.R;
@@ -22,13 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
 public class SectionFragment  extends ViewModelFragment<FormViewModel> {
     @Override
@@ -94,7 +89,7 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
     }
 
     private class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.QuestionViewHolder> {
 
         Context context;
         private List<AbstractQuestion> mValues;
@@ -105,16 +100,16 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         }
 
         @Override
-        public SimpleItemRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public QuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             context = parent.getContext();
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.viewholder_question
                             , parent, false);
-            return new SimpleItemRecyclerViewAdapter.ViewHolder(view);
+            return new QuestionViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final SimpleItemRecyclerViewAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final QuestionViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mLibelleView.setText(holder.mItem.getLibelle());
 
@@ -160,14 +155,14 @@ public class SectionFragment  extends ViewModelFragment<FormViewModel> {
         }
 
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class QuestionViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mLibelleView;
 
 
             public AbstractQuestion mItem;
 
-            public ViewHolder(View view) {
+            public QuestionViewHolder(View view) {
                 super(view);
                 mView = view;
                 mLibelleView = view.findViewById(R.id.libelle);

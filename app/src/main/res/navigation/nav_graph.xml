@@ -178,12 +178,6 @@
         <action
             android:id="@+id/action_formFragment_to_sectionAddDialog"
             app:destination="@id/sectionAddDialog" />
-        <action
-            android:id="@+id/action_formFragment_to_formEditDialog"
-            app:destination="@id/formEditDialog" />
-        <action
-            android:id="@+id/action_formFragment_to_formViewFragment"
-            app:destination="@id/formViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/sectionFragment"
@@ -316,4 +310,10 @@
     <action
         android:id="@+id/action_global_enqueteMenuFragment"
         app:destination="@id/enqueteMenuFragment" />
+    <action
+        android:id="@+id/action_global_formViewFragment"
+        app:destination="@id/formViewFragment" />
+    <action
+        android:id="@+id/action_global_formEditDialog"
+        app:destination="@id/formEditDialog" />
 </navigation>

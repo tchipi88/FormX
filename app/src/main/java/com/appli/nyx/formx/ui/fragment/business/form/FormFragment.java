@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.appli.nyx.formx.R;
@@ -20,13 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
 public class FormFragment extends ViewModelFragment<FormViewModel> {
 
@@ -56,10 +52,10 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_edit:
-                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_formEditDialog);
+                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_global_formEditDialog);
                 return true;
             case R.id.action_visibility:
-                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_formViewFragment);
+                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_global_formViewFragment);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -100,7 +96,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
     }
 
     private class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.SectionViewHolder> {
 
         Context context;
         private List<Section> mValues;
@@ -111,22 +107,37 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         }
 
         @Override
-        public SimpleItemRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public SectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             context = parent.getContext();
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.viewholder_section
                             , parent, false);
-            return new SimpleItemRecyclerViewAdapter.ViewHolder(view);
+            return new SectionViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final SimpleItemRecyclerViewAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final SectionViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mLibelleView.setText(holder.mItem.libelle);
             holder.mView.setOnClickListener(v -> {
                 viewModel.setSection(holder.mItem);
                 NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionFragment);
 
+            });
+
+
+            holder.delete.setOnClickListener(v -> {
+
+            });
+
+            holder.duplicate.setOnClickListener(v -> {
+                viewModel.setSection(holder.mItem);
+                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_global_formViewFragment);
+            });
+
+            holder.edit.setOnClickListener(v -> {
+                viewModel.setSection(holder.mItem);
+                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_global_formEditDialog);
             });
 
 
@@ -144,16 +155,24 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         }
 
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class SectionViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mLibelleView;
 
+            public final AppCompatImageView delete;
+            public final AppCompatImageView duplicate;
+            public final AppCompatImageView edit;
+
             public Section mItem;
 
-            public ViewHolder(View view) {
+            public SectionViewHolder(View view) {
                 super(view);
                 mView = view;
                 mLibelleView = view.findViewById(R.id.libelle);
+
+                delete = view.findViewById(R.id.delete);
+                duplicate = view.findViewById(R.id.duplicate);
+                edit = view.findViewById(R.id.edit);
             }
 
             @Override

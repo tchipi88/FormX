@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="fontFamily">@font/ubuntu_light</item>
+        <item name="colorControlNormal">@color/white</item>
         <item name="android:fontFamily">@font/ubuntu_light</item>
 
         <item name="android:dialogTheme">@style/AppDialogTheme</item>

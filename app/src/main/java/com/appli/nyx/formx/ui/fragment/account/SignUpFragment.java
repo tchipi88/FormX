@@ -72,7 +72,6 @@ public class SignUpFragment extends NetworkFragment {
 
 	private FirebaseAuth mAuth;
 
-	String specialiteSelected;
 
 	UserViewModel userViewModel;
 	SignInViewModel signInViewModel;

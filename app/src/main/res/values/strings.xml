@@ -118,4 +118,5 @@
     <string name="bf_chosen_date">"Chosen Date - %s"</string>
     <string name="bf_chosen_time">"Chosen Time - %s"</string>
     <string name="snack_bar_undo">UNDO</string>
+    <string name="or_sign_in_with">Or Sign In with</string>
 </resources>
