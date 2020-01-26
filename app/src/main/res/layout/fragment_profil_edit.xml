@@ -15,35 +15,9 @@
             android:padding="8dp">
 
 
-            <TextView
-                style="@style/TextCardView"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/gender" />
 
 
-            <RadioGroup
-                android:id="@+id/gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/gender_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_gender_male"
-                    android:text="@string/gender_male"
-                    android:textAppearance="@style/TextCardView" />
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/gender_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_gender_female"
-                    android:text="@string/gender_female"
-                    android:textAppearance="@style/TextCardView" />
-            </RadioGroup>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -97,22 +71,6 @@
                     android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/TextInputLayout"
-                android:id="@+id/birthplaceLayout"
-                android:hint="@string/birthplace">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/birthplace"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
-                    android:drawablePadding="8dp"
-
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapWords"
-                    android:text="" />
-            </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout

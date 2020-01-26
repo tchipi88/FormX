@@ -45,23 +45,14 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 	EditText birthday;
 	@BindView(R.id.birthdayLayout)
 	TextInputLayout birthdayLayout;
-	@BindView(R.id.birthplace)
-	EditText birthplace;
-	@BindView(R.id.birthplaceLayout)
-	TextInputLayout birthplaceLayout;
-	@BindView(R.id.phone)
+
+    @BindView(R.id.phone)
 	EditText tel;
 	@BindView(R.id.phoneLayout)
 	TextInputLayout phoneLayout;
 
-	@BindView(R.id.gender)
-	RadioGroup gender;
-	@BindView(R.id.gender_female)
-	RadioButton gender_female;
-	@BindView(R.id.gender_male)
-	RadioButton gender_male;
 
-	@Override
+    @Override
 	protected Class<UserViewModel> getViewModel() {
 		return UserViewModel.class;
 	}
@@ -78,17 +69,11 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
         viewModel.getObservableUser().observe(getViewLifecycleOwner(), User -> {
 			name.setText(User.name);
 			surname.setText(User.firstName);
-			birthplace.setText(User.birthPlace);
 			birthday.setText(User.birthDay);
 			tel.setText(User.telephone);
 
-            if (Gender.F.equals(User.gender)) {
-                gender.check(R.id.gender_female);
-            }
-            if (Gender.M.equals(User.gender)) {
-                gender.check(R.id.gender_male);
-            }
-		});
+
+        });
 		return rootView;
 	}
 
@@ -102,16 +87,9 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 
 		User.name = (name.getText().toString());
 		User.firstName = (surname.getText().toString());
-		User.birthPlace = (birthplace.getText().toString());
 		User.birthDay = (birthday.getText().toString());
 		User.telephone = (tel.getText().toString());
 
-		if (gender.getCheckedRadioButtonId() == R.id.gender_female) {
-			User.gender = Gender.F;
-		}
-		if (gender.getCheckedRadioButtonId() == R.id.gender_male) {
-			User.gender = (Gender.M);
-		}
 
 		viewModel.setUser(User);
 
@@ -122,7 +100,6 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 		Map<String, Object> UserNewValues = new HashMap<>();
 		UserNewValues.put("name", User.name);
 		UserNewValues.put("firstName", User.firstName);
-		UserNewValues.put("birthPlace", User.birthPlace);
 		UserNewValues.put("birthDay", User.birthDay);
 		UserNewValues.put("telephone", User.telephone);
 
@@ -137,14 +114,10 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 		boolean valid = true;
 		nameLayout.setError(null);
 		birthdayLayout.setError(null);
-		birthplaceLayout.setError(null);
 		phoneLayout.setError(null);
 
-		if (gender.getCheckedRadioButtonId() == -1) {
-			gender_female.setError("Please setUser Gender");
-			valid = false;
-		}
-		if (name.getText().toString().isEmpty()) {
+
+        if (name.getText().toString().isEmpty()) {
 			nameLayout.setError(getResources().getText(R.string.error_field_required));
 			valid = false;
 		}
@@ -177,10 +150,6 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 			}
 		}
 
-		if (birthplace.getText().toString().isEmpty()) {
-			birthplaceLayout.setError(getResources().getText(R.string.error_field_required));
-			valid = false;
-		}
 
 		return valid;
 	}

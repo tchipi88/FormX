@@ -8,10 +8,14 @@ import android.widget.TextView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.LoggedFragment;
+import com.appli.nyx.formx.utils.FileCompressor;
+import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.appli.nyx.formx.utils.ShareUtils;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.StorageReference;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
@@ -35,6 +39,8 @@ public class SettingsFragment extends LoggedFragment {
 
 	@BindView(R.id.menu_licences)
 	TextView menu_licences;
+
+	StorageReference storageRef;
 
 	@Override
 	protected int getLayoutRes() {
@@ -64,7 +70,15 @@ public class SettingsFragment extends LoggedFragment {
 			if (firebaseUser.getPhotoUrl() != null) {
 				((AppCompatImageView) rootView.findViewById(R.id.profil_img)).setImageURI(firebaseUser.getPhotoUrl());
 			}
+
+			ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), ((AppCompatImageView) rootView.findViewById(R.id.profil_img)));
 		}
 		return rootView;
+	}
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		storageRef = firebaseStorage.getReference();
 	}
 }

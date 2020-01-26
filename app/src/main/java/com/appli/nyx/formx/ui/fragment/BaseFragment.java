@@ -11,6 +11,7 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.preference.PrefsManager;
 import com.appli.nyx.formx.preference.PrefsManager_;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public abstract class BaseFragment extends Fragment {
 
 	protected FirebaseFirestore mFirestore;
+	protected FirebaseStorage firebaseStorage;
 	protected ProgressBar progressBar;
 
 	protected PrefsManager prefsManager;
@@ -39,6 +41,7 @@ public abstract class BaseFragment extends Fragment {
 		// Enable Firestore logging
 		FirebaseFirestore.setLoggingEnabled(true);
 		mFirestore = FirebaseFirestore.getInstance();
+		firebaseStorage = FirebaseStorage.getInstance();
 	}
 
 	@Nullable
