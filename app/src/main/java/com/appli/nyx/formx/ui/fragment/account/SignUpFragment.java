@@ -135,12 +135,16 @@ public class SignUpFragment extends NetworkFragment {
 				user1.name = name.getText().toString();
 				user1.firstName = surname.getText().toString();
 				user1.email = email.getText().toString();
+				user1.telephone = tel.getText().toString();
 
 				mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid()).set(user1).addOnSuccessListener(aVoid -> {
 					prefsManager.clearSessionPrefs();
 					signInViewModel.authenticated();
 					prefsManager.setCurrentUserEmail(email.getText().toString());
 					prefsManager.setCurrentUserName(name.getText().toString());
+
+					UserViewModel userViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
+					userViewModel.setUser(user1);
 
 					Navigation.findNavController(view).navigate(R.id.action_global_mainFragment);
 				}).addOnFailureListener(e -> Log.w(TAG, "Error adding Patient", e));

@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.preference.PrefsManager;
 import com.appli.nyx.formx.preference.PrefsManager_;
 import com.appli.nyx.formx.ui.viewmodel.NetworkErrorViewModel;
+import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.utils.NetworkUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,13 +31,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.appli.nyx.formx.utils.FirestoreConstant.USER_PATH;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -181,6 +185,18 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         });
 
         mFirestore = FirebaseFirestore.getInstance();
+
+        UserViewModel userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
+        if (userViewModel.getObservableUser().getValue() == null) {
+            if (SessionUtils.isUserSigned()) {
+                mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid()).get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        userViewModel.setUser(user);
+                    }
+                });
+            }
+        }
 
     }
 

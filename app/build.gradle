@@ -104,6 +104,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation  'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:6.2.0'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:6.2.0'
+
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
     // Dagger
@@ -128,17 +134,15 @@ dependencies {
 
     implementation "com.leodroidcoder:generic-adapter:1.0.1"
 
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     // Glide image library
     implementation('com.github.bumptech.glide:glide:4.11.0') {
         transitive = true
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
-    // FirebaseUI for Cloud Storage
-    implementation 'com.firebaseui:firebase-ui-storage:6.2.0'
 
-    // FirebaseUI for Cloud Firestore
-    implementation 'com.firebaseui:firebase-ui-firestore:6.2.0'
 }
 
 

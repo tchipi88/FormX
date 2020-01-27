@@ -9,9 +9,6 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-
 import com.appli.nyx.formx.di.module.GlideApp;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,6 +20,9 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 public class ImageUtils {
 
@@ -194,9 +194,8 @@ public class ImageUtils {
         }
     }
 
-
-    static File compressImage(File imageFile, int reqWidth, int reqHeight,
-                              Bitmap.CompressFormat compressFormat, int quality, String destinationPath)
+	public static File compressImage(File imageFile, int reqWidth, int reqHeight,
+									 Bitmap.CompressFormat compressFormat, int quality, String destinationPath)
             throws IOException {
         FileOutputStream fileOutputStream = null;
         File file = new File(destinationPath).getParentFile();
@@ -217,7 +216,7 @@ public class ImageUtils {
         return new File(destinationPath);
     }
 
-    static Bitmap decodeSampledBitmapFromFile(File imageFile, int reqWidth, int reqHeight)
+	public static Bitmap decodeSampledBitmapFromFile(File imageFile, int reqWidth, int reqHeight)
             throws IOException {
         // First decode with inJustDecodeBounds=true to check dimensions
         BitmapFactory.Options options = new BitmapFactory.Options();

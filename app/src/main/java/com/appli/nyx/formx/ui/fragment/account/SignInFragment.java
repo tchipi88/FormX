@@ -17,6 +17,7 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.fragment.NetworkFragment;
 import com.appli.nyx.formx.ui.viewmodel.SignInViewModel;
+import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -39,7 +40,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
@@ -222,6 +222,16 @@ public class SignInFragment extends NetworkFragment {
 		signInViewModel.authenticated();
 		prefsManager.setCurrentUserEmail(firebaseUser.getEmail());
 		prefsManager.setCurrentUserName(firebaseUser.getDisplayName());
+
+		UserViewModel userViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
+
+		mFirestore.collection(USER_PATH).document(firebaseUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+			if (documentSnapshot.exists()) {
+				User user = documentSnapshot.toObject(User.class);
+				userViewModel.setUser(user);
+				prefsManager.setCurrentUserName(user.name);
+			}
+		});
 	}
 
 	@OnClick(R.id.link_forgetpassword)
@@ -273,7 +283,7 @@ public class SignInFragment extends NetworkFragment {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");
-
+						setCurrentUser(task.getResult().getUser());
                         boolean newuser = task.getResult().getAdditionalUserInfo().isNewUser();
                         if (newuser) {
 
@@ -282,14 +292,7 @@ public class SignInFragment extends NetworkFragment {
                             user1.firstName = acct.getGivenName();
                             user1.email = acct.getEmail();
 
-                            mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid()).set(user1).addOnSuccessListener(aVoid -> {
-                                prefsManager.clearSessionPrefs();
-                                signInViewModel.authenticated();
-                                prefsManager.setCurrentUserEmail(user1.email);
-                                prefsManager.setCurrentUserName(user1.name);
-
-                            }).addOnFailureListener(e -> Log.w(TAG, "Error adding User", e));
-
+							mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid()).set(user1).addOnFailureListener(e -> Log.w(TAG, "Error adding User", e));
                         }
 
                     } else {
