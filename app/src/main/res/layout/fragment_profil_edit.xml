@@ -91,6 +91,24 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:id="@+id/townLayout"
+                android:hint="@string/Town">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/town"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_place_black_24dp"
+                    android:drawablePadding="8dp"
+
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:text="" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save"
                 style="@style/ButttonStyle"

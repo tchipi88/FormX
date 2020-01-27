@@ -6,12 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
-import com.appli.nyx.formx.model.firebase.enumeration.Gender;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.utils.DateUtils;
@@ -51,6 +48,10 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 	@BindView(R.id.phoneLayout)
 	TextInputLayout phoneLayout;
 
+	@BindView(R.id.town)
+	EditText town;
+
+
 
     @Override
 	protected Class<UserViewModel> getViewModel() {
@@ -66,11 +67,12 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-        viewModel.getObservableUser().observe(getViewLifecycleOwner(), User -> {
-			name.setText(User.name);
-			surname.setText(User.firstName);
-			birthday.setText(User.birthDay);
-			tel.setText(User.telephone);
+		viewModel.getObservableUser().observe(getViewLifecycleOwner(), user -> {
+			name.setText(user.name);
+			surname.setText(user.firstName);
+			birthday.setText(user.birthDay);
+			tel.setText(user.telephone);
+			town.setText(user.town);
 
 
         });
@@ -83,25 +85,26 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 			return;
 		}
 
-		User User = viewModel.getObservableUser().getValue();
+		User user = viewModel.getObservableUser().getValue();
 
-		User.name = (name.getText().toString());
-		User.firstName = (surname.getText().toString());
-		User.birthDay = (birthday.getText().toString());
-		User.telephone = (tel.getText().toString());
+		user.name = (name.getText().toString());
+		user.firstName = (surname.getText().toString());
+		user.birthDay = (birthday.getText().toString());
+		user.telephone = (tel.getText().toString());
+		user.town = (town.getText().toString());
 
-
-		viewModel.setUser(User);
+		viewModel.setUser(user);
 
 		showLoading(true);
 
 		DocumentReference UserRef = mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid());
 
 		Map<String, Object> UserNewValues = new HashMap<>();
-		UserNewValues.put("name", User.name);
-		UserNewValues.put("firstName", User.firstName);
-		UserNewValues.put("birthDay", User.birthDay);
-		UserNewValues.put("telephone", User.telephone);
+		UserNewValues.put("name", user.name);
+		UserNewValues.put("firstName", user.firstName);
+		UserNewValues.put("birthDay", user.birthDay);
+		UserNewValues.put("telephone", user.telephone);
+		UserNewValues.put("town", user.town);
 
 		UserRef.update(UserNewValues).addOnSuccessListener(aVoid -> {
 			showLoading(false);

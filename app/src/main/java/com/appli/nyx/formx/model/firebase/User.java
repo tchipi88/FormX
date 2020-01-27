@@ -1,7 +1,5 @@
 package com.appli.nyx.formx.model.firebase;
 
-import com.appli.nyx.formx.model.firebase.enumeration.Gender;
-
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -14,10 +12,9 @@ public class User implements Serializable {
 
 	public String telephone;
 
-	public Gender gender;
 
 	public String birthDay;
 
-	public String birthPlace;
+	public String town;
 
 }

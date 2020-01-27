@@ -159,6 +159,37 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageTown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18dp"
+                        android:src="@drawable/ic_place_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/titleTown"
+                        style="@style/TextCardView"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageTown"
+                        android:textStyle="bold"
+                        tools:text="10/10/1988" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/titleTown"
+                        android:layout_toRightOf="@+id/imageTown"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Town"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                </RelativeLayout>
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
