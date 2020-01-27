@@ -3,11 +3,13 @@ package com.appli.nyx.formx.ui.fragment.account;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,6 +39,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.FileProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -64,6 +68,10 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
     AppCompatImageView profil_photo;
     FileCompressor mCompressor;
 
+    @BindDrawable(R.drawable.ic_account_circle_white_128dp)
+    Drawable ic_account_circle_white_128dp;
+
+
 
     StorageReference storageRef;
 
@@ -88,12 +96,25 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
             user_profile_name.setText(user.name);
             user_profile_email.setText(user.email);
-            user_profile_phone.setText(user.telephone);
 
-            user_profile_birthday.setText(user.birthDay);
-            user_profile_town.setText(user.town);
+            if (TextUtils.isEmpty(user.telephone)) {
+                rootView.findViewById(R.id.phoneLayout).setVisibility(View.GONE);
+            } else {
+                user_profile_phone.setText(user.telephone);
+            }
+            if (TextUtils.isEmpty(user.birthDay)) {
+                rootView.findViewById(R.id.birthdayLayout).setVisibility(View.GONE);
+            } else {
+                user_profile_birthday.setText(user.birthDay);
+            }
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), profil_photo);
+            if (TextUtils.isEmpty(user.town)) {
+                rootView.findViewById(R.id.townLayout).setVisibility(View.GONE);
+            } else {
+                user_profile_town.setText(user.town);
+            }
+
+            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), profil_photo, ic_account_circle_white_128dp);
 
         });
 

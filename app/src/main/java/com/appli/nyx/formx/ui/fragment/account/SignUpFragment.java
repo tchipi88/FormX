@@ -147,7 +147,7 @@ public class SignUpFragment extends NetworkFragment {
 					userViewModel.setUser(user1);
 
 					Navigation.findNavController(view).navigate(R.id.action_global_mainFragment);
-				}).addOnFailureListener(e -> Log.w(TAG, "Error adding Patient", e));
+				}).addOnFailureListener(e -> Log.w(TAG, "Error adding User", e));
 
 			} else {
 				// If sign in fails, display a message to the user.

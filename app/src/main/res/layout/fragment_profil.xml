@@ -97,6 +97,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/phoneLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp">
@@ -129,6 +130,7 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/birthdayLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp">
@@ -160,6 +162,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/townLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp">

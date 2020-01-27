@@ -1,5 +1,6 @@
 package com.appli.nyx.formx.ui.fragment.settings;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.navigation.Navigation;
+
+import butterknife.BindDrawable;
 import butterknife.BindView;
 
 public class SettingsFragment extends LoggedFragment {
@@ -41,6 +44,9 @@ public class SettingsFragment extends LoggedFragment {
 	TextView menu_licences;
 
 	StorageReference storageRef;
+
+	@BindDrawable(R.drawable.ic_account_circle_black_24dp)
+	Drawable ic_account_circle_black_24dp;
 
 	@Override
 	protected int getLayoutRes() {
@@ -71,7 +77,7 @@ public class SettingsFragment extends LoggedFragment {
 				((AppCompatImageView) rootView.findViewById(R.id.profil_img)).setImageURI(firebaseUser.getPhotoUrl());
 			}
 
-			ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), ((AppCompatImageView) rootView.findViewById(R.id.profil_img)));
+			ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), ((AppCompatImageView) rootView.findViewById(R.id.profil_img)), ic_account_circle_black_24dp);
 		}
 		return rootView;
 	}

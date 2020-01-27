@@ -31,10 +31,10 @@ public class ImageUtils {
 
     }
 
-    public static void displayRoundImageFromStorageReference(final Context context, final StorageReference storageReference, final ImageView imageView) {
+    public static void displayRoundImageFromStorageReference(final Context context, final StorageReference storageReference, final ImageView imageView, Drawable errorDrawable) {
         RequestOptions myOptions = new RequestOptions().centerCrop().dontAnimate();
 
-        GlideApp.with(context).asBitmap().apply(myOptions).load(storageReference).into(new BitmapImageViewTarget(imageView) {
+        GlideApp.with(context).asBitmap().apply(myOptions).load(storageReference).error(errorDrawable).into(new BitmapImageViewTarget(imageView) {
 
             @Override
             protected void setResource(Bitmap resource) {
