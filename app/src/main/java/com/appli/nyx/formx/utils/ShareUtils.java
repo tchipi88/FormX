@@ -6,8 +6,7 @@ import android.net.Uri;
 
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
-import com.mikepenz.aboutlibraries.Libs;
-import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 
 public class ShareUtils {
 
@@ -35,10 +34,6 @@ public class ShareUtils {
 	}
 
 	public static void openLicencesPage(Context context) {
-		LibsBuilder libsBuilder = new LibsBuilder()
-				//Pass the fields of your application to the lib so it can find all external lib information
-				.withFields(R.string.class.getFields()).withActivityStyle(Libs.ActivityStyle.LIGHT);
-		libsBuilder.setActivityTitle("Open Sources Licences");
-		libsBuilder.start(context);
+		context.startActivity(new Intent(context, OssLicensesMenuActivity.class));
 	}
 }
