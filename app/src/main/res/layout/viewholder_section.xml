@@ -14,8 +14,6 @@
         <TextView
             android:id="@+id/libelle"
             style="@style/TextCardViewBold"
-            android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-            android:drawablePadding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
