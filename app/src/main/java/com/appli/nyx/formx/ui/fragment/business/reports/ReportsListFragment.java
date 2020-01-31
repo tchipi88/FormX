@@ -33,6 +33,7 @@ public class ReportsListFragment extends ViewModelFragment<ReportViewModel> {
 
 	FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
+    private View emptyView;
 
     @Override
     protected Class<ReportViewModel> getViewModel() {
@@ -52,6 +53,7 @@ public class ReportsListFragment extends ViewModelFragment<ReportViewModel> {
 
 
         recyclerView = view.findViewById(R.id.reports);
+        emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -82,6 +84,17 @@ public class ReportsListFragment extends ViewModelFragment<ReportViewModel> {
 				});
 
 			}
+
+            @Override
+            public void onDataChanged() {
+                if (getItemCount() == 0) {
+                    emptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
 		};
         recyclerView.setAdapter(adapter);
 

@@ -6,12 +6,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Form implements Serializable {
+public class Form extends MyDocument {
 
 	private String libelle;
 	private String description;
-	@ServerTimestamp
-	private Date mTimestamp;
+
 
 	private List<Section> sections;
 
@@ -38,13 +37,7 @@ public class Form implements Serializable {
 		this.description = description;
 	}
 
-	public Date getmTimestamp() {
-		return mTimestamp;
-	}
 
-	public void setmTimestamp(Date mTimestamp) {
-		this.mTimestamp = mTimestamp;
-	}
 
 	public List<Section> getSections() {
 		return sections;

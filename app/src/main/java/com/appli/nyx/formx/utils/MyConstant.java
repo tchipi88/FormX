@@ -6,6 +6,7 @@ public class MyConstant {
 	public static String ENQUETE_PATH = "enquetes";
 	public static String CLUSTER_PATH = "clusters";
 	public static String FORM_PATH = "forms";
+	public static String SECTION_PATH = "sections";
 	public static String REPORTS_PATH = "reports";
 	public static String DATA = "data";
 

@@ -2,7 +2,7 @@ package com.appli.nyx.formx.model.firebase;
 
 import java.io.Serializable;
 
-public class Cluster implements Serializable {
+public class Cluster extends MyDocument {
 
     public String libelle;
     public String description;

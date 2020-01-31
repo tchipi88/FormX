@@ -33,6 +33,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
     FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
+    private View emptyView;
 
     @Override
     protected Class<FormViewModel> getViewModel() {
@@ -47,13 +48,18 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
 
         recyclerView = view.findViewById(R.id.forms);
+        emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
 
-        FirestoreRecyclerOptions<Form> options = new FirestoreRecyclerOptions.Builder<Form>().setQuery(query, Form.class).build();
+        FirestoreRecyclerOptions<Form> options = new FirestoreRecyclerOptions.Builder<Form>().setQuery(query, snapshot -> {
+            Form form = snapshot.toObject(Form.class);
+            form.setId(snapshot.getId());
+            return form;
+        }).build();
         adapter = new FirestoreRecyclerAdapter<Form, FormViewHolder>(options) {
 
             @NonNull
@@ -87,6 +93,17 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                     viewModel.setForm(holder.mItem);
                     NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_global_formEditDialog);
                 });
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (getItemCount() == 0) {
+                    emptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         };
         recyclerView.setAdapter(adapter);

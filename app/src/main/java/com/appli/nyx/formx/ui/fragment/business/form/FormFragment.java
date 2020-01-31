@@ -11,18 +11,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
+import com.appli.nyx.formx.ui.viewholder.FormViewHolder;
+import com.appli.nyx.formx.ui.viewholder.SectionViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class FormFragment extends ViewModelFragment<FormViewModel> {
 
@@ -32,8 +44,9 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
     }
 
 
-    SimpleItemRecyclerViewAdapter adapter;
+    FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
+    private View emptyView;
 
 
     @Override
@@ -75,18 +88,76 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
 
         recyclerView = view.findViewById(R.id.sections);
+        emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SimpleItemRecyclerViewAdapter();
+
+        // Create the query and the FirestoreRecyclerOptions
+        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH)
+                .document(SessionUtils.getUserUid())
+                .collection(DATA)
+                .document(viewModel.getFormMutableLiveData().getValue().getId())
+                .collection("sections");
+
+        FirestoreRecyclerOptions<Section> options = new FirestoreRecyclerOptions.Builder<Section>().setQuery(query, snapshot -> {
+            Section section = snapshot.toObject(Section.class);
+            section.setId(snapshot.getId());
+            return section;
+        }).build();
+
+        adapter = new FirestoreRecyclerAdapter<Section, SectionViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public SectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_section, parent, false);
+                return new SectionViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull SectionViewHolder holder, int position, @NonNull Section model) {
+                holder.mItem = getItem(position);
+                holder.mLibelleView.setText(model.getLibelle());
+
+                holder.mView.setOnClickListener(v -> {
+                    viewModel.setSection(holder.mItem);
+                    NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionFragment);
+
+                });
+
+
+                holder.delete.setOnClickListener(v -> {
+
+                });
+
+                holder.duplicate.setOnClickListener(v -> {
+                    viewModel.setSection(holder.mItem);
+                });
+
+                holder.edit.setOnClickListener(v -> {
+                    viewModel.setSection(holder.mItem);
+                    NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionEditDialog);
+                });
+
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (getItemCount() == 0) {
+                    emptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        };
         recyclerView.setAdapter(adapter);
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-			NavHostFragment.findNavController(FormFragment.this).getCurrentDestination().setLabel(form.getLibelle());
+            NavHostFragment.findNavController(FormFragment.this).getCurrentDestination().setLabel(form.getLibelle());
         });
 
-        viewModel.loadSectionByForm().observe(getViewLifecycleOwner(), sections -> {
-            adapter.addAll(sections);
-        });
 
         view.findViewById(R.id.add_section).setOnClickListener(v -> {
             NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionAddDialog);
@@ -95,91 +166,17 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         return view;
     }
 
-    private class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.SectionViewHolder> {
-
-        Context context;
-        private List<Section> mValues;
-
-
-        public SimpleItemRecyclerViewAdapter() {
-            mValues = new ArrayList<>();
-        }
-
-        @Override
-        public SectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            context = parent.getContext();
-            View view = LayoutInflater.from(context)
-                    .inflate(R.layout.viewholder_section
-                            , parent, false);
-            return new SectionViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final SectionViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mLibelleView.setText(holder.mItem.libelle);
-            holder.mView.setOnClickListener(v -> {
-                viewModel.setSection(holder.mItem);
-                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionFragment);
-
-            });
-
-
-            holder.delete.setOnClickListener(v -> {
-
-            });
-
-            holder.duplicate.setOnClickListener(v -> {
-                viewModel.setSection(holder.mItem);
-                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_global_formViewFragment);
-            });
-
-            holder.edit.setOnClickListener(v -> {
-                viewModel.setSection(holder.mItem);
-                NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_global_formEditDialog);
-            });
-
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public void addAll(List<Section> sections) {
-            mValues.addAll(sections);
-            notifyDataSetChanged();
-
-        }
-
-
-        public class SectionViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mLibelleView;
-
-            public final AppCompatImageView delete;
-            public final AppCompatImageView duplicate;
-            public final AppCompatImageView edit;
-
-            public Section mItem;
-
-            public SectionViewHolder(View view) {
-                super(view);
-                mView = view;
-                mLibelleView = view.findViewById(R.id.libelle);
-
-                delete = view.findViewById(R.id.delete);
-                duplicate = view.findViewById(R.id.duplicate);
-                edit = view.findViewById(R.id.edit);
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mLibelleView.getText() + "'";
-            }
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
 
 }

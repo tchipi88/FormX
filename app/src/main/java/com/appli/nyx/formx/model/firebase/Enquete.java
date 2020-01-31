@@ -3,7 +3,7 @@ package com.appli.nyx.formx.model.firebase;
 import java.io.Serializable;
 import java.util.List;
 
-public class Enquete  implements Serializable {
+public class Enquete extends MyDocument {
 
 	private String libelle;
 	private String description;

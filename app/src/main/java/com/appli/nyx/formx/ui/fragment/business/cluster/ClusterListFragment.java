@@ -33,6 +33,7 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
 
 	FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
+    private View emptyView;
 
 
     @Override
@@ -53,6 +54,7 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
 
 
         recyclerView = view.findViewById(R.id.clusters);
+        emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -83,6 +85,18 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
 				});
 
 			}
+
+            @Override
+            public void onDataChanged() {
+                if (getItemCount() == 0) {
+                    emptyView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+
 		};
         recyclerView.setAdapter(adapter);
 

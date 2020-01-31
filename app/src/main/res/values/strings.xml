@@ -121,4 +121,8 @@
     <string name="or_sign_in_with">Or Sign In with</string>
     <string name="rationale_permissions_profil">This app needs access to your camera and your gallery.</string>
     <string name="Town">Town</string>
+    <string name="no_form">No Form</string>
+    <string name="no_cluster">No Cluster</string>
+    <string name="no_report">No Report</string>
+    <string name="no_section">No Section</string>
 </resources>

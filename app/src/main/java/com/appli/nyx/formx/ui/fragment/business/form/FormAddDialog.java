@@ -10,12 +10,20 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
 
@@ -53,8 +61,21 @@ public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
             return;
         }
         String libelle = libelle_tiet.getText().toString();
-        Form form=new Form();
-		form.setLibelle(libelle);
+        Form form = new Form();
+        form.setLibelle(libelle);
+        form.setDescription(description_tiet.getText().toString());
+
+        FirebaseFirestore.getInstance()
+                .collection(FORM_PATH)
+                .document(SessionUtils.getUserUid())
+                .collection(DATA)
+                .add(form).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                NavHostFragment.findNavController(FormAddDialog.this).navigateUp();
+            } else {
+                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+            }
+        });
 
     }
 
@@ -74,7 +95,6 @@ public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
         boolean valid = true;
 
         libelle_til.setError(null);
-        description_til.setError(null);
 
         if (libelle_tiet.getText().toString().isEmpty()) {
             libelle_til.setError(getResources().getText(R.string.error_field_required));

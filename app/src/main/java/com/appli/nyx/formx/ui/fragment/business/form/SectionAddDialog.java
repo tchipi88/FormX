@@ -8,16 +8,24 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
 public class SectionAddDialog extends BaseDialogFragment<FormViewModel> {
 
@@ -32,17 +40,18 @@ public class SectionAddDialog extends BaseDialogFragment<FormViewModel> {
     TextInputLayout description_til;
 
     @Override
-	protected Class<FormViewModel> getViewModel() {
-		return FormViewModel.class;
+    protected Class<FormViewModel> getViewModel() {
+        return FormViewModel.class;
     }
 
-	@Override
-	protected int getLayoutRes() {
-		return R.layout.dialog_section_add;
-	}
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.dialog_section_add;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         return view;
     }
@@ -52,9 +61,24 @@ public class SectionAddDialog extends BaseDialogFragment<FormViewModel> {
         if (!validate()) {
             return;
         }
-        //TODO
-        Section section=new Section();
-        section.libelle=libelle_tiet.getText().toString();
+        Section section = new Section();
+        section.libelle = libelle_tiet.getText().toString();
+        section.description = description_tiet.getText().toString();
+
+        FirebaseFirestore.getInstance()
+                .collection(FORM_PATH)
+                .document(SessionUtils.getUserUid())
+                .collection(DATA)
+                .document(viewModel.getFormMutableLiveData().getValue().getId())
+                .collection(SECTION_PATH)
+                .add(section).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                NavHostFragment.findNavController(SectionAddDialog.this).navigateUp();
+            } else {
+                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+            }
+        });
+
 
     }
 
@@ -67,7 +91,7 @@ public class SectionAddDialog extends BaseDialogFragment<FormViewModel> {
 
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        getDialog().setTitle(getResources().getString(R.string.add_form));
+        getDialog().setTitle(getResources().getString(R.string.add_section));
     }
 
     public boolean validate() {

@@ -178,6 +178,9 @@
         <action
             android:id="@+id/action_formFragment_to_sectionAddDialog"
             app:destination="@id/sectionAddDialog" />
+        <action
+            android:id="@+id/action_formFragment_to_sectionEditDialog"
+            app:destination="@id/sectionEditDialog" />
     </fragment>
     <fragment
         android:id="@+id/sectionFragment"
