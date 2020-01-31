@@ -5,12 +5,10 @@ import java.util.List;
 
 public class Enquete  implements Serializable {
 
-    public String libelle;
-    public String description;
+	private String libelle;
+	private String description;
 
-    public String userId;
-
-    public List<Form> forms;
+	private List<Form> forms;
 
     public Enquete(String libelle) {
         this.libelle = libelle;
@@ -18,4 +16,28 @@ public class Enquete  implements Serializable {
 
     public Enquete() {
     }
+
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Form> getForms() {
+		return forms;
+	}
+
+	public void setForms(List<Form> forms) {
+		this.forms = forms;
+	}
 }

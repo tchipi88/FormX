@@ -6,12 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.ui.adapter.ClusterAdapter;
+import com.appli.nyx.formx.model.firebase.Cluster;
 import com.appli.nyx.formx.ui.adapter.MySwipeToDeleteCallback;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
+import com.appli.nyx.formx.ui.viewholder.ClusterViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
-import com.leodroidcoder.genericadapter.OnRecyclerItemClickListener;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -20,10 +26,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static android.widget.LinearLayout.VERTICAL;
+import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
 
-public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> implements OnRecyclerItemClickListener {
+public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
 
-    ClusterAdapter adapter;
+	FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
 
 
@@ -50,7 +58,32 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> imp
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
-        adapter = new ClusterAdapter(getContext(), this);
+		// Create the query and the FirestoreRecyclerOptions
+		Query query = FirebaseFirestore.getInstance().collection(CLUSTER_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+
+		FirestoreRecyclerOptions<Cluster> options = new FirestoreRecyclerOptions.Builder<Cluster>().setQuery(query, Cluster.class).build();
+
+		adapter = new FirestoreRecyclerAdapter<Cluster, ClusterViewHolder>(options) {
+
+			@NonNull
+			@Override
+			public ClusterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+				View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_cluster, parent, false);
+				return new ClusterViewHolder(view);
+			}
+
+			@Override
+			protected void onBindViewHolder(@NonNull ClusterViewHolder holder, int position, @NonNull Cluster model) {
+				holder.mItem = getItem(position);
+				holder.mLibelleView.setText(model.getLibelle());
+
+				holder.mView.setOnClickListener(v -> {
+					viewModel.setCluster(holder.mItem);
+					NavHostFragment.findNavController(ClusterListFragment.this).navigate(R.id.action_clusterListFragment_to_clusterFragment);
+				});
+
+			}
+		};
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper itemTouchHelper = new
@@ -58,9 +91,6 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> imp
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
-        viewModel.loadClusterByUser().observe(getViewLifecycleOwner(), clusters -> {
-            adapter.addAll(clusters);
-        });
 
         view.findViewById(R.id.add_cluster).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_clusterListFragment_to_clusterFragment);
@@ -70,16 +100,22 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> imp
     }
 
     @Override
-    public void onItemClick(int position) {
-        viewModel.setCluster(adapter.getItem(position));
-        NavHostFragment.findNavController(ClusterListFragment.this).navigate(R.id.action_clusterListFragment_to_clusterFragment);
+	public void onStart() {
+		super.onStart();
+		adapter.startListening();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		adapter.stopListening();
     }
 
     private class SwipeToDeleteCallback extends MySwipeToDeleteCallback {
 
-        ClusterAdapter adapter;
+		FirestoreRecyclerAdapter adapter;
 
-        public SwipeToDeleteCallback(ClusterAdapter adapter) {
+		public SwipeToDeleteCallback(FirestoreRecyclerAdapter adapter) {
             super(ic_delete);
             this.adapter = adapter;
         }
@@ -87,11 +123,9 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> imp
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            adapter.remove(adapter.getItem(position));
+			//TODO delete object to firebase
         }
 
     }
-
-
 
 }

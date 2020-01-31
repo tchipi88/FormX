@@ -1,21 +1,18 @@
 package com.appli.nyx.formx.ui.fragment.business.form;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import androidx.annotation.Nullable;
-
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -46,8 +43,8 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
 		viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-			libelle_tiet.setText(form.libelle);
-			description_tiet.setText(form.description);
+			libelle_tiet.setText(form.getLibelle());
+			description_tiet.setText(form.getDescription());
 		});
 
 

@@ -6,13 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.navigation.fragment.NavHostFragment;
-
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fields.FieldsGenerator;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 
+import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 
 public class FormViewFragment extends ViewModelFragment<FormViewModel> {
@@ -36,7 +35,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-            NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.libelle);
+			NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.getLibelle());
         });
 
         viewModel.loadQuestionBySection().observe(getViewLifecycleOwner(), questions -> {

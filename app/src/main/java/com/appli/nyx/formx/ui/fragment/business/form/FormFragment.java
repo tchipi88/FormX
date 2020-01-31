@@ -81,7 +81,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setAdapter(adapter);
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-            NavHostFragment.findNavController(FormFragment.this).getCurrentDestination().setLabel(form.libelle);
+			NavHostFragment.findNavController(FormFragment.this).getCurrentDestination().setLabel(form.getLibelle());
         });
 
         viewModel.loadSectionByForm().observe(getViewLifecycleOwner(), sections -> {

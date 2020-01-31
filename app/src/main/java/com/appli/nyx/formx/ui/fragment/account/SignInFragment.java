@@ -44,7 +44,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.appli.nyx.formx.utils.FirestoreConstant.USER_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.USER_PATH;
 
 public class SignInFragment extends NetworkFragment {
 

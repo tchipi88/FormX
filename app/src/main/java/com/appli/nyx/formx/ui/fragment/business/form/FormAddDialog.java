@@ -1,14 +1,10 @@
 package com.appli.nyx.formx.ui.fragment.business.form;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
-
-import androidx.annotation.Nullable;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
@@ -17,6 +13,7 @@ import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -57,7 +54,7 @@ public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
         }
         String libelle = libelle_tiet.getText().toString();
         Form form=new Form();
-        form.libelle=libelle;
+		form.setLibelle(libelle);
 
     }
 

@@ -6,12 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.ui.adapter.EnqueteAdapter;
+import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.adapter.MySwipeToDeleteCallback;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
+import com.appli.nyx.formx.ui.viewholder.EnqueteViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
-import com.leodroidcoder.genericadapter.OnRecyclerItemClickListener;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -20,8 +26,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static android.widget.LinearLayout.VERTICAL;
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
-public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> implements OnRecyclerItemClickListener {
+public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
 	@Override
 	protected Class<EnqueteViewModel> getViewModel() {
@@ -33,7 +41,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> imp
 		return R.layout.fragment_enquete_list;
 	}
 
-	EnqueteAdapter adapter;
+	FirestoreRecyclerAdapter adapter;
 	private RecyclerView recyclerView;
 
 	@Override
@@ -49,17 +57,40 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> imp
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
-		adapter = new EnqueteAdapter(getContext(), this);
+		// Create the query and the FirestoreRecyclerOptions
+		Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+
+		FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, Enquete.class).build();
+
+		adapter = new FirestoreRecyclerAdapter<Enquete, EnqueteViewHolder>(options) {
+
+			@NonNull
+			@Override
+			public EnqueteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+				View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_enquete, parent, false);
+				return new EnqueteViewHolder(view);
+			}
+
+			@Override
+			protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete model) {
+				holder.mItem = getItem(position);
+				holder.mLibelleView.setText(model.getLibelle());
+
+				holder.mView.setOnClickListener(v -> {
+					viewModel.setEnquete(holder.mItem);
+					NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
+				});
+
+			}
+		};
+
+
 		recyclerView.setAdapter(adapter);
 
 		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
 		itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
-
-		viewModel.loadEnqueteByUser().observe(getViewLifecycleOwner(), enquetes -> {
-			adapter.addAll(enquetes);
-		});
 
 		view.findViewById(R.id.add_enquete).setOnClickListener(v -> {
 			NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
@@ -68,17 +99,25 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> imp
 		return view;
 	}
 
+
 	@Override
-	public void onItemClick(int position) {
-		viewModel.setEnquete(adapter.getItem(position));
-		NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
+	public void onStart() {
+		super.onStart();
+		adapter.startListening();
 	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		adapter.stopListening();
+	}
+
 
 	private class SwipeToDeleteCallback extends MySwipeToDeleteCallback {
 
-		EnqueteAdapter adapter;
+		FirestoreRecyclerAdapter adapter;
 
-		public SwipeToDeleteCallback(EnqueteAdapter adapter) {
+		public SwipeToDeleteCallback(FirestoreRecyclerAdapter adapter) {
 			super(ic_delete);
 			this.adapter = adapter;
 		}
@@ -86,7 +125,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> imp
 		@Override
 		public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 			int position = viewHolder.getAdapterPosition();
-			adapter.remove(adapter.getItem(position));
+			//TODO delete object to firebase
 		}
 
 

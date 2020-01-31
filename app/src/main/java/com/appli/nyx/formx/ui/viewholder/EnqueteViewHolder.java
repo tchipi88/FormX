@@ -5,25 +5,24 @@ import android.widget.TextView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
-import com.leodroidcoder.genericadapter.BaseViewHolder;
-import com.leodroidcoder.genericadapter.OnRecyclerItemClickListener;
 
-public class EnqueteViewHolder extends BaseViewHolder<Enquete, OnRecyclerItemClickListener> {
+import androidx.recyclerview.widget.RecyclerView;
 
-	private TextView mLibelleView;
+public class EnqueteViewHolder extends RecyclerView.ViewHolder {
 
-	public EnqueteViewHolder(View itemView, OnRecyclerItemClickListener listener) {
-		super(itemView, listener);
-		// initialize view and set click listener
+	public final View mView;
+	public TextView mLibelleView;
+
+	public Enquete mItem;
+
+	public EnqueteViewHolder(View itemView) {
+		super(itemView);
 		mLibelleView = itemView.findViewById(R.id.libelle);
-		if (listener != null) {
-			itemView.setOnClickListener(v -> listener.onItemClick(getAdapterPosition()));
-		}
+		mView = itemView;
 	}
 
 	@Override
-	public void onBind(Enquete item) {
-		// bind data to the views
-		mLibelleView.setText(item.libelle);
+	public String toString() {
+		return super.toString() + " '" + mLibelleView.getText() + "'";
 	}
 }

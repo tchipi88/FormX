@@ -26,7 +26,7 @@ import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.FirestoreConstant.USER_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.USER_PATH;
 
 public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 

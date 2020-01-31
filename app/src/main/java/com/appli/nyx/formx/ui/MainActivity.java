@@ -38,7 +38,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.appli.nyx.formx.utils.FirestoreConstant.USER_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.USER_PATH;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector, BottomNavigationView.OnNavigationItemSelectedListener {
 
