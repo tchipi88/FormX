@@ -1,24 +1,16 @@
 package com.appli.nyx.formx.ui.fragment.business.form.question;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
-import com.tiper.MaterialSpinner;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import butterknife.BindView;
 
@@ -46,6 +38,7 @@ public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
         getDialog().setTitle(R.string.question_type);
 
        question_type.setOnCheckedChangeListener((group, checkedId) -> {
+           viewModel.setQuestionCreationMode(true);
 
            switch (checkedId) {
                case R.id.question_text:

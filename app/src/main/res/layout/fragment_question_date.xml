@@ -14,6 +14,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:textAppearance="@style/TextCardViewBold"
         android:id="@+id/mandatory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

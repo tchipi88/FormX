@@ -14,6 +14,10 @@ public class SpinnerQuestion extends AbstractQuestion {
         this.libelle=libelle;
     }
 
+    public SpinnerQuestion() {
+        super(QuestionType.SPINNER);
+    }
+
     public boolean isMandatory() {
         return mandatory;
     }

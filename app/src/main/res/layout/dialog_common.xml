@@ -7,6 +7,7 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/TextInputLayout"
         android:id="@+id/libelle_til"
+        android:paddingLeft="0dp"
         android:hint="@string/libelle">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -19,6 +20,7 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/TextInputLayout"
         android:id="@+id/description_til"
+        android:paddingLeft="0dp"
         android:hint="@string/description">
 
         <com.google.android.material.textfield.TextInputEditText

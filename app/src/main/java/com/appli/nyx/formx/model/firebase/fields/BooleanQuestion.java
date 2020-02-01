@@ -8,4 +8,8 @@ public class BooleanQuestion extends AbstractQuestion {
         super(QuestionType.BOOLEAN);
         this.libelle=libelle;
     }
+
+    public BooleanQuestion() {
+        super(QuestionType.BOOLEAN);
+    }
 }

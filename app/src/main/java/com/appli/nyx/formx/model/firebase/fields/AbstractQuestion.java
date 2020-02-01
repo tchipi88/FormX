@@ -4,11 +4,14 @@ import android.view.View;
 
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.validation.ValidationError;
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
 
 public class AbstractQuestion implements Serializable {
 
+    @DocumentId
     protected String id;
 
     protected final QuestionType questionType;
@@ -16,8 +19,10 @@ public class AbstractQuestion implements Serializable {
     protected String libelle;
     protected String description;
 
+    @Exclude
     private View fieldView;
 
+    @Exclude
     private ValidationError validationError;
 
     public AbstractQuestion(QuestionType questionType) {

@@ -13,7 +13,11 @@ public class NumberQuestion extends AbstractQuestion {
 
     public NumberQuestion(String libelle) {
         super(QuestionType.NUMBER);
-        this.libelle=libelle;
+        this.libelle = libelle;
+    }
+
+    public NumberQuestion() {
+        super(QuestionType.NUMBER);
     }
 
     public String getUnit() {
@@ -22,5 +26,29 @@ public class NumberQuestion extends AbstractQuestion {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public boolean isMandatory() {
+        return mandatory;
+    }
+
+    public void setMandatory(boolean mandatory) {
+        this.mandatory = mandatory;
     }
 }

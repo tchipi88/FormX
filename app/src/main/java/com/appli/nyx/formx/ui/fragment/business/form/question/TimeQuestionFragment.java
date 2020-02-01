@@ -5,9 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class TimeQuestionFragment extends CommonQuestionFragment {
@@ -17,12 +22,28 @@ public class TimeQuestionFragment extends CommonQuestionFragment {
 		return R.layout.fragment_question_time;
 	}
 
-	TimeQuestion timeQuestion;
+    TimeQuestion question;
+
+    @BindView(R.id.mandatory)
+    SwitchMaterial mandatory;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        viewModel.getQuestionCreationMode().observe(this, aBoolean -> {
+            if (Boolean.FALSE.equals(aBoolean))
+                viewModel.getQuestionMutableLiveData().observe(this, abstractQuestion -> {
+                    question = (TimeQuestion) abstractQuestion;
+                    libelle_tiet.setText(question.getLibelle());
+                    description_tiet.setText(question.getDescription());
+                    mandatory.setChecked(question.isMandatory());
+
+                    NavHostFragment.findNavController(TimeQuestionFragment.this).getCurrentDestination().setLabel(question.getLibelle());
+                });
+        });
 
 		return view;
 	}
@@ -33,12 +54,34 @@ public class TimeQuestionFragment extends CommonQuestionFragment {
 			return;
 		}
 
-	}
+        question = new TimeQuestion();
+        question.setLibelle(libelle_tiet.getText().toString());
+        question.setDescription(description_tiet.getText().toString());
+        question.setMandatory(mandatory.isChecked());
 
-	public boolean validate() {
-		boolean valid = super.validate();
+        if (Boolean.TRUE.equals(viewModel.getQuestionCreationMode().getValue())) {
+            fieldsRef.add(question).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    NavHostFragment.findNavController(TimeQuestionFragment.this).navigateUp();
+                } else {
+                    AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                }
+            });
 
-		return valid;
-	}
+        } else {
+            fieldsRef.document(viewModel.getQuestionMutableLiveData().getValue().getId())
+                    .set(question).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    NavHostFragment.findNavController(TimeQuestionFragment.this).navigateUp();
+                } else {
+                    AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                }
+            });
+
+        }
+
+    }
+
+
 
 }

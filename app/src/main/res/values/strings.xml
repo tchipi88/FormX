@@ -125,4 +125,6 @@
     <string name="no_cluster">No Cluster</string>
     <string name="no_report">No Report</string>
     <string name="no_section">No Section</string>
+    <string name="no_question">No Question</string>
+    <string name="home">Home</string>
 </resources>

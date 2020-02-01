@@ -7,6 +7,7 @@ public class MyConstant {
 	public static String CLUSTER_PATH = "clusters";
 	public static String FORM_PATH = "forms";
 	public static String SECTION_PATH = "sections";
+    public static String FIELDS_PATH = "fields";
 	public static String REPORTS_PATH = "reports";
 	public static String DATA = "data";
 

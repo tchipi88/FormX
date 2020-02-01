@@ -13,4 +13,11 @@ public class Option implements Serializable {
     public void setEditTextValue(String editTextValue) {
         this.editTextValue = editTextValue;
     }
+
+    public Option(String editTextValue) {
+        this.editTextValue = editTextValue;
+    }
+
+    public Option() {
+    }
 }

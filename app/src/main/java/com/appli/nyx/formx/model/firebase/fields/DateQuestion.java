@@ -10,4 +10,16 @@ public class DateQuestion extends AbstractQuestion {
         super(QuestionType.DATE_PICKER);
         this.libelle=libelle;
     }
+
+    public DateQuestion() {
+        super(QuestionType.DATE_PICKER);
+    }
+
+    public boolean isMandatory() {
+        return mandatory;
+    }
+
+    public void setMandatory(boolean mandatory) {
+        this.mandatory = mandatory;
+    }
 }

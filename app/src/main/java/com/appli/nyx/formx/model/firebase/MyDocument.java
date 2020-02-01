@@ -1,5 +1,6 @@
 package com.appli.nyx.formx.model.firebase;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
@@ -7,6 +8,7 @@ import java.util.Date;
 
 public class MyDocument implements Serializable {
 
+    @Exclude
     private String id;
 
     @ServerTimestamp

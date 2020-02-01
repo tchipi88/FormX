@@ -1,7 +1,6 @@
 package com.appli.nyx.formx.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Path;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +16,7 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.Option;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SpinnerOptionAdapter extends RecyclerView.Adapter<SpinnerOptionAdapter.MyViewHolder> {
 
@@ -53,6 +53,13 @@ public class SpinnerOptionAdapter extends RecyclerView.Adapter<SpinnerOptionAdap
         return options.size();
     }
 
+    public void addAll(List<String> values) {
+        for (String value : values) {
+            options.add(new Option(value));
+        }
+        notifyDataSetChanged();
+    }
+
     public void add() {
         options.add(new Option());
         notifyItemInserted(options.size() - 1);
@@ -64,6 +71,15 @@ public class SpinnerOptionAdapter extends RecyclerView.Adapter<SpinnerOptionAdap
             options.remove(position);
             notifyItemRemoved(position);
         }
+    }
+
+    public List<String> getOptionsValues() {
+        List<String> result = new ArrayList<>();
+        for (Option option : options) {
+            result.add(option.getEditTextValue());
+        }
+
+        return result;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

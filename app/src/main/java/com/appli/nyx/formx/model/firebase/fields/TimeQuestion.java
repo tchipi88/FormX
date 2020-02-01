@@ -10,4 +10,16 @@ public class TimeQuestion extends AbstractQuestion {
         super(QuestionType.TIME_PICKER);
         this.libelle=libelle;
     }
+
+    public TimeQuestion() {
+        super(QuestionType.TIME_PICKER);
+    }
+
+    public boolean isMandatory() {
+        return mandatory;
+    }
+
+    public void setMandatory(boolean mandatory) {
+        this.mandatory = mandatory;
+    }
 }

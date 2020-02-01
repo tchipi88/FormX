@@ -156,7 +156,7 @@
     <fragment
         android:id="@+id/clusterFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment"
-        android:label="ClusterFragment" />
+        android:label="@string/cluster" />
     <fragment
         android:id="@+id/formListFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormListFragment"
@@ -206,22 +206,22 @@
     <dialog
         android:id="@+id/sectionAddDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog"
-        android:label="SectionAddDialog" />
+        android:label="@string/add_section" />
     <dialog
         android:id="@+id/formEditDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog"
-        android:label="FormEditDialog" />
+        android:label="@string/edit_form" />
     <dialog
         android:id="@+id/sectionEditDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog"
-        android:label="SectionEditDialog" />
+        android:label="@string/edit_section" />
     <action
         android:id="@+id/action_global_formListFragment"
         app:destination="@id/formListFragment" />
     <fragment
         android:id="@+id/reportsFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.reports.ReportsFragment"
-        android:label="ReportsFragment" />
+        android:label="@string/reports" />
     <fragment
         android:id="@+id/spinnerDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment"
@@ -283,7 +283,7 @@
     <fragment
         android:id="@+id/reportsListFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.reports.ReportsListFragment"
-        android:label="ReportsListFragment">
+        android:label="@string/reports">
         <action
             android:id="@+id/action_reportsListFragment_to_reportsFragment"
             app:destination="@id/reportsFragment" />
@@ -294,7 +294,7 @@
     <fragment
         android:id="@+id/clusterListFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment"
-        android:label="ClusterListFragment">
+        android:label="@string/cluster">
         <action
             android:id="@+id/action_clusterListFragment_to_clusterFragment"
             app:destination="@id/clusterFragment" />
@@ -305,7 +305,7 @@
     <fragment
         android:id="@+id/enqueteMenuFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment"
-        android:label="EnqueteMenuFragment">
+        android:label="@string/home">
         <action
             android:id="@+id/action_enqueteMenuFragment_to_enqueteListFragment"
             app:destination="@id/enqueteListFragment" />

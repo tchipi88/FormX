@@ -6,17 +6,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
+
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
 public abstract class CommonQuestionFragment extends ViewModelFragment<FormViewModel> {
 
@@ -36,10 +41,22 @@ public abstract class CommonQuestionFragment extends ViewModelFragment<FormViewM
 	TextInputLayout description_til;
 
 
+	protected CollectionReference fieldsRef;
+
+
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+
+		fieldsRef = FirebaseFirestore.getInstance()
+				.collection(FORM_PATH)
+				.document(SessionUtils.getUserUid())
+				.collection(DATA)
+				.document(viewModel.getFormMutableLiveData().getValue().getId())
+				.collection(SECTION_PATH)
+				.document(viewModel.getSectionMutableLiveData().getValue().getId())
+				.collection(FIELDS_PATH);
 	}
 
 	@Override
