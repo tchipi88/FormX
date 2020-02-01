@@ -5,31 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        app:constraint_referenced_ids="card_myenquetes,card_myinvitations,card_newenquete,card_joinenquete"
-        app:flow_horizontalBias="0"
-        app:flow_maxElementsWrap="2"
-        app:flow_verticalBias="0"
-        app:flow_verticalGap="8dp"
-        app:flow_verticalStyle="packed"
-        app:flow_wrapMode="chain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_myenquetes"
         style="@style/CardViewStyle"
         android:layout_width="0dp"
-        tools:ignore="MissingConstraints">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/card_newenquete"
+        app:layout_constraintEnd_toStartOf="@id/card_myinvitations"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -50,13 +39,18 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_myinvitations"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/card_joinenquete"
+        app:layout_constraintEnd_toEndOf="parent"
         style="@style/CardViewStyle"
         android:layout_width="0dp"
+        app:layout_constraintStart_toEndOf="@id/card_myenquetes"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -79,14 +73,30 @@
         android:id="@+id/card_newenquete"
         style="@style/CardViewStyle"
         android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/card_joinenquete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_myenquetes"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_newenquete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_newenquete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_newenquete"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -96,7 +106,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/img_newenquete" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,13 +115,18 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_joinenquete"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         style="@style/CardViewStyle"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
+        app:layout_constraintStart_toEndOf="@+id/card_newenquete"
+        app:layout_constraintTop_toBottomOf="@id/card_myinvitations"
         tools:ignore="MissingConstraints">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
 

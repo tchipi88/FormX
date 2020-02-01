@@ -5,6 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.adapter.MySwipeToDeleteCallback;
@@ -16,14 +24,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static android.widget.LinearLayout.VERTICAL;
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
@@ -43,6 +43,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
 	FirestoreRecyclerAdapter adapter;
 	private RecyclerView recyclerView;
+	private View emptyView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +53,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
 
 		recyclerView = view.findViewById(R.id.enquetes);
+		emptyView = view.findViewById(R.id.emptyView);
 		assert recyclerView != null;
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -81,6 +83,17 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 					NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
 				});
 
+			}
+
+			@Override
+			public void onDataChanged() {
+				if (getItemCount() == 0) {
+					emptyView.setVisibility(View.VISIBLE);
+					recyclerView.setVisibility(View.GONE);
+				} else {
+					emptyView.setVisibility(View.GONE);
+					recyclerView.setVisibility(View.VISIBLE);
+				}
 			}
 		};
 

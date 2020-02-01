@@ -6,13 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.ui.fields.FieldsGenerator;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
+
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
 public class FormViewFragment extends ViewModelFragment<FormViewModel> {
     @Override
@@ -28,6 +35,9 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
     @BindView(R.id.fields_container)
     LinearLayout fieldsContainer;
 
+    @BindView(R.id.btn_next)
+    MaterialButton btn_next;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,11 +45,18 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-			NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.getLibelle());
-        });
+            NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.getLibelle());
 
-        viewModel.loadQuestionBySection().observe(getViewLifecycleOwner(), questions -> {
-            FieldsGenerator.generateLayoutField(getContext(), fieldsContainer, questions);
+            //get all sections
+            FirebaseFirestore.getInstance().collection(FORM_PATH)
+                    .document(SessionUtils.getUserUid())
+                    .collection(DATA)
+                    .document(form.getId())
+                    .collection(SECTION_PATH).get().addOnCompleteListener(task -> {
+//TODO
+
+            });
+
         });
 
         return view;

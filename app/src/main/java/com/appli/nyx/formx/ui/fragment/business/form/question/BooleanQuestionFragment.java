@@ -27,9 +27,9 @@ public class BooleanQuestionFragment extends CommonQuestionFragment {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        viewModel.getQuestionCreationMode().observe(this, aBoolean -> {
+        viewModel.getQuestionCreationMode().observe(getViewLifecycleOwner(), aBoolean -> {
             if (Boolean.FALSE.equals(aBoolean))
-                viewModel.getQuestionMutableLiveData().observe(this, abstractQuestion -> {
+                viewModel.getQuestionMutableLiveData().observe(getViewLifecycleOwner(), abstractQuestion -> {
                     question = (BooleanQuestion) abstractQuestion;
                     libelle_tiet.setText(question.getLibelle());
                     description_tiet.setText(question.getDescription());

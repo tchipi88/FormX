@@ -1,18 +1,11 @@
 package com.appli.nyx.formx.model.firebase;
 
-import com.google.firebase.firestore.ServerTimestamp;
-
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 public class Form extends MyDocument {
 
 	private String libelle;
 	private String description;
 
 
-	private List<Section> sections;
 
     public Form(String libelle) {
         this.libelle = libelle;
@@ -37,13 +30,4 @@ public class Form extends MyDocument {
 		this.description = description;
 	}
 
-
-
-	public List<Section> getSections() {
-		return sections;
-	}
-
-	public void setSections(List<Section> sections) {
-		this.sections = sections;
-	}
 }
