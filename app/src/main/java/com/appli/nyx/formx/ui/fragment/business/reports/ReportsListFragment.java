@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Report;
@@ -11,6 +12,7 @@ import com.appli.nyx.formx.ui.adapter.MySwipeToDeleteCallback;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.ReportViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.ReportViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -134,7 +136,13 @@ public class ReportsListFragment extends ViewModelFragment<ReportViewModel> {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-			//TODO delete object to firebase
+			FirebaseFirestore.getInstance().collection(REPORTS_PATH).document(SessionUtils.getUserUid()).collection(DATA).document().delete().addOnCompleteListener(task -> {
+				if (task.isSuccessful()) {
+					Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+				} else {
+					AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+				}
+			});
         }
 
     }

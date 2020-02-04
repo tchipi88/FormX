@@ -128,4 +128,5 @@
     <string name="no_question">No Question</string>
     <string name="home">Home</string>
     <string name="no_enquetes">No  Survey</string>
+    <string name="operation_completes_successfully">Operation completes successfully</string>
 </resources>

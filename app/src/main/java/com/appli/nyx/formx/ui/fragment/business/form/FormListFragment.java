@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.FormViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -81,7 +83,13 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.delete.setOnClickListener(v -> {
-
+                    FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                        }
+                    });
                 });
 
                 holder.voir.setOnClickListener(v -> {

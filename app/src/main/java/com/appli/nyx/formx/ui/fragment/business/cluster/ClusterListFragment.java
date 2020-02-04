@@ -137,7 +137,17 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-			//TODO delete object to firebase
+
+			/**FirebaseFirestore.getInstance()
+			 .collection(CLUSTER_PATH)
+			 .document(SessionUtils.getUserUid())
+			 .collection(DATA).document().delete().addOnCompleteListener(task -> {
+			 if(task.isSuccessful()){
+			 Toast.makeText(getContext(),R.string.operation_completes_successfully,Toast.LENGTH_LONG).show();
+			 } else {
+			 AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+			 }
+			 });*/
         }
 
     }

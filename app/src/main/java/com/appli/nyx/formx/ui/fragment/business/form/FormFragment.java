@@ -7,12 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Section;
@@ -35,6 +30,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
@@ -124,6 +125,8 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(model.getLibelle());
 
+                CollectionReference sectionCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH);
+
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setSection(holder.mItem);
                     NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionFragment);
@@ -132,22 +135,19 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
 
                 holder.delete.setOnClickListener(v -> {
-
+                    sectionCollectionRef.document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                        }
+                    });
                 });
 
                 holder.duplicate.setOnClickListener(v -> {
                     Section duplicatedSection = new Section();
                     duplicatedSection.setLibelle(holder.mItem.getLibelle() + "__Copy");
                     duplicatedSection.setDescription(holder.mItem.getDescription());
-
-                    CollectionReference sectionCollectionRef =
-                            FirebaseFirestore.getInstance()
-                                    .collection(FORM_PATH)
-                                    .document(SessionUtils.getUserUid())
-                                    .collection(DATA)
-                                    .document(viewModel.getFormMutableLiveData().getValue().getId())
-                                    .collection(SECTION_PATH);
-
                     sectionCollectionRef.add(duplicatedSection).addOnCompleteListener(task -> {
                         if (!task.isSuccessful()) {
                             AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());

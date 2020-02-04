@@ -8,12 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
@@ -31,8 +26,15 @@ import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
@@ -121,6 +123,7 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
 
             @Override
             protected void onBindViewHolder(@NonNull QuestionViewHolder holder, int position, @NonNull AbstractQuestion model) {
+                CollectionReference fieldsCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH).document(viewModel.getSectionMutableLiveData().getValue().getId()).collection(FIELDS_PATH);
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(holder.mItem.getLibelle());
 
@@ -153,20 +156,18 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.delete.setOnClickListener(v -> {
-
+                    fieldsCollectionRef.document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                        }
+                    });
                 });
 
                 holder.duplicate.setOnClickListener(v -> {
 
-                    FirebaseFirestore.getInstance()
-                            .collection(FORM_PATH)
-                            .document(SessionUtils.getUserUid())
-                            .collection(DATA)
-                            .document(viewModel.getFormMutableLiveData().getValue().getId())
-                            .collection(SECTION_PATH)
-                            .document(viewModel.getSectionMutableLiveData().getValue().getId())
-                            .collection(FIELDS_PATH)
-                            .add(holder.mItem).addOnCompleteListener(task -> {
+                    fieldsCollectionRef.add(holder.mItem).addOnCompleteListener(task -> {
                         if (!task.isSuccessful()) {
                             AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
                         }
