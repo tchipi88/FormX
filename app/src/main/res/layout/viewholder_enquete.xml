@@ -8,13 +8,26 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginRight="18dp"
+        android:src="@drawable/ic_account_circle_black_64dp"
+        app:layout_constraintEnd_toStartOf="@id/libelle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/libelle"
         style="@style/TextCardViewBold"
+        android:layout_width="0dp"
         android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
         android:drawablePadding="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/img"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="QUESTIONNN  45" />
 </androidx.constraintlayout.widget.ConstraintLayout>
