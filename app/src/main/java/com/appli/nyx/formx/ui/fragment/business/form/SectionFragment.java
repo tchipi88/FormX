@@ -166,8 +166,8 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.duplicate.setOnClickListener(v -> {
-
-                    fieldsCollectionRef.add(holder.mItem).addOnCompleteListener(task -> {
+					model.setLibelle(model.getLibelle() + "__Copy");
+					fieldsCollectionRef.add(model).addOnCompleteListener(task -> {
                         if (!task.isSuccessful()) {
                             AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
                         }
