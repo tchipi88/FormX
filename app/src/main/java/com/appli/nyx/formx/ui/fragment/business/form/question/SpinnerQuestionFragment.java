@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -99,6 +100,7 @@ public class SpinnerQuestionFragment extends CommonQuestionFragment {
         if (Boolean.TRUE.equals(viewModel.getQuestionCreationMode().getValue())) {
             fieldsRef.add(question).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                     NavHostFragment.findNavController(SpinnerQuestionFragment.this).navigateUp();
                 } else {
                     AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
@@ -109,6 +111,7 @@ public class SpinnerQuestionFragment extends CommonQuestionFragment {
             fieldsRef.document(viewModel.getQuestionMutableLiveData().getValue().getId())
                     .set(question).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                     NavHostFragment.findNavController(SpinnerQuestionFragment.this).navigateUp();
                 } else {
                     AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());

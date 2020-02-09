@@ -29,6 +29,15 @@
             tools:text="Loreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeem" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/duplicate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8dp"
+            app:layout_constraintEnd_toStartOf="@+id/voir"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            app:srcCompat="@drawable/ic_content_copy_black_24dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/voir"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

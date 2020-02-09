@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -63,6 +64,7 @@ public class NumberQuestionFragment extends CommonQuestionFragment {
         if (Boolean.TRUE.equals(viewModel.getQuestionCreationMode().getValue())) {
             fieldsRef.add(question).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                     NavHostFragment.findNavController(NumberQuestionFragment.this).navigateUp();
                 } else {
                     AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
@@ -73,6 +75,7 @@ public class NumberQuestionFragment extends CommonQuestionFragment {
             fieldsRef.document(viewModel.getQuestionMutableLiveData().getValue().getId())
                     .set(question).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                     NavHostFragment.findNavController(NumberQuestionFragment.this).navigateUp();
                 } else {
                     AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());

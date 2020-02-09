@@ -4,15 +4,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_8dp"
-    android:layout_marginBottom="@dimen/_8dp"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Libelle" />
+        style="@style/TextCardViewBold"
+        tools:text="Libelle" />
 
 
     <com.google.android.material.textview.MaterialTextView

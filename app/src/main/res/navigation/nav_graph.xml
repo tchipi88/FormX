@@ -181,6 +181,9 @@
         <action
             android:id="@+id/action_formFragment_to_sectionEditDialog"
             app:destination="@id/sectionEditDialog" />
+        <action
+            android:id="@+id/action_formFragment_to_selectFormDialog"
+            app:destination="@id/selectFormDialog" />
     </fragment>
     <fragment
         android:id="@+id/sectionFragment"
@@ -319,4 +322,18 @@
     <action
         android:id="@+id/action_global_formEditDialog"
         app:destination="@id/formEditDialog" />
+    <dialog
+        android:id="@+id/selectFormDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.SelectFormDialog"
+        android:label="SelectFormDialog">
+        <action
+            android:id="@+id/action_selectFormDialog_to_importSectionDialog"
+            app:destination="@id/importSectionDialog"
+            app:popUpTo="@+id/formFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/importSectionDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.ImportSectionDialog"
+        android:label="ImportSectionDialog" />
 </navigation>

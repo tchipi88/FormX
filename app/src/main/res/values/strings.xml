@@ -17,6 +17,7 @@
     <string name="sign_out">Sign Out</string>
 
     <string name="error">Error</string>
+    <string name="success">Success</string>
 
     <string name="reset_succesful">Reset Successful!</string>
     <string name="please_wait">Please wait ...</string>
@@ -129,4 +130,6 @@
     <string name="home">Home</string>
     <string name="no_enquetes">No  Survey</string>
     <string name="operation_completes_successfully">Operation completes successfully</string>
+    <string name="select_section">Select Section to import</string>
+    <string name="select_form">Select Form</string>
 </resources>

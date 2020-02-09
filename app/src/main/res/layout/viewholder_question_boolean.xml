@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_8dp"
-    android:layout_marginBottom="@dimen/_8dp"
+
     android:orientation="vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Libelle" />
-
-
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MaterialComponents.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="description" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/booleanfield_swithcompat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextCardViewBold"
+        android:textOff="@string/txt_no"
+        android:textOn="@string/txt_yes"
+        app:showText="true"
+        tools:text="Libelle" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/description"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="description" />
+
 
 </LinearLayout>

@@ -9,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
@@ -30,12 +36,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
@@ -182,7 +182,9 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
                                         }
 
                                         sectionCollectionRef.document(task.getResult().getId())
-                                                .collection(FIELDS_PATH).add(question);
+                                                .collection(FIELDS_PATH).add(question).addOnCompleteListener(task1 -> {
+
+                                        });
                                     }
                                 }
 
@@ -222,6 +224,10 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
             NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionAddDialog);
         });
 
+        view.findViewById(R.id.import_section).setOnClickListener(v -> {
+            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_selectFormDialog);
+        });
+        
         return view;
     }
 

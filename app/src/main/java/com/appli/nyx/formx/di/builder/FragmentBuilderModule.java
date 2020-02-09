@@ -9,24 +9,26 @@ import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
-import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
-import com.appli.nyx.formx.ui.fragment.business.reports.ReportsFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormListFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormViewFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.ImportSectionDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.SelectFormDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.question.BooleanQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.DateQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.NumberQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TextQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TimeQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.reports.ReportsFragment;
 import com.appli.nyx.formx.ui.fragment.business.reports.ReportsListFragment;
 import com.appli.nyx.formx.ui.fragment.settings.SettingsFragment;
 
@@ -124,6 +126,12 @@ public abstract class FragmentBuilderModule {
 
 	@ContributesAndroidInjector
 	abstract EnqueteMenuFragment enqueteMenuFragment();
+
+    @ContributesAndroidInjector
+    abstract ImportSectionDialog importSectionDialog();
+
+    @ContributesAndroidInjector
+    abstract SelectFormDialog selectFormDialog();
 
 }
 
