@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.navigation.Navigation;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
@@ -22,7 +24,6 @@ import org.joda.time.Years;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -146,13 +147,7 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 		if (tel.getText().toString().isEmpty()) {
 			phoneLayout.setError(getResources().getText(R.string.error_field_required));
 			valid = false;
-		} else {
-			if (tel.getText().toString().length() != 9) {
-				phoneLayout.setError("Not Valid Phone Number");
-				valid = false;
-			}
 		}
-
 
 		return valid;
 	}

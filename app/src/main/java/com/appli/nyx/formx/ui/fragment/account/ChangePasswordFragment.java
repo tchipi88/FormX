@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.navigation.Navigation;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.LoggedFragment;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
@@ -15,12 +17,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.navigation.Navigation;
-
 public class ChangePasswordFragment extends LoggedFragment {
 
 	EditText password;
 	TextInputLayout passwordLayout;
+
+    EditText currentPassword;
+    TextInputLayout currentPasswordLayout;
 	EditText confirmPassword;
 	TextInputLayout confirmPasswordLayout;
 
@@ -37,6 +40,8 @@ public class ChangePasswordFragment extends LoggedFragment {
 		passwordLayout = rootView.findViewById(R.id.passwordLayout);
 		confirmPassword = rootView.findViewById(R.id.confirmPassword);
 		confirmPasswordLayout = rootView.findViewById(R.id.confirmPasswordLayout);
+        currentPassword = rootView.findViewById(R.id.old_password);
+        currentPasswordLayout = rootView.findViewById(R.id.currentpasswordLayout);
 
 		rootView.findViewById(R.id.btn_save).setOnClickListener(v -> save(v));
 
@@ -51,7 +56,8 @@ public class ChangePasswordFragment extends LoggedFragment {
 		showLoading(true);
 
 		FirebaseUser firebaseUser = SessionUtils.getUserSigned();
-		firebaseUser.reauthenticate(EmailAuthProvider.getCredential(firebaseUser.getEmail(), password.getText().toString())).addOnSuccessListener(aVoid -> firebaseUser.updatePassword(confirmPassword.getText().toString()).addOnSuccessListener(aVoid1 -> {
+        firebaseUser.reauthenticate(EmailAuthProvider.getCredential(firebaseUser.getEmail(), currentPassword.getText().toString()))
+                .addOnSuccessListener(aVoid -> firebaseUser.updatePassword(confirmPassword.getText().toString()).addOnSuccessListener(aVoid1 -> {
 			showLoading(false);
 			new MaterialAlertDialogBuilder(getActivity()).setIcon(R.drawable.ic_info_black_24dp).setTitle("Notifications").setMessage(getString(R.string.your_password_has_been_reset)).setPositiveButton("OK", (dialog, which) -> {
 				Navigation.findNavController(view).navigate(R.id.action_global_mainFragment);
@@ -68,6 +74,16 @@ public class ChangePasswordFragment extends LoggedFragment {
 
 	public boolean validate() {
 		boolean valid = true;
+
+        passwordLayout.setError(null);
+        confirmPasswordLayout.setError(null);
+        currentPasswordLayout.setError(null);
+
+        if (currentPassword.getText().toString().isEmpty()) {
+            currentPasswordLayout.setError(getResources().getText(R.string.error_field_required));
+            valid = false;
+        }
+
 		if (password.getText().toString().isEmpty()) {
 			passwordLayout.setError(getResources().getText(R.string.error_field_required));
 			valid = false;

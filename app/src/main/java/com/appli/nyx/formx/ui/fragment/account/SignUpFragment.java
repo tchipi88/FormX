@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.fragment.NetworkFragment;
@@ -23,9 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
@@ -175,11 +176,6 @@ public class SignUpFragment extends NetworkFragment {
 		if (tel.getText().toString().isEmpty()) {
 			phoneLayout.setError(getResources().getText(R.string.error_field_required));
 			valid = false;
-		} else {
-			if (tel.getText().toString().length() != 9) {
-				phoneLayout.setError("Not Valid Phone Number");
-				valid = false;
-			}
 		}
 
 		if (email.getText().toString().isEmpty()) {

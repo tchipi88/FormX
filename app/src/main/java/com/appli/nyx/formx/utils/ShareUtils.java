@@ -16,7 +16,7 @@ public class ShareUtils {
 		//To send an email you need to specify mailto as URI
 		emailIntent.setData(Uri.parse("mailto:"));
 
-		emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{ "ganeo.app@gmail.com" });
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"formx@gmail.com"});
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.email_title, context.getString(R.string.app_name), BuildConfig.VERSION_NAME));
 
 		//this is mime type of email without it no activity can be found to send email.
