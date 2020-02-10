@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.navigation.fragment.NavHostFragment;
-
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
@@ -29,6 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
@@ -82,16 +81,30 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
                         sections.add(sectionView);
                     }
 
-                    if (!sections.isEmpty())
-                        generateLayoutSection(sections.get(0));
+					if (!sections.isEmpty()) {
+						generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
+					}
 
 
                 }
             });
 
-            //TODO like quizz
         });
 
+		btn_next.setOnClickListener(view1 -> {
+			if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
+				generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
+				viewModel.setsectionViewIndex();
+			} else {
+				NavHostFragment.findNavController(FormViewFragment.this).navigateUp();
+			}
+		});
+
+		viewModel.getsectionViewIndex().observe(getViewLifecycleOwner(), index -> {
+			if (index + 1 < sections.size()) {
+				btn_next.setText(R.string.finish);
+			}
+		});
 
         return view;
     }
@@ -146,4 +159,10 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
         public List<AbstractQuestion> questions = new ArrayList<>();
     }
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		viewModel.setsectionViewIndex(0);
+	}
 }
