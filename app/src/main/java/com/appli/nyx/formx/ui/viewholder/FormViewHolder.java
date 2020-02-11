@@ -18,6 +18,7 @@ public class FormViewHolder extends RecyclerView.ViewHolder {
 	public final AppCompatImageView delete;
 	public final AppCompatImageView voir;
 	public final AppCompatImageView edit;
+	public final AppCompatImageView duplicate;
 
 	public Form mItem;
 
@@ -30,6 +31,7 @@ public class FormViewHolder extends RecyclerView.ViewHolder {
 		delete = view.findViewById(R.id.delete);
 		voir = view.findViewById(R.id.voir);
 		edit = view.findViewById(R.id.edit);
+		duplicate = view.findViewById(R.id.duplicate);
 
 	}
 
