@@ -6,11 +6,16 @@ import com.appli.nyx.formx.ui.fragment.account.ProfilFragment;
 import com.appli.nyx.formx.ui.fragment.account.ResetPasswordRequestFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignInFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
+import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteSharedFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.JoinEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
@@ -132,6 +137,22 @@ public abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract SelectFormDialog selectFormDialog();
+
+    @ContributesAndroidInjector
+    abstract EnqueteAddDialog enqueteAddDialog();
+
+
+    @ContributesAndroidInjector
+    abstract EnqueteEditDialog enqueteEditDialog();
+
+    @ContributesAndroidInjector
+    abstract EnqueteSharedFragment enqueteSharedFragment();
+
+    @ContributesAndroidInjector
+    abstract JoinEnqueteFragment joinEnqueteFragment();
+
+    @ContributesAndroidInjector
+    abstract SelectUserFragment selectUserFragment();
 
 }
 

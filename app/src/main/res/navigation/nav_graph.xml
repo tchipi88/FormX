@@ -274,6 +274,12 @@
         <action
             android:id="@+id/action_enqueteListFragment_to_enqueteFragment"
             app:destination="@id/enqueteFragment" />
+        <action
+            android:id="@+id/action_enqueteListFragment_to_enqueteEditDialog"
+            app:destination="@id/enqueteEditDialog" />
+        <action
+            android:id="@+id/action_enqueteListFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/enqueteFragment"
@@ -312,6 +318,12 @@
         <action
             android:id="@+id/action_enqueteMenuFragment_to_enqueteListFragment"
             app:destination="@id/enqueteListFragment" />
+        <action
+            android:id="@+id/action_enqueteMenuFragment_to_joinEnqueteFragment"
+            app:destination="@id/joinEnqueteFragment" />
+        <action
+            android:id="@+id/action_enqueteMenuFragment_to_enqueteSharedFragment"
+            app:destination="@id/enqueteSharedFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_enqueteMenuFragment"
@@ -336,4 +348,30 @@
         android:id="@+id/importSectionDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.ImportSectionDialog"
         android:label="ImportSectionDialog" />
+    <dialog
+        android:id="@+id/enqueteAddDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteAddDialog"
+        android:label="EnqueteAddDialog" />
+    <action
+        android:id="@+id/action_global_enqueteAddDialog"
+        app:destination="@id/enqueteAddDialog" />
+    <dialog
+        android:id="@+id/enqueteEditDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteEditDialog"
+        android:label="EnqueteEditDialog" />
+    <action
+        android:id="@+id/action_global_enqueteListFragment"
+        app:destination="@id/enqueteListFragment" />
+    <fragment
+        android:id="@+id/joinEnqueteFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.JoinEnqueteFragment"
+        android:label="Join Enquete" />
+    <fragment
+        android:id="@+id/enqueteSharedFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteSharedFragment"
+        android:label="EnqueteSharedFragment" />
+    <fragment
+        android:id="@+id/selectUserFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.SelectUserFragment"
+        android:label="Select User " />
 </navigation>

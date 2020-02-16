@@ -19,6 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.FileProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
@@ -33,13 +40,6 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.FileProvider;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -50,7 +50,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_GALLERY_PHOTO = 2;
-    private static final int ALL_PERMISSIONS_RESULT = 100;
+    static final int ALL_PERMISSIONS_RESULT = 100;
     @BindView(R.id.menu_changepwd)
     TextView menu_changepwd;
     @BindView(R.id.titleName)

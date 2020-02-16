@@ -156,12 +156,14 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.delete.setOnClickListener(v -> {
-                    fieldsCollectionRef.document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
-                        } else {
-                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
-                        }
+                    AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
+                        fieldsCollectionRef.document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
                     });
                 });
 

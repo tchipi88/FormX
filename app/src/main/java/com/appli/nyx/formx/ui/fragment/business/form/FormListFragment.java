@@ -6,6 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.model.firebase.Section;
@@ -28,11 +33,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
@@ -96,12 +96,14 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.delete.setOnClickListener(v -> {
-                    FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
-                        } else {
-                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
-                        }
+                    AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
+                        FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
                     });
                 });
 

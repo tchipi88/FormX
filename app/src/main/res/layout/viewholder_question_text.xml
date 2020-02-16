@@ -18,6 +18,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textfield_tiet"
             android:layout_width="match_parent"
+            android:drawableLeft="@drawable/ic_short_text_black_24dp"
+            android:drawablePadding="8dp"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:saveEnabled="false"

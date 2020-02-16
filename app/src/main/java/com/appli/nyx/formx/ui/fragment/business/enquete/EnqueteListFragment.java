@@ -4,28 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
-import com.appli.nyx.formx.ui.adapter.MySwipeToDeleteCallback;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.EnqueteViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import androidx.annotation.NonNull;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import static android.widget.LinearLayout.VERTICAL;
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
@@ -57,12 +55,15 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 		assert recyclerView != null;
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
-		recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
 		// Create the query and the FirestoreRecyclerOptions
 		Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
 
-		FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, Enquete.class).build();
+        FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
+            Enquete enquete = snapshot.toObject(Enquete.class);
+            enquete.setId(snapshot.getId());
+            return enquete;
+        }).build();
 
 		adapter = new FirestoreRecyclerAdapter<Enquete, EnqueteViewHolder>(options) {
 
@@ -77,12 +78,36 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 			protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete model) {
 				holder.mItem = getItem(position);
 				holder.mLibelleView.setText(model.getLibelle());
+                holder.mDescriptionView.setText(model.getDescription());
 
 				holder.mView.setOnClickListener(v -> {
 					viewModel.setEnquete(holder.mItem);
 					NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
 				});
 
+                holder.delete.setOnClickListener(v -> {
+
+                    AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
+                        FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
+                    });
+
+                });
+
+                holder.share.setOnClickListener(v -> {
+                    viewModel.setEnquete(holder.mItem);
+                    NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_selectUserFragment);
+                });
+
+                holder.edit.setOnClickListener(v -> {
+                    viewModel.setEnquete(holder.mItem);
+                    NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteEditDialog);
+                });
 			}
 
 			@Override
@@ -100,13 +125,11 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
 		recyclerView.setAdapter(adapter);
 
-		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
-		itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
 
 		view.findViewById(R.id.add_enquete).setOnClickListener(v -> {
-			NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
+            NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_global_enqueteAddDialog);
 		});
 
 		return view;
@@ -126,31 +149,5 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 	}
 
 
-	private class SwipeToDeleteCallback extends MySwipeToDeleteCallback {
 
-		FirestoreRecyclerAdapter adapter;
-
-		public SwipeToDeleteCallback(FirestoreRecyclerAdapter adapter) {
-			super(ic_delete);
-			this.adapter = adapter;
-		}
-
-		@Override
-		public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-			int position = viewHolder.getAdapterPosition();
-			/**FirebaseFirestore.getInstance()
-			 .collection(ENQUETE_PATH)
-			 .document(SessionUtils.getUserUid())
-			 .collection(DATA).document().delete().addOnCompleteListener(task -> {
-			 if(task.isSuccessful()){
-			 Toast.makeText(getContext(),R.string.operation_completes_successfully,Toast.LENGTH_LONG).show();
-			 } else {
-			 AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
-			 }
-			 });*/
-		}
-
-
-
-	}
 }

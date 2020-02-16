@@ -1,14 +1,11 @@
 package com.appli.nyx.formx.model.firebase;
 
-import java.io.Serializable;
-import java.util.List;
-
 public class Enquete extends MyDocument {
 
 	private String libelle;
 	private String description;
 
-	private List<Form> forms;
+    private Form form;
 
     public Enquete(String libelle) {
         this.libelle = libelle;
@@ -33,11 +30,11 @@ public class Enquete extends MyDocument {
 		this.description = description;
 	}
 
-	public List<Form> getForms() {
-		return forms;
-	}
+    public Form getForm() {
+        return form;
+    }
 
-	public void setForms(List<Form> forms) {
-		this.forms = forms;
+    public void setForm(Form form) {
+        this.form = form;
 	}
 }
