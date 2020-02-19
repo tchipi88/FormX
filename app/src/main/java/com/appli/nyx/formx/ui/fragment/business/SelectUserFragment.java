@@ -119,7 +119,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         adapter = new UserFirebaseAdapter(options);
         recyclerView.setAdapter(adapter);
 
-        selectionTracker = new SelectionTracker.Builder<>("my-user-id", recyclerView, new UserKeyProvider(1, adapter.getCurrentList()), new UserLookup(recyclerView), StorageStrategy.createLongStorage()).withOnItemActivatedListener(null).withOnDragInitiatedListener(e -> {
+        selectionTracker = new SelectionTracker.Builder<>("my-user-id", recyclerView, new UserKeyProvider(adapter), new UserLookup(recyclerView), StorageStrategy.createStringStorage()).withOnItemActivatedListener(null).withOnDragInitiatedListener(e -> {
             Log.d(TAG, "onDragInitiated");
             return true;
         }).build();

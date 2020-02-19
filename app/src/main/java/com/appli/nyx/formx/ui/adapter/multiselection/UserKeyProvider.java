@@ -1,6 +1,9 @@
 package com.appli.nyx.formx.ui.adapter.multiselection;
 
-import com.appli.nyx.formx.model.firebase.User;
+import android.annotation.SuppressLint;
+
+import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -8,23 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.selection.ItemKeyProvider;
 
-public class UserKeyProvider extends ItemKeyProvider {
+public class UserKeyProvider extends ItemKeyProvider<String> {
 
-	private final List<User> itemList;
+	private final List<DocumentSnapshot> itemList;
 
-	public UserKeyProvider(int scope, List<User> itemList) {
-		super(scope);
-		this.itemList = itemList;
+	@SuppressLint("WrongConstant")
+	public UserKeyProvider(SelectUserFragment.UserFirebaseAdapter adapter) {
+		super(0);
+		itemList = adapter.getCurrentList();
 	}
 
 	@Nullable
 	@Override
-	public Object getKey(int position) {
-		return itemList.get(position);
+	public String getKey(int position) {
+		return itemList.get(position).getId();
 	}
 
 	@Override
-	public int getPosition(@NonNull Object key) {
+	public int getPosition(@NonNull String key) {
 		return itemList.indexOf(key);
 	}
 }

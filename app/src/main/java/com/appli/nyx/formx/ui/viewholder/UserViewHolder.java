@@ -37,6 +37,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder implements ViewHolde
 
     @Override
     public ItemDetailsLookup.ItemDetails getItemDetails() {
-        return new UserDetails(getAdapterPosition(), user);
+        return new UserDetails(getAdapterPosition(), user.getId());
     }
 }

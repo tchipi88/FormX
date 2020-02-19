@@ -1,16 +1,14 @@
 package com.appli.nyx.formx.ui.adapter.multiselection;
 
-import com.appli.nyx.formx.model.firebase.User;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 
-public class UserDetails extends ItemDetailsLookup.ItemDetails {
+public class UserDetails extends ItemDetailsLookup.ItemDetails<String> {
 
 	private final int adapterPosition;
-	private final User selectionKey;
+	private final String selectionKey;
 
-	public UserDetails(int adapterPosition, User selectionKey) {
+	public UserDetails(int adapterPosition, String selectionKey) {
 		this.adapterPosition = adapterPosition;
 		this.selectionKey = selectionKey;
 	}
@@ -22,7 +20,7 @@ public class UserDetails extends ItemDetailsLookup.ItemDetails {
 
 	@Nullable
 	@Override
-	public Object getSelectionKey() {
+	public String getSelectionKey() {
 		return selectionKey;
 	}
 }
