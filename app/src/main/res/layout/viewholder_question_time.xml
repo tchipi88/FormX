@@ -10,13 +10,13 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textfield_til"
+        android:id="@+id/timefield_til"
         style="@style/TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textfield_tiet"
+            android:id="@+id/timefield_tiet"
             android:layout_width="match_parent"
             android:drawableLeft="@drawable/ic_access_time_black_24dp"
             android:drawablePadding="8dp"

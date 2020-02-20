@@ -4,29 +4,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
 
     android:orientation="vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextCardViewBold"
-        tools:text="Libelle" />
 
-
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MaterialComponents.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="description" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textfield_til"
+        android:id="@+id/numberfield_til"
         style="@style/TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textfield_tiet"
+            android:id="@+id/numberfield_tiet"
             android:layout_width="match_parent"
             android:drawableLeft="@drawable/ic_plus_one_black_24dp"
             android:drawablePadding="8dp"

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
+import com.appli.nyx.formx.model.firebase.validation.ValidationError;
 import com.tiper.MaterialSpinner;
 
 public class SpinnerFieldGenerator implements  IFieldGenerator<SpinnerQuestion>{
@@ -67,12 +68,12 @@ public class SpinnerFieldGenerator implements  IFieldGenerator<SpinnerQuestion>{
         final View fieldView = field.getFieldView();
         final MaterialSpinner spiSpinner = fieldView.findViewById(R.id.spinnerfield_spi);
 
-/*
+
         final ValidationError validationError = field.getValidationError();
         if (validationError != null && !validationError.isEmpty()) {
             if (validationError.hasError()) {
                 // Le champ ne respecte pas certaines règles obligatoires
-                spiSpinner.setOnError(true);
+                spiSpinner.setError(true);
             } else if (validationError.hasWarning()) {
                 // Le champ ne respecte pas certaines règles
                 spiSpinner.setOnWarning(true);
@@ -80,6 +81,6 @@ public class SpinnerFieldGenerator implements  IFieldGenerator<SpinnerQuestion>{
         } else {
             // Aucune erreur à afficher, afficher le champ de façon classique
             spiSpinner.resetState();
-        }*/
+        }
     }
 }

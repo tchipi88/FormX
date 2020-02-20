@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
 import com.appli.nyx.formx.model.firebase.fields.BooleanQuestion;
@@ -23,13 +24,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 
+import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
@@ -52,7 +53,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
     @BindView(R.id.btn_next)
     MaterialButton btn_next;
 
-    List<SectionView> sections = new ArrayList<>();
+	List<Section> sections = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,12 +74,12 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
                     for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
 
-                        SectionView sectionView = new SectionView();
-                        sectionView.id = sectionSnapshot.getId();
-                        sectionView.libelle = (String) sectionSnapshot.get("libelle");
-                        sectionView.description = (String) sectionSnapshot.get("description");
+						Section section = new Section();
+						section.setId(sectionSnapshot.getId());
+						section.libelle = (String) sectionSnapshot.get("libelle");
+						section.description = (String) sectionSnapshot.get("description");
 
-                        sections.add(sectionView);
+						sections.add(section);
                     }
 
 					if (!sections.isEmpty()) {
@@ -96,8 +97,10 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
 		btn_next.setOnClickListener(view1 -> {
 			if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
+
 				//validate questions of section
 				if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
+					viewModel.clearQuestionList();
 					generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
 					viewModel.setsectionViewIndex();
 				}
@@ -116,19 +119,23 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         return view;
     }
 
-	private boolean validateSection(SectionView sectionView) {
+	private boolean validateSection(Section section) {
 		boolean valid = true;
+
+		for (AbstractQuestion question : viewModel.getQuestionsListMutableLiveData().getValue()) {
+			FieldsGenerator.generateError(question);
+		}
 		return valid;
 	}
 
-	private void generateLayoutSection(SectionView sectionView) {
+	private void generateLayoutSection(Section section) {
+		viewModel.clearQuestionList();
         //get all fields for section
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
                 .collection(DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
-                .collection(SECTION_PATH)
-                .document(sectionView.id)
+                .collection(SECTION_PATH).document(section.getId())
                 .collection(FIELDS_PATH).get().addOnCompleteListener(fieldsTask -> {
             if (fieldsTask.isSuccessful()) {
                 for (DocumentSnapshot fieldsSnapshot : fieldsTask.getResult().getDocuments()) {
@@ -155,26 +162,23 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
                             break;
                     }
 
-                    sectionView.questions.add(question);
+					View fieldView = generateLayoutField(getContext(), question);
+					question.setFieldView(fieldView);
+					fieldsContainer.addView(fieldView);
+					viewModel.addQuestion(question);
                 }
 
-                FieldsGenerator.generateLayoutField(getContext(), fieldsContainer, sectionView.questions);
             }
         });
     }
 
 
-    private class SectionView implements Serializable {
-        public String id;
-        public String libelle;
-        public String description;
-
-        public List<AbstractQuestion> questions = new ArrayList<>();
-    }
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		viewModel.setsectionViewIndex(0);
+		viewModel.clearQuestionList();
+		viewModel.clearSectionList();
 	}
 }

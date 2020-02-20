@@ -6,6 +6,9 @@ import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,9 @@ public class FormViewModel extends AndroidViewModel {
     private MutableLiveData<Section> sectionMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<AbstractQuestion> questionMutableLiveData = new MutableLiveData<>();
 
+	private MutableLiveData<List<AbstractQuestion>> questionsListMutableLiveData = new MutableLiveData<>();
+	private MutableLiveData<List<Section>> sectionsListMutableLiveData = new MutableLiveData<>();
+
 	//Form View
 	private MutableLiveData<Integer> sectionViewIndex = new MutableLiveData<>();
 
@@ -27,11 +33,38 @@ public class FormViewModel extends AndroidViewModel {
     public FormViewModel(@NonNull Application application) {
         super(application);
 		sectionViewIndex.setValue(0);
+		questionsListMutableLiveData.setValue(new ArrayList<>());
+		sectionsListMutableLiveData.setValue(new ArrayList<>());
     }
 
 	public LiveData<Integer> getsectionViewIndex() {
 		return sectionViewIndex;
 	}
+
+	public void addQuestion(AbstractQuestion question) {
+		questionsListMutableLiveData.getValue().add(question);
+	}
+
+	public void clearQuestionList() {
+		questionsListMutableLiveData.getValue().clear();
+	}
+
+	public MutableLiveData<List<AbstractQuestion>> getQuestionsListMutableLiveData() {
+		return questionsListMutableLiveData;
+	}
+
+	public void addSection(Section section) {
+		sectionsListMutableLiveData.getValue().add(section);
+	}
+
+	public void clearSectionList() {
+		sectionsListMutableLiveData.getValue().clear();
+	}
+
+	public MutableLiveData<List<Section>> getSectionsListMutableLiveData() {
+		return sectionsListMutableLiveData;
+	}
+
 
 	public void setsectionViewIndex() {
 		sectionViewIndex.setValue(sectionViewIndex.getValue() + 1);

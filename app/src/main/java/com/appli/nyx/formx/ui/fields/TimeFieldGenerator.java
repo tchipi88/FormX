@@ -27,8 +27,8 @@ public class TimeFieldGenerator  implements  IFieldGenerator<TimeQuestion>{
         final View fieldView = inflater.inflate(R.layout.viewholder_question_time, null);
         field.setFieldView(fieldView);
 
-        final TextInputLayout tilInput = fieldView.findViewById(R.id.textfield_til);
-        final TextInputEditText edtInput = fieldView.findViewById(R.id.textfield_tiet);
+        final TextInputLayout tilInput = fieldView.findViewById(R.id.timefield_til);
+        final TextInputEditText edtInput = fieldView.findViewById(R.id.timefield_tiet);
 
         //LIBELLE
         if (!TextUtils.isEmpty(field.getLibelle())) {

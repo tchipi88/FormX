@@ -5,12 +5,16 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
+import com.appli.nyx.formx.model.firebase.validation.ValidationError;
 import com.appli.nyx.formx.ui.components.EditTextUnitDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import androidx.core.content.ContextCompat;
 
 public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
 
@@ -63,7 +67,7 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
 
     @Override
     public void loadValues(TextQuestion field) {
-      /*  if (field == null || field.getFieldView() == null) {
+        if (field == null || field.getFieldView() == null) {
             // Aucun champ à charger
             throw new EmptyValueException("Le champ de saisie de texte est null ou aucune vue ne lui est associée.");
         }
@@ -90,12 +94,12 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
         } else {
             // S'il n'existe pas de valeur pour le champ, l'associer quand même à celui-ci pour déclencher le TextWatcher
             edtInput.setText("");
-        }*/
+        }
     }
 
     @Override
     public void generateError(TextQuestion field) {
-       /* if (field == null || field.getFieldView() == null ) {
+        if (field == null || field.getFieldView() == null) {
             return;
         }
 
@@ -120,6 +124,6 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
         } else {
             // Aucune erreur à afficher, afficher le champ de façon classique
             edtInput.setBackground(ContextCompat.getDrawable(context, R.drawable.edittext_normal_background));
-        }*/
+        }
     }
 }
