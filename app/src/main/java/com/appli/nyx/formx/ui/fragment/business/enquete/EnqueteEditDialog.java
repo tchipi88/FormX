@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.Form;
+import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
@@ -65,14 +65,13 @@ public class EnqueteEditDialog extends BaseDialogFragment<EnqueteViewModel> {
         }
 
         String libelle = libelle_tiet.getText().toString();
-        Form form = new Form();
-        form.setLibelle(libelle);
-        form.setDescription(description_tiet.getText().toString());
+		Enquete enquete = new Enquete();
+		enquete.setLibelle(libelle);
+		enquete.setDescription(description_tiet.getText().toString());
 
         FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
                 .document(SessionUtils.getUserUid()).collection(DATA)
-                .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
-                .set(form).addOnCompleteListener(task -> {
+                .document(viewModel.getEnqueteMutableLiveData().getValue().getId()).set(enquete).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 NavHostFragment.findNavController(EnqueteEditDialog.this).navigateUp();
             } else {

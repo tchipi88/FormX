@@ -97,8 +97,11 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 		btn_next.setOnClickListener(view1 -> {
 			if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
 				//validate questions of section
-				generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
-				viewModel.setsectionViewIndex();
+				if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
+					generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
+					viewModel.setsectionViewIndex();
+				}
+				;
 			} else {
 				NavHostFragment.findNavController(FormViewFragment.this).navigateUp();
 			}
@@ -113,7 +116,12 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         return view;
     }
 
-    private void generateLayoutSection(SectionView sectionView) {
+	private boolean validateSection(SectionView sectionView) {
+		boolean valid = true;
+		return valid;
+	}
+
+	private void generateLayoutSection(SectionView sectionView) {
         //get all fields for section
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
