@@ -83,6 +83,9 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
 					if (!sections.isEmpty()) {
 						generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
+						view.findViewById(R.id.no_section).setVisibility(View.GONE);
+					} else {
+						btn_next.findViewById(R.id.no_section).setVisibility(View.GONE);
 					}
 
 
@@ -93,6 +96,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
 		btn_next.setOnClickListener(view1 -> {
 			if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
+				//validate questions of section
 				generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
 				viewModel.setsectionViewIndex();
 			} else {
