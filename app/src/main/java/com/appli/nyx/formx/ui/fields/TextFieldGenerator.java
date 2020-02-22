@@ -5,7 +5,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
@@ -13,8 +12,6 @@ import com.appli.nyx.formx.model.firebase.validation.ValidationError;
 import com.appli.nyx.formx.ui.components.EditTextUnitDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import androidx.core.content.ContextCompat;
 
 public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
 
@@ -67,34 +64,7 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
 
     @Override
     public void loadValues(TextQuestion field) {
-        if (field == null || field.getFieldView() == null) {
-            // Aucun champ à charger
-            throw new EmptyValueException("Le champ de saisie de texte est null ou aucune vue ne lui est associée.");
-        }
 
-        final View fieldView = field.getFieldView();
-
-
-        final TextInputEditText edtInput = fieldView.findViewById(R.id.textfield_tiet);
-
-
-        // Action de validation au clic sur le bouton DONE sur le clavier
-        edtInput.setOnEditorActionListener((view, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                field.updateValue(!TextUtils.isEmpty(view.getText()) ? view.getText().toString().trim() : null, field.getId());
-            }
-
-            return false;
-        });
-
-        final String value = field.getFormattedValue();
-        if (!TextUtils.isEmpty(value)) {
-            // S'il existe une valeur pour le champ, l'associer à celui-ci
-            edtInput.setText(value);
-        } else {
-            // S'il n'existe pas de valeur pour le champ, l'associer quand même à celui-ci pour déclencher le TextWatcher
-            edtInput.setText("");
-        }
     }
 
     @Override
@@ -105,9 +75,9 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
 
         final View fieldView = field.getFieldView();
         final Context context = fieldView.getContext();
-        final TextInputEditText edtInput = fieldView.findViewById(R.id.textfield_tiet);
+        final TextInputLayout textfield_til = fieldView.findViewById(R.id.textfield_til);
 
-        if (edtInput == null) {
+        if (textfield_til == null) {
             // Aucun champ de saisie affiché donc aucune information à mettre en erreur
             return;
         }
@@ -116,14 +86,11 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
         if (validationError != null && !validationError.isEmpty()) {
             if (validationError.hasError()) {
                 // Le champ ne respecte pas certaines règles obligatoires
-                edtInput.setBackground(ContextCompat.getDrawable(context, R.drawable.edittext_error_background));
-            } else if (validationError.hasWarning()) {
-                // Le champ ne respecte pas certaines règles
-                edtInput.setBackground(ContextCompat.getDrawable(context, R.drawable.edittext_warning_background));
+                textfield_til.setError("");
             }
         } else {
             // Aucune erreur à afficher, afficher le champ de façon classique
-            edtInput.setBackground(ContextCompat.getDrawable(context, R.drawable.edittext_normal_background));
+            textfield_til.setError(null);
         }
     }
 }

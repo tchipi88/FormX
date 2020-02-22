@@ -40,14 +40,6 @@ public class BooleanFieldGenerator implements  IFieldGenerator<BooleanQuestion>{
             ((MaterialTextView) fieldView.findViewById(R.id.description)).setText(field.getDescription());
         }
 
-       /* if (!TextUtils.isEmpty(field.get)) {
-            switchCompat.setText(hintAccessor.getValue());
-        }
-
-        loadValues(checkboxField);
-
-        addListener(checkboxField, fieldView.findViewById(R.id.checklist_swithcompat_swith_swithcompat));
-*/
 
         return fieldView;
     }
