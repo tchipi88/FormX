@@ -73,14 +73,11 @@ public class SpinnerFieldGenerator implements  IFieldGenerator<SpinnerQuestion>{
         if (validationError != null && !validationError.isEmpty()) {
             if (validationError.hasError()) {
                 // Le champ ne respecte pas certaines règles obligatoires
-                spiSpinner.setError(true);
-            } else if (validationError.hasWarning()) {
-                // Le champ ne respecte pas certaines règles
-                spiSpinner.setOnWarning(true);
+                spiSpinner.setError("");
             }
         } else {
             // Aucune erreur à afficher, afficher le champ de façon classique
-            spiSpinner.resetState();
+            spiSpinner.setError(null);
         }
     }
 }
