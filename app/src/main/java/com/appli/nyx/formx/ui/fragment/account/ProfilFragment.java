@@ -204,7 +204,10 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
         StorageReference uploadeRef = storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg");
 
-        uploadeRef.putFile(picUri).addOnFailureListener(exception -> Log.e("Profil Fragment", "Failed to upload picture to cloud storage"));
+		uploadeRef.putFile(picUri).addOnFailureListener(exception -> {
+			AlertDialogUtils.showErrorDialog(getContext(), exception.getMessage());
+			Log.e("Profil Fragment", "Failed to upload picture to cloud storage");
+		});
     }
 
 
