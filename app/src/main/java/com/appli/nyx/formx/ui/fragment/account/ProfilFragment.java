@@ -18,18 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.FileProvider;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
+import android.widget.Toast;
 
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.FileCompressor;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
@@ -40,6 +35,12 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.FileProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -270,8 +271,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
      * Alert dialog for capture or select from galley
      */
     private void selectImage() {
-        final CharSequence[] items = {
-                "Take Photo", "Choose from Library",
+        final CharSequence[] items = { "Take Photo", "Choose from Library", "Remove Photo",
                 "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -280,13 +280,30 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
                 requestStoragePermission(true);
             } else if (items[item].equals("Choose from Library")) {
                 requestStoragePermission(false);
-            } else if (items[item].equals("Cancel")) {
-                dialog.dismiss();
-            }
+			} else if (items[item].equals("Cancel")) {
+				dialog.dismiss();
+			} else if (items[item].equals("Remove Photo")) {
+				removeImage();
+			}
         });
         builder.show();
     }
 
+	private void removeImage() {
+		profil_photo.setBackgroundDrawable(ic_account_circle_white_128dp);
+
+		StorageReference uploadeRef = storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg");
+
+		uploadeRef.delete().addOnSuccessListener(aVoid -> {
+			Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_SHORT).show();
+			// File deleted successfully
+			Log.d(ProfilFragment.class.getSimpleName(), "onSuccess: deleted file");
+		}).addOnFailureListener(exception -> {
+			// Uh-oh, an error occurred!
+			Log.d(ProfilFragment.class.getSimpleName(), "onFailure: did not delete file");
+			AlertDialogUtils.showErrorDialog(getContext(), exception.getMessage());
+		});
+	}
 
     // navigating user to app settings
     private void openSettings() {

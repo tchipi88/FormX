@@ -260,6 +260,7 @@ public class SignInFragment extends NetworkFragment {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+				AlertDialogUtils.showErrorDialog(getContext(), e.getMessage());
 
             }
         }
@@ -298,6 +299,7 @@ public class SignInFragment extends NetworkFragment {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
+						AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
                         signInViewModel.invalidAuthenticated();
                     }
 

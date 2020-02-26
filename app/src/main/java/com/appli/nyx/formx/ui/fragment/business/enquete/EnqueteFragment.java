@@ -15,16 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.FileProvider;
+import android.widget.Toast;
 
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
+import com.appli.nyx.formx.ui.fragment.account.ProfilFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.FileCompressor;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.google.firebase.storage.StorageReference;
@@ -32,6 +30,10 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.FileProvider;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -202,8 +204,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
      * Alert dialog for capture or select from galley
      */
     private void selectImage() {
-        final CharSequence[] items = {
-                "Take Photo", "Choose from Library",
+        final CharSequence[] items = { "Take Photo", "Choose from Library", "Remove Photo",
                 "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -214,9 +215,27 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
                 requestStoragePermission(false);
             } else if (items[item].equals("Cancel")) {
                 dialog.dismiss();
+            } else if (items[item].equals("Remove Photo")) {
+                removeImage();
             }
         });
         builder.show();
+    }
+
+    private void removeImage() {
+        enquete_photo.setBackgroundDrawable(ic_assignment_black_128dp);
+
+        StorageReference uploadeRef = storageRef.child(enqueteId).child("enquete_photo.jpg");
+
+        uploadeRef.delete().addOnSuccessListener(aVoid -> {
+            Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_SHORT).show();
+            // File deleted successfully
+            Log.d(ProfilFragment.class.getSimpleName(), "onSuccess: deleted file");
+        }).addOnFailureListener(exception -> {
+            // Uh-oh, an error occurred!
+            Log.d(ProfilFragment.class.getSimpleName(), "onFailure: did not delete file");
+            AlertDialogUtils.showErrorDialog(getContext(), exception.getMessage());
+        });
     }
 
 
