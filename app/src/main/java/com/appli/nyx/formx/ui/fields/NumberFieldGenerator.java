@@ -68,7 +68,20 @@ public class NumberFieldGenerator implements  IFieldGenerator<NumberQuestion>{
     }
 
     @Override
-    public void generateError(NumberQuestion field) {
+    public boolean generateError(Context context, NumberQuestion field) {
+        if (field == null || field.getFieldView() == null) {
+            return false;
+        }
+        final TextInputLayout tilInput = field.getFieldView().findViewById(R.id.numberfield_til);
+        final TextInputEditText edtInput = field.getFieldView().findViewById(R.id.numberfield_tiet);
+        tilInput.setError(null);
+        if (field.mandatory) {
+            if (TextUtils.isEmpty(edtInput.getText().toString())) {
+                tilInput.setError(context.getResources().getText(R.string.error_field_required));
+                return false;
+            }
+        }
 
+        return true;
     }
 }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,7 +75,7 @@ public class EnqueteSharedFragment extends ViewModelFragment<EnqueteViewModel> {
 
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setEnquete(holder.mItem);
-                    NavHostFragment.findNavController(EnqueteSharedFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
+                    //TODO NavHostFragment.findNavController(EnqueteSharedFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
                 });
 
                 holder.delete.setOnClickListener(v -> {

@@ -11,5 +11,5 @@ public  interface IFieldGenerator<V extends AbstractQuestion> {
 
     public  void loadValues(final V field);
 
-    public  void generateError(V field);
+    public boolean generateError(Context context, V field);
 }

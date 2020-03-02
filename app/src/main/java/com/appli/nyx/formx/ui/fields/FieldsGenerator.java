@@ -47,42 +47,45 @@ public class FieldsGenerator {
         return null;
     }
 
-    public static void generateError(AbstractQuestion field) {
+    public static boolean validate(Context context, AbstractQuestion field) {
         QuestionType questionType = field.getQuestionType();
         IFieldGenerator fieldGenerator;
+        boolean valid = true;
         switch (questionType) {
             case TEXT:
                 TextQuestion textField = (TextQuestion) field;
                 fieldGenerator = new TextFieldGenerator();
-                fieldGenerator.generateError(textField);
+                valid = fieldGenerator.generateError(context, textField);
                 break;
             case NUMBER:
                 NumberQuestion numberField = (NumberQuestion) field;
                 fieldGenerator = new NumberFieldGenerator();
-                fieldGenerator.generateError(numberField);
+                valid = fieldGenerator.generateError(context, numberField);
                 break;
             case BOOLEAN:
                 BooleanQuestion booleanField = (BooleanQuestion) field;
                 fieldGenerator = new BooleanFieldGenerator();
-                fieldGenerator.generateError(booleanField);
+                valid = fieldGenerator.generateError(context, booleanField);
                 break;
             case SPINNER:
                 SpinnerQuestion spinnerField = (SpinnerQuestion) field;
                 fieldGenerator = new SpinnerFieldGenerator();
-                fieldGenerator.generateError(spinnerField);
+                valid = fieldGenerator.generateError(context, spinnerField);
                 break;
             case DATE_PICKER:
                 DateQuestion dateField = (DateQuestion) field;
                 fieldGenerator = new DateFieldGenerator();
-                fieldGenerator.generateError(dateField);
+                valid = fieldGenerator.generateError(context, dateField);
                 break;
             case TIME_PICKER:
                 TimeQuestion timeField = (TimeQuestion) field;
                 fieldGenerator = new TimeFieldGenerator();
-                fieldGenerator.generateError(timeField);
+                valid = fieldGenerator.generateError(context, timeField);
                 break;
 
         }
+
+        return valid;
 
     }
 

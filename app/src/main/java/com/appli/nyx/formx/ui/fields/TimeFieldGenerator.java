@@ -7,11 +7,13 @@ import android.view.View;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
+import com.appli.nyx.formx.utils.DateUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class TimeFieldGenerator  implements  IFieldGenerator<TimeQuestion>{
+import org.joda.time.LocalTime;
 
+public class TimeFieldGenerator implements IFieldGenerator<TimeQuestion> {
 
 
     @Override
@@ -56,7 +58,33 @@ public class TimeFieldGenerator  implements  IFieldGenerator<TimeQuestion>{
     }
 
     @Override
-    public void generateError(TimeQuestion field) {
+    public boolean generateError(Context context, TimeQuestion field) {
+        if (field == null || field.getFieldView() == null) {
+            return false;
+        }
 
+        final View fieldView = field.getFieldView();
+        final TextInputLayout textfield_til = fieldView.findViewById(R.id.timefield_til);
+        final TextInputEditText textfield_tiet = fieldView.findViewById(R.id.timefield_tiet);
+
+        textfield_til.setError(null);
+
+        if (TextUtils.isEmpty(textfield_tiet.getText().toString())) {
+            if (field.isMandatory()) {
+                textfield_til.setError(context.getResources().getText(R.string.error_field_required));
+                return false;
+            }
+        } else {
+
+            try {
+                LocalTime dt = DateUtils.getLocalTime(textfield_tiet.getText().toString());
+            } catch (Exception e) {
+                textfield_til.setError("Not Valid Date");
+                return false;
+            }
+
+        }
+
+        return true;
     }
 }

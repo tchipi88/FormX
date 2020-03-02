@@ -3,6 +3,7 @@ package com.appli.nyx.formx.utils;
 import com.google.firebase.Timestamp;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 
 import java.text.SimpleDateFormat;
@@ -15,6 +16,10 @@ public class DateUtils {
 	// This class should not be initialized
 	private DateUtils() {
 
+	}
+
+	public static LocalTime getLocalTime(String time) {
+		return LocalTime.parse(time, DateTimeFormat.forPattern("HH:mm"));
 	}
 
 	public static LocalDate getLocalDate(String date) {

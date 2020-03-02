@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
@@ -27,7 +29,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 
 import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
@@ -53,7 +54,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
     @BindView(R.id.btn_next)
     MaterialButton btn_next;
 
-	List<Section> sections = new ArrayList<>();
+    List<Section> sections = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,20 +75,20 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
                     for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
 
-						Section section = new Section();
-						section.setId(sectionSnapshot.getId());
-						section.libelle = (String) sectionSnapshot.get("libelle");
-						section.description = (String) sectionSnapshot.get("description");
+                        Section section = new Section();
+                        section.setId(sectionSnapshot.getId());
+                        section.libelle = (String) sectionSnapshot.get("libelle");
+                        section.description = (String) sectionSnapshot.get("description");
 
-						sections.add(section);
+                        sections.add(section);
                     }
 
-					if (!sections.isEmpty()) {
-						generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
-						view.findViewById(R.id.no_section).setVisibility(View.GONE);
-					} else {
-						btn_next.findViewById(R.id.no_section).setVisibility(View.GONE);
-					}
+                    if (!sections.isEmpty()) {
+                        generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
+                        view.findViewById(R.id.no_section).setVisibility(View.GONE);
+                    } else {
+                        btn_next.setVisibility(View.GONE);
+                    }
 
 
                 }
@@ -95,41 +96,44 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
         });
 
-		btn_next.setOnClickListener(view1 -> {
-			if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
+        btn_next.setOnClickListener(view1 -> {
+            if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
 
-				//validate questions of section
-				if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
-					viewModel.clearQuestionList();
-					generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
-					viewModel.setsectionViewIndex();
-				}
-				;
-			} else {
-				NavHostFragment.findNavController(FormViewFragment.this).navigateUp();
-			}
-		});
+                //validate questions of section
+                if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
+                    generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
+                    viewModel.setsectionViewIndex();
+                }
+                ;
+            } else {
+                NavHostFragment.findNavController(FormViewFragment.this).navigateUp();
+            }
+        });
 
-		viewModel.getsectionViewIndex().observe(getViewLifecycleOwner(), index -> {
-			if (index + 1 < sections.size()) {
-				btn_next.setText(R.string.finish);
-			}
-		});
+        viewModel.getsectionViewIndex().observe(getViewLifecycleOwner(), index -> {
+            if (index + 1 < sections.size()) {
+                btn_next.setText(R.string.finish);
+            }
+        });
+
 
         return view;
     }
 
-	private boolean validateSection(Section section) {
-		boolean valid = true;
+    private boolean validateSection(Section section) {
+        boolean valid = true;
 
-		for (AbstractQuestion question : viewModel.getQuestionsListMutableLiveData().getValue()) {
-			FieldsGenerator.generateError(question);
-		}
-		return valid;
-	}
+        for (AbstractQuestion question : viewModel.getQuestionsListMutableLiveData().getValue()) {
+            if (!FieldsGenerator.validate(getContext(), question)) {
+                valid = false;
+            }
+        }
+        return valid;
+    }
 
-	private void generateLayoutSection(Section section) {
-		viewModel.clearQuestionList();
+    private void generateLayoutSection(Section section) {
+        viewModel.clearQuestionList();
+        fieldsContainer.removeAllViews();
         //get all fields for section
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
@@ -173,12 +177,11 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
     }
 
 
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		viewModel.setsectionViewIndex(0);
-		viewModel.clearQuestionList();
-		viewModel.clearSectionList();
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        viewModel.setsectionViewIndex(0);
+        viewModel.clearQuestionList();
+        viewModel.clearSectionList();
+    }
 }

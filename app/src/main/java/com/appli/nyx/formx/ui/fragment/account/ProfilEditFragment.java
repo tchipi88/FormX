@@ -131,10 +131,7 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 		} else {
 			try {
 				LocalDate dt = DateUtils.getLocalDate(birthday.getText().toString());
-				if (Years.yearsBetween(dt, LocalDate.now()).getYears() < 18) {
-					birthdayLayout.setError("User too young");
-					valid = false;
-				}
+
 				if (Years.yearsBetween(dt, LocalDate.now()).getYears() > 100) {
 					birthdayLayout.setError(getResources().getText(R.string.max_exceeded));
 					valid = false;

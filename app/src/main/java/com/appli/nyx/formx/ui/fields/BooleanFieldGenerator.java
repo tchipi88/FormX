@@ -10,7 +10,7 @@ import com.appli.nyx.formx.model.firebase.fields.BooleanQuestion;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textview.MaterialTextView;
 
-public class BooleanFieldGenerator implements  IFieldGenerator<BooleanQuestion>{
+public class BooleanFieldGenerator implements IFieldGenerator<BooleanQuestion> {
 
     @Override
     public View generateLayout(Context context, BooleanQuestion field) {
@@ -50,7 +50,7 @@ public class BooleanFieldGenerator implements  IFieldGenerator<BooleanQuestion>{
     }
 
     @Override
-    public void generateError(BooleanQuestion field) {
-
+    public boolean generateError(Context context, BooleanQuestion field) {
+        return true;
     }
 }

@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
-import com.appli.nyx.formx.model.firebase.validation.ValidationError;
 import com.appli.nyx.formx.ui.components.EditTextUnitDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -68,29 +67,23 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
     }
 
     @Override
-    public void generateError(TextQuestion field) {
+    public boolean generateError(Context context, TextQuestion field) {
         if (field == null || field.getFieldView() == null) {
-            return;
+            return false;
         }
 
         final View fieldView = field.getFieldView();
-        final Context context = fieldView.getContext();
         final TextInputLayout textfield_til = fieldView.findViewById(R.id.textfield_til);
+        final TextInputEditText textfield_tiet = fieldView.findViewById(R.id.textfield_tiet);
 
-        if (textfield_til == null) {
-            // Aucun champ de saisie affiché donc aucune information à mettre en erreur
-            return;
-        }
-
-        final ValidationError validationError = field.getValidationError();
-        if (validationError != null && !validationError.isEmpty()) {
-            if (validationError.hasError()) {
-                // Le champ ne respecte pas certaines règles obligatoires
-                textfield_til.setError("");
+        textfield_til.setError(null);
+        if (field.isMandatory()) {
+            if (TextUtils.isEmpty(textfield_tiet.getText().toString())) {
+                textfield_til.setError(context.getResources().getText(R.string.error_field_required));
+                return false;
             }
-        } else {
-            // Aucune erreur à afficher, afficher le champ de façon classique
-            textfield_til.setError(null);
         }
+
+        return true;
     }
 }
