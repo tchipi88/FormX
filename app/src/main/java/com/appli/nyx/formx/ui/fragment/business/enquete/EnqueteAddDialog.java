@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
+import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
@@ -52,6 +53,7 @@ public class EnqueteAddDialog extends BaseDialogFragment<EnqueteViewModel> {
         Enquete enquete = new Enquete();
         enquete.setLibelle(libelle);
         enquete.setDescription(description_tiet.getText().toString());
+        enquete.setEnqueteVisibility(EnqueteVisibility.DRAFT);
 
         FirebaseFirestore.getInstance()
                 .collection(ENQUETE_PATH)

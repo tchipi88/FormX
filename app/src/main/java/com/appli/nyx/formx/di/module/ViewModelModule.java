@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
-import com.appli.nyx.formx.ui.viewmodel.ImportSectionViewModel;
 import com.appli.nyx.formx.ui.viewmodel.NetworkErrorViewModel;
 import com.appli.nyx.formx.ui.viewmodel.ReportViewModel;
+import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.ui.viewmodel.SignInViewModel;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.ui.viewmodel.ViewModelFactory;
@@ -64,9 +64,9 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ImportSectionViewModel.class)
+    @ViewModelKey(SelectFormViewModel.class)
     @SuppressWarnings("unused")
-    abstract ViewModel bindsImportSectionViewModel(ImportSectionViewModel importSectionViewModel);
+    abstract ViewModel bindsImportSectionViewModel(SelectFormViewModel selectFormViewModel);
 
 
     @Binds

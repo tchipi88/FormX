@@ -284,7 +284,11 @@
     <fragment
         android:id="@+id/enqueteFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment"
-        android:label="@string/enquetes" />
+        android:label="@string/enquetes">
+        <action
+            android:id="@+id/action_enqueteFragment_to_selectFormDialog"
+            app:destination="@id/selectFormDialog" />
+    </fragment>
     <fragment
         android:id="@+id/formViewFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormViewFragment"
@@ -343,6 +347,9 @@
             app:destination="@id/importSectionDialog"
             app:popUpTo="@+id/formFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="destination"
+            app:argType="integer" />
     </dialog>
     <dialog
         android:id="@+id/importSectionDialog"

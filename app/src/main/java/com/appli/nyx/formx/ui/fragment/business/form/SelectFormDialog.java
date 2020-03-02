@@ -16,7 +16,7 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewholder.SimpleViewHolder;
-import com.appli.nyx.formx.ui.viewmodel.ImportSectionViewModel;
+import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -26,15 +26,15 @@ import com.google.firebase.firestore.Query;
 import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
-public class SelectFormDialog extends BaseDialogFragment<ImportSectionViewModel> {
+public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
 
     FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View emptyView;
 
     @Override
-    protected Class<ImportSectionViewModel> getViewModel() {
-        return ImportSectionViewModel.class;
+    protected Class<SelectFormViewModel> getViewModel() {
+        return SelectFormViewModel.class;
     }
 
     @Override
@@ -74,7 +74,13 @@ public class SelectFormDialog extends BaseDialogFragment<ImportSectionViewModel>
                 holder.mLibelleView.setText(model.getLibelle());
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setForm(model);
-                    NavHostFragment.findNavController(SelectFormDialog.this).navigate(R.id.action_selectFormDialog_to_importSectionDialog);
+                    int destination = getArguments().getInt("destination");
+                    if (destination == 0) {
+                        NavHostFragment.findNavController(SelectFormDialog.this).navigateUp();
+                    } else {
+                        NavHostFragment.findNavController(SelectFormDialog.this).navigate(destination);
+                    }
+
                 });
             }
 

@@ -17,28 +17,39 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.fragment.account.ProfilFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
+import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.FileCompressor;
 import com.appli.nyx.formx.utils.ImageUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.FileProvider;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
+import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
@@ -57,11 +68,20 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     @BindView(R.id.enquete_des)
     TextView enquete_des;
 
+    @BindView(R.id.enquete_visibility)
+    TextView enquete_visibility;
+
+    @BindView(R.id.enquete_form)
+    TextView enquete_form;
+
+
     StorageReference storageRef;
     File mPhotoFile;
     FileCompressor mCompressor;
 
     String enqueteId;
+
+    SelectFormViewModel selectFormViewModel;
 
     @Override
     protected Class<EnqueteViewModel> getViewModel() {
@@ -79,6 +99,8 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         storageRef = firebaseStorage.getReference();
         mCompressor = new FileCompressor(getContext());
 
+        selectFormViewModel = ViewModelProviders.of(getActivity(), viewModelFactory).get(SelectFormViewModel.class);
+
     }
 
     @Override
@@ -89,6 +111,9 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
             enquete_name.setText(enquete.getLibelle());
             enquete_des.setText(enquete.getDescription());
+            if (enquete.getForm() != null) enquete_form.setText(enquete.getForm().getLibelle());
+            if (enquete.getEnqueteVisibility() != null)
+                enquete_visibility.setText(enquete.getEnqueteVisibility().name());
 
             ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()).child("enquete_photo.jpg"), enquete_photo, ic_assignment_black_128dp);
 
@@ -100,6 +125,36 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             selectImage();
         });
 
+        rootView.findViewById(R.id.card_form).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("destination", 0);
+            NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_selectFormDialog, bundle);
+        });
+        rootView.findViewById(R.id.card_visibility).setOnClickListener(v -> {
+            //TODO
+        });
+
+        selectFormViewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
+            Map<String, Object> updatedObject = new HashMap<>();
+            updatedObject.put("form", form);
+            updatedObject.put("formPath", FirebaseFirestore.getInstance().collection(FORM_PATH)
+                    .document(SessionUtils.getUserUid())
+                    .collection(DATA)
+                    .document(form.getId()).getPath());
+
+            FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                    .document(SessionUtils.getUserUid()).collection(DATA)
+                    .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
+                    .update(updatedObject)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            enquete_form.setText(form.getLibelle());
+                        } else {
+                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                        }
+                    });
+
+        });
 
         return rootView;
     }

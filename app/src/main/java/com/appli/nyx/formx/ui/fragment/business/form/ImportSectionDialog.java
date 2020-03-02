@@ -27,7 +27,7 @@ import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewholder.SimpleViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
-import com.appli.nyx.formx.ui.viewmodel.ImportSectionViewModel;
+import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -41,15 +41,15 @@ import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
-public class ImportSectionDialog extends BaseDialogFragment<ImportSectionViewModel> {
+public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel> {
 
     FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View emptyView;
 
     @Override
-    protected Class<ImportSectionViewModel> getViewModel() {
-        return ImportSectionViewModel.class;
+    protected Class<SelectFormViewModel> getViewModel() {
+        return SelectFormViewModel.class;
     }
 
     @Override

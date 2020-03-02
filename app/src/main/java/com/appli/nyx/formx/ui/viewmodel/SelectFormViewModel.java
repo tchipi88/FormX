@@ -10,12 +10,12 @@ import com.appli.nyx.formx.model.firebase.Form;
 
 import javax.inject.Inject;
 
-public class ImportSectionViewModel extends AndroidViewModel {
+public class SelectFormViewModel extends AndroidViewModel {
 
     private MutableLiveData<Form> formMutableLiveData = new MutableLiveData<>();
 
     @Inject
-    public ImportSectionViewModel(@NonNull Application application) {
+    public SelectFormViewModel(@NonNull Application application) {
         super(application);
     }
 
