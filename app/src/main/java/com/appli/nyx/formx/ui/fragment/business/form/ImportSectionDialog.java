@@ -36,8 +36,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -73,7 +73,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
-                .collection(DATA)
+                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH);
 
@@ -102,7 +102,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
                     FirebaseFirestore.getInstance()
                             .collection(FORM_PATH)
                             .document(SessionUtils.getUserUid())
-                            .collection(DATA)
+                            .collection(FORM_DATA)
                             .document(formViewModel.getFormMutableLiveData().getValue().getId())
                             .collection(SECTION_PATH)
                             .add(model).addOnCompleteListener(task -> {
@@ -111,7 +111,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
                             //add fields
                             FirebaseFirestore.getInstance().collection(FORM_PATH)
                                     .document(SessionUtils.getUserUid())
-                                    .collection(DATA)
+                                    .collection(FORM_DATA)
                                     .document(viewModel.getFormMutableLiveData().getValue().getId())
                                     .collection(SECTION_PATH)
                                     .document(model.getId())
@@ -147,7 +147,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
                                                 FirebaseFirestore.getInstance()
                                                         .collection(FORM_PATH)
                                                         .document(SessionUtils.getUserUid())
-                                                        .collection(DATA)
+                                                        .collection(FORM_DATA)
                                                         .document(formViewModel.getFormMutableLiveData().getValue().getId())
                                                         .collection(SECTION_PATH)
                                                         .document(task.getResult().getId())

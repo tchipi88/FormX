@@ -34,8 +34,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -68,7 +68,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(FORM_DATA).orderBy("libelle");
 
         FirestoreRecyclerOptions<Form> options = new FirestoreRecyclerOptions.Builder<Form>().setQuery(query, snapshot -> {
             Form form = snapshot.toObject(Form.class);
@@ -97,7 +97,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
                 holder.delete.setOnClickListener(v -> {
                     AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
-                        FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                        FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(FORM_DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                             } else {
@@ -119,7 +119,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
                 holder.duplicate.setOnClickListener(v -> {
                     CollectionReference formCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).
-                            document(SessionUtils.getUserUid()).collection(DATA);
+                            document(SessionUtils.getUserUid()).collection(FORM_DATA);
 
                     Form duplicateform = new Form();
                     duplicateform.setLibelle(form.getLibelle() + "__Copy");

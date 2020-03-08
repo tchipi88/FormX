@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
@@ -16,12 +19,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class EnqueteEditDialog extends BaseDialogFragment<EnqueteViewModel> {
@@ -70,7 +71,7 @@ public class EnqueteEditDialog extends BaseDialogFragment<EnqueteViewModel> {
 		enquete.setDescription(description_tiet.getText().toString());
 
         FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                .document(SessionUtils.getUserUid()).collection(DATA)
+                .document(SessionUtils.getUserUid()).collection(ENQUETE_DATA)
                 .document(viewModel.getEnqueteMutableLiveData().getValue().getId()).set(enquete).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 NavHostFragment.findNavController(EnqueteEditDialog.this).navigateUp();

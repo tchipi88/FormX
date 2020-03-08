@@ -5,6 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.preference.PrefsManager;
 import com.appli.nyx.formx.preference.PrefsManager_;
@@ -14,17 +24,6 @@ import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import javax.inject.Inject;
-
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;

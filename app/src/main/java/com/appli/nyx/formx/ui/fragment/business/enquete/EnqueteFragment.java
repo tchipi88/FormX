@@ -47,8 +47,9 @@ import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
@@ -139,11 +140,11 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             updatedObject.put("form", form);
             updatedObject.put("formPath", FirebaseFirestore.getInstance().collection(FORM_PATH)
                     .document(SessionUtils.getUserUid())
-                    .collection(DATA)
+                    .collection(FORM_DATA)
                     .document(form.getId()).getPath());
 
             FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                    .document(SessionUtils.getUserUid()).collection(DATA)
+                    .document(SessionUtils.getUserUid()).collection(ENQUETE_DATA)
                     .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
                     .update(updatedObject)
                     .addOnCompleteListener(task -> {

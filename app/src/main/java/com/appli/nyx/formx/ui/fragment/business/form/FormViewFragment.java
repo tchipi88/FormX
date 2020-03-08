@@ -32,8 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -68,7 +68,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
             //get all sections
             FirebaseFirestore.getInstance().collection(FORM_PATH)
                     .document(SessionUtils.getUserUid())
-                    .collection(DATA)
+                    .collection(FORM_DATA)
                     .document(form.getId())
                     .collection(SECTION_PATH).get().addOnCompleteListener(sectiontask -> {
                 if (sectiontask.isSuccessful()) {
@@ -137,7 +137,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         //get all fields for section
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
-                .collection(DATA)
+                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH).document(section.getId())
                 .collection(FIELDS_PATH).get().addOnCompleteListener(fieldsTask -> {

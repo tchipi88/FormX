@@ -18,8 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -52,7 +52,7 @@ public abstract class CommonQuestionFragment extends ViewModelFragment<FormViewM
 		fieldsRef = FirebaseFirestore.getInstance()
 				.collection(FORM_PATH)
 				.document(SessionUtils.getUserUid())
-				.collection(DATA)
+				.collection(FORM_DATA)
 				.document(viewModel.getFormMutableLiveData().getValue().getId())
 				.collection(SECTION_PATH)
 				.document(viewModel.getSectionMutableLiveData().getValue().getId())

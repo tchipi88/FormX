@@ -23,7 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
@@ -53,7 +53,7 @@ public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(FORM_DATA).orderBy("libelle");
 
         FirestoreRecyclerOptions<Form> options = new FirestoreRecyclerOptions.Builder<Form>().setQuery(query, snapshot -> {
             Form form = snapshot.toObject(Form.class);

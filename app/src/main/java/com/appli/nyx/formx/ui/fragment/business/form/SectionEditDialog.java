@@ -1,7 +1,6 @@
 package com.appli.nyx.formx.ui.fragment.business.form;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -74,7 +73,7 @@ public class SectionEditDialog extends BaseDialogFragment<FormViewModel> {
         FirebaseFirestore.getInstance()
                 .collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
-                .collection(DATA)
+                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH)
                 .document(viewModel.getSectionMutableLiveData().getValue().getId())

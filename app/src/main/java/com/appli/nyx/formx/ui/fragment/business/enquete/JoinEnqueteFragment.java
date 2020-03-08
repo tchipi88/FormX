@@ -15,14 +15,12 @@ import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.EnqueteViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 
 public class JoinEnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
@@ -54,7 +52,7 @@ public class JoinEnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collectionGroup(ENQUETE_DATA).orderBy("libelle");
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
             Enquete enquete = snapshot.toObject(Enquete.class);

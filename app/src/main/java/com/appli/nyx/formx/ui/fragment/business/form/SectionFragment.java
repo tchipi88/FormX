@@ -36,8 +36,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -75,7 +75,7 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
         Query query = FirebaseFirestore.getInstance()
                 .collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
-                .collection(DATA)
+                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH)
                 .document(viewModel.getSectionMutableLiveData().getValue().getId())
@@ -123,7 +123,7 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
 
             @Override
             protected void onBindViewHolder(@NonNull QuestionViewHolder holder, int position, @NonNull AbstractQuestion model) {
-                CollectionReference fieldsCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH).document(viewModel.getSectionMutableLiveData().getValue().getId()).collection(FIELDS_PATH);
+                CollectionReference fieldsCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(FORM_DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH).document(viewModel.getSectionMutableLiveData().getValue().getId()).collection(FIELDS_PATH);
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(holder.mItem.getLibelle());
 

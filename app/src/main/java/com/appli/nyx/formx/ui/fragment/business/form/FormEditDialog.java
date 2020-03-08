@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
@@ -16,13 +19,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
@@ -72,7 +72,7 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
 
         FirebaseFirestore.getInstance()
                 .collection(FORM_PATH)
-                .document(SessionUtils.getUserUid()).collection(DATA)
+                .document(SessionUtils.getUserUid()).collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .set(form).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

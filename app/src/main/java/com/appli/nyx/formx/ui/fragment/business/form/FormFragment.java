@@ -37,8 +37,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -101,7 +101,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(SessionUtils.getUserUid())
-                .collection(DATA)
+                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH);
 
@@ -126,7 +126,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
                 holder.mLibelleView.setText(model.getLibelle());
 
                 CollectionReference sectionCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).
-                        document(SessionUtils.getUserUid()).collection(DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH);
+                        document(SessionUtils.getUserUid()).collection(FORM_DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH);
 
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setSection(holder.mItem);

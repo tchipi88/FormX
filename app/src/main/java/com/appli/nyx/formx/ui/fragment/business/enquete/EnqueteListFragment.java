@@ -24,7 +24,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
@@ -57,7 +57,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		// Create the query and the FirestoreRecyclerOptions
-		Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA).orderBy("libelle");
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
             Enquete enquete = snapshot.toObject(Enquete.class);
@@ -88,7 +88,7 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
                 holder.delete.setOnClickListener(v -> {
 
                     AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
-                        FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                        FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                             } else {

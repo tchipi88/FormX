@@ -5,6 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Cluster;
 import com.appli.nyx.formx.ui.adapter.MySwipeToDeleteCallback;
@@ -17,21 +25,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import androidx.annotation.NonNull;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import static android.widget.LinearLayout.VERTICAL;
+import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_PATH;
-import static com.appli.nyx.formx.utils.MyConstant.DATA;
+
 
 public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
 
-	FirestoreRecyclerAdapter adapter;
+    FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View emptyView;
 
@@ -61,7 +62,7 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
 		// Create the query and the FirestoreRecyclerOptions
-		Query query = FirebaseFirestore.getInstance().collection(CLUSTER_PATH).document(SessionUtils.getUserUid()).collection(DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(CLUSTER_PATH).document(SessionUtils.getUserUid()).collection(CLUSTER_DATA).orderBy("libelle");
 
 		FirestoreRecyclerOptions<Cluster> options = new FirestoreRecyclerOptions.Builder<Cluster>().setQuery(query, Cluster.class).build();
 
