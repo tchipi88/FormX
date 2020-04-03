@@ -2,17 +2,13 @@ package com.appli.nyx.formx.ui.viewmodel;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.appli.nyx.formx.model.firebase.Cluster;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.inject.Inject;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 public class ClusterViewModel extends AndroidViewModel {
 
@@ -23,15 +19,8 @@ public class ClusterViewModel extends AndroidViewModel {
         super(application);
     }
 
-
-    public LiveData<List<Cluster>> loadClusterByUser() {
-        List<Cluster> clusters = Arrays.asList(new Cluster("Cluster  1"),
-                new Cluster("Cluster  2"),
-                new Cluster("Cluster  3"),
-                new Cluster("Cluster  4"),
-                new Cluster("Cluster  5"),
-                new Cluster("Cluster  6"));
-        return new MutableLiveData<>(clusters);
+	public MutableLiveData<Cluster> getClusterMutableLiveData() {
+		return clusterMutableLiveData;
     }
 
     public void setCluster(Cluster cluster) {

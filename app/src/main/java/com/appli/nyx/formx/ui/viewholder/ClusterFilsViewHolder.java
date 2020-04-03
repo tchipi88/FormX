@@ -10,22 +10,19 @@ import com.appli.nyx.formx.model.firebase.ClusterFils;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ClusterViewHolder extends RecyclerView.ViewHolder {
+public class ClusterFilsViewHolder extends RecyclerView.ViewHolder {
 
 	public final View mView;
-	public TextView mLibelleView;
 	public final AppCompatImageView delete;
-	public final AppCompatImageView edit;
+	public TextView mLibelleView;
 	public TextView mDescriptionView;
 
-
-	public ClusterViewHolder(View itemView) {
+	public ClusterFilsViewHolder(View itemView) {
 		super(itemView);
 		mLibelleView = itemView.findViewById(R.id.libelle);
 		mDescriptionView = itemView.findViewById(R.id.description);
 
 		delete = itemView.findViewById(R.id.delete);
-		edit = itemView.findViewById(R.id.edit);
 		mView = itemView;
 	}
 
@@ -35,7 +32,6 @@ public class ClusterViewHolder extends RecyclerView.ViewHolder {
 	}
 
 	public void bind(ClusterFils model) {
-
 		mLibelleView.setText(model.getLibelle());
 		mDescriptionView.setText(model.getDescription());
 

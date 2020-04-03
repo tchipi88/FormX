@@ -6,12 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
@@ -23,6 +17,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
@@ -124,9 +124,6 @@ public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
 
 		recyclerView.setAdapter(adapter);
-
-
-
 
 		view.findViewById(R.id.add_enquete).setOnClickListener(v -> {
             NavHostFragment.findNavController(EnqueteListFragment.this).navigate(R.id.action_global_enqueteAddDialog);

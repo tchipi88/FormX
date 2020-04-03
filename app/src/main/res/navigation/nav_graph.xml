@@ -156,7 +156,12 @@
     <fragment
         android:id="@+id/clusterFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment"
-        android:label="@string/cluster" />
+        android:label="@string/cluster">
+
+        <action
+            android:id="@+id/action_clusterFragment_to_clusterFilsAddDialog"
+            app:destination="@id/clusterFilsAddDialog" />
+    </fragment>
     <fragment
         android:id="@+id/formListFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormListFragment"
@@ -192,16 +197,16 @@
 
         <action
             android:id="@+id/action_sectionFragment_to_questionAddDialog"
-            app:destination="@id/questionAddDialogFragment" />
+            app:destination="@id/questionAddDialog" />
         <action
             android:id="@+id/action_sectionFragment_to_sectionEditDialog"
             app:destination="@id/sectionEditDialog" />
     </fragment>
 
     <dialog
-        android:id="@+id/questionAddDialogFragment"
+        android:id="@+id/questionAddDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog"
-        android:label="QuestionAddDialogFragment" />
+        android:label="QuestionAddDialog" />
     <dialog
         android:id="@+id/formAddDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog"
@@ -311,6 +316,10 @@
         <action
             android:id="@+id/action_clusterListFragment_to_clusterFragment"
             app:destination="@id/clusterFragment" />
+
+        <action
+            android:id="@+id/action_clusterListFragment_to_clusterEditDialog"
+            app:destination="@id/clusterEditDialog" />
     </fragment>
     <action
         android:id="@+id/action_global_clusterListFragment"
@@ -381,4 +390,23 @@
         android:id="@+id/selectUserFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.SelectUserFragment"
         android:label="Select User " />
+
+    <dialog
+        android:id="@+id/clusterAddDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterRootAddDialog"
+        android:label="ClusterAddDialog" />
+    <action
+        android:id="@+id/action_global_clusterAddDialog"
+        app:destination="@id/clusterAddDialog" />
+
+    <dialog
+        android:id="@+id/clusterEditDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterRootEditDialog"
+        android:label="ClusterEditDialog" />
+
+    <dialog
+        android:id="@+id/clusterFilsAddDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFilsAddDialog"
+        android:label="ClusterFilsAddDialog" />
+
 </navigation>

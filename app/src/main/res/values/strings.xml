@@ -135,6 +135,8 @@
     <string name="finish">Finish</string>
     <string name="edit_enquete">Edit Enquete</string>
     <string name="add_enquete">Add Enquete</string>
+    <string name="edit_cluster">Edit Cluster</string>
+    <string name="add_cluster">Add Cluster</string>
     <string name="confirm_delete">Confirm Delete...</string>
     <string name="are_you_sure_to_delete">Are you sure you want delete this?</string>
     <string name="cancel">Cancel</string>
