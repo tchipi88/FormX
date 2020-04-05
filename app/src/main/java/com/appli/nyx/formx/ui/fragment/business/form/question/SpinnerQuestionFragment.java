@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.Option;
 import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
+import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.ui.adapter.SpinnerOptionAdapter;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -74,7 +75,7 @@ public class SpinnerQuestionFragment extends CommonQuestionFragment {
 
                     customAdapter.addAll(question.options);
 
-                    NavHostFragment.findNavController(SpinnerQuestionFragment.this).getCurrentDestination().setLabel(question.getLibelle());
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(question.getLibelle());
                 });
         });
 

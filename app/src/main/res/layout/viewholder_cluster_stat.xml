@@ -9,27 +9,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/_8dp">
 
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginRight="18dp"
-            android:src="@drawable/ic_insert_chart_black_24dp"
-            app:layout_constraintEnd_toStartOf="@id/libelle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/libelle"
             style="@style/TextCardViewBold"
             android:layout_width="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/img"
+            android:drawableStart="@drawable/ic_insert_chart_black_24dp"
+            android:drawablePadding="@dimen/_8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img"
-            app:layout_constraintTop_toTopOf="@id/img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="QUESTIONNN  45" />
 
 
@@ -38,8 +29,8 @@
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            app:layout_constraintStart_toEndOf="@id/img"
+            android:layout_marginLeft="32dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/libelle"
             tools:text="Loreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeem" />
 

@@ -6,23 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.ClusterFils;
-import com.appli.nyx.formx.model.firebase.enumeration.TypeClusterFils;
+import com.appli.nyx.formx.model.firebase.Cluster;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class ClusterEditDialog extends BaseDialogFragment<ClusterViewModel> {
 
@@ -49,9 +46,9 @@ public class ClusterEditDialog extends BaseDialogFragment<ClusterViewModel> {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 
-		viewModel.getClusterMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-			libelle_tiet.setText(form.getLibelle());
-			description_tiet.setText(form.getDescription());
+        viewModel.getClusterMutableLiveData().observe(getViewLifecycleOwner(), cluster -> {
+            libelle_tiet.setText(cluster.getLibelle());
+            description_tiet.setText(cluster.getDescription());
 		});
 
 		return view;
@@ -64,11 +61,11 @@ public class ClusterEditDialog extends BaseDialogFragment<ClusterViewModel> {
 		}
 
 		String libelle = libelle_tiet.getText().toString();
-		ClusterFils cluster = new ClusterFils(TypeClusterFils.CLUSTER);
+        Cluster cluster = new Cluster();
 		cluster.setLibelle(libelle);
 		cluster.setDescription(description_tiet.getText().toString());
-		//TODO
-		FirddebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA).document(viewModel.getClusterMutableLiveData().getValue().getId()).set(cluster).addOnCompleteListener(task -> {
+
+        FirebaseFirestore.getInstance().document(viewModel.getClusterCollectionPathMutableLiveData().getValue()).set(cluster).addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
 				NavHostFragment.findNavController(ClusterEditDialog.this).navigateUp();
 			} else {

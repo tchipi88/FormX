@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
+import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -42,7 +43,7 @@ public class TimeQuestionFragment extends CommonQuestionFragment {
                     description_tiet.setText(question.getDescription());
                     mandatory.setChecked(question.isMandatory());
 
-                    NavHostFragment.findNavController(TimeQuestionFragment.this).getCurrentDestination().setLabel(question.getLibelle());
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(question.getLibelle());
                 });
         });
 

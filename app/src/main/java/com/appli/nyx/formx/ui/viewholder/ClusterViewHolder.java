@@ -2,13 +2,12 @@ package com.appli.nyx.formx.ui.viewholder;
 
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.ClusterFils;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Cluster;
 
 public class ClusterViewHolder extends RecyclerView.ViewHolder {
 
@@ -34,13 +33,22 @@ public class ClusterViewHolder extends RecyclerView.ViewHolder {
 		return super.toString() + " '" + mLibelleView.getText() + "'";
 	}
 
-	public void bind(ClusterFils model) {
+	public void bind(Cluster model) {
 
 		mLibelleView.setText(model.getLibelle());
 		mDescriptionView.setText(model.getDescription());
 
-		delete.setOnClickListener(v -> {
-			Toast.makeText(mView.getContext(), "Not Yet Implemented", Toast.LENGTH_LONG).show();
-		});
+	}
+
+	public void setOnViewClickListener(View.OnClickListener onClickListener) {
+		mView.setOnClickListener(onClickListener);
+	}
+
+	public void setOnDeleteClickListener(View.OnClickListener onClickListener) {
+		delete.setOnClickListener(onClickListener);
+	}
+
+	public void setOnEditClickListener(View.OnClickListener onClickListener) {
+		edit.setOnClickListener(onClickListener);
 	}
 }

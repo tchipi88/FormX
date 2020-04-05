@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +44,7 @@ public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+        getDialog().setTitle(getResources().getString(R.string.select_form));
 
         recyclerView = view.findViewById(R.id.items);
         emptyView = view.findViewById(R.id.emptyView);
@@ -101,14 +100,6 @@ public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
 
 
         return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        getDialog().setTitle(getResources().getString(R.string.select_form));
     }
 
 

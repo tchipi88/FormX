@@ -14,7 +14,7 @@ import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 
 import butterknife.BindView;
 
-public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
+public class ChooseQuestionTypeDialog extends BaseDialogFragment<FormViewModel> {
 
     @Override
     protected Class<FormViewModel> getViewModel() {
@@ -23,7 +23,7 @@ public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.dialog_question_add;
+        return R.layout.dialog_choose_question_type;
     }
 
     @BindView(R.id.question_type)
@@ -42,22 +42,22 @@ public class QuestionAddDialog extends BaseDialogFragment<FormViewModel> {
 
            switch (checkedId) {
                case R.id.question_text:
-                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_textDialog);
+                   NavHostFragment.findNavController(ChooseQuestionTypeDialog.this).navigate(R.id.action_global_textDialog);
                    break;
                case R.id.question_number:
-                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_numberDialog);
+                   NavHostFragment.findNavController(ChooseQuestionTypeDialog.this).navigate(R.id.action_global_numberDialog);
                    break;
                case R.id.question_boolean:
-                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_booleanDialog);
+                   NavHostFragment.findNavController(ChooseQuestionTypeDialog.this).navigate(R.id.action_global_booleanDialog);
                    break;
                case R.id.question_spinner:
-                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_spinnerDialog);
+                   NavHostFragment.findNavController(ChooseQuestionTypeDialog.this).navigate(R.id.action_global_spinnerDialog);
                    break;
                case R.id.question_date:
-                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_dateDialog);
+                   NavHostFragment.findNavController(ChooseQuestionTypeDialog.this).navigate(R.id.action_global_dateDialog);
                    break;
                case R.id.question_time:
-                   NavHostFragment.findNavController(QuestionAddDialog.this).navigate(R.id.action_global_timeDialog);
+                   NavHostFragment.findNavController(ChooseQuestionTypeDialog.this).navigate(R.id.action_global_timeDialog);
                    break;
                default:
            }

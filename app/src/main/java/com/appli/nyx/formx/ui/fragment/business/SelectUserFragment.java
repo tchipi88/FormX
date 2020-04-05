@@ -9,15 +9,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.SearchView;
+import androidx.paging.PagedList;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StorageStrategy;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.adapter.ActionModeController;
+import com.appli.nyx.formx.ui.adapter.multiselection.UserDetails;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserKeyProvider;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserLookup;
+import com.appli.nyx.formx.ui.adapter.multiselection.ViewHolderWithDetails;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
-import com.appli.nyx.formx.ui.viewholder.UserViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.MyConstant;
@@ -31,18 +48,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.Iterator;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
-import androidx.appcompat.widget.SearchView;
-import androidx.paging.PagedList;
-import androidx.recyclerview.selection.SelectionTracker;
-import androidx.recyclerview.selection.StorageStrategy;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindDrawable;
 
 public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> implements SearchView.OnQueryTextListener {
@@ -119,7 +124,12 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         adapter = new UserFirebaseAdapter(options);
         recyclerView.setAdapter(adapter);
 
-        selectionTracker = new SelectionTracker.Builder<>("my-user-id", recyclerView, new UserKeyProvider(adapter), new UserLookup(recyclerView), StorageStrategy.createStringStorage()).withOnItemActivatedListener(null).withOnDragInitiatedListener(e -> {
+        selectionTracker = new SelectionTracker.Builder<>("my-user-id",
+                recyclerView,
+                new UserKeyProvider(adapter),
+                new UserLookup(recyclerView),
+                StorageStrategy.createLongStorage())
+                .withOnItemActivatedListener((item, e) -> true).withOnDragInitiatedListener(e -> {
             Log.d(TAG, "onDragInitiated");
             return true;
         }).build();
@@ -222,7 +232,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         adapter.stopListening();
     }
 
-    public class UserFirebaseAdapter extends FirestorePagingAdapter<User, UserViewHolder> {
+    public class UserFirebaseAdapter extends FirestorePagingAdapter<User, UserFirebaseAdapter.UserViewHolder> {
 
         private SelectionTracker selectionTracker;
 
@@ -272,6 +282,11 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         }
 
         @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
         protected void onLoadingStateChanged(@NonNull LoadingState state) {
             switch (state) {
                 case LOADING_INITIAL:
@@ -304,6 +319,36 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
             } else {
                 emptyView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        public class UserViewHolder extends RecyclerView.ViewHolder implements ViewHolderWithDetails {
+
+            public final View mView;
+            public TextView user_name;
+            public TextView user_firstname;
+            public AppCompatImageView user_img;
+
+            public User user;
+
+            public UserViewHolder(View itemView) {
+                super(itemView);
+                mView = itemView;
+                user_firstname = itemView.findViewById(R.id.user_firstname);
+                user_name = itemView.findViewById(R.id.user_name);
+                user_img = itemView.findViewById(R.id.user_img);
+
+            }
+
+            @Override
+            public String toString() {
+                return super.toString() + " '" + user_name.getText() + "'";
+            }
+
+            @Override
+            public ItemDetailsLookup.ItemDetails getItemDetails() {
+                return new UserDetails(getAdapterPosition(), getCurrentList().get(getAdapterPosition()));
             }
         }
     }

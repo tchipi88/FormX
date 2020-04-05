@@ -3,12 +3,13 @@ package com.appli.nyx.formx;
 import android.app.Activity;
 import android.app.Application;
 
+import androidx.fragment.app.Fragment;
+
 import com.appli.nyx.formx.di.components.DaggerAppComponent;
 import com.appli.nyx.formx.exception.MyExceptionHandler;
 
 import javax.inject.Inject;
 
-import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -41,8 +42,6 @@ public class MyApplication extends Application implements HasActivityInjector, H
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
-
-		//TODO setUpStrictMode();
 
 		Thread.setDefaultUncaughtExceptionHandler(new MyExceptionHandler(this));
 

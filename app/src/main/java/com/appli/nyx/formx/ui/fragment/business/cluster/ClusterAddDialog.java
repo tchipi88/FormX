@@ -4,23 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.ClusterFils;
-import com.appli.nyx.formx.model.firebase.enumeration.TypeClusterFils;
+import com.appli.nyx.formx.model.firebase.Cluster;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.annotation.Nullable;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_DATA;
-import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_PATH;
 
 public class ClusterAddDialog extends BaseDialogFragment<ClusterViewModel> {
 
@@ -49,13 +46,13 @@ public class ClusterAddDialog extends BaseDialogFragment<ClusterViewModel> {
 			return;
 		}
 		String libelle = libelle_tiet.getText().toString();
-		ClusterFils cluster = new ClusterFils(TypeClusterFils.CLUSTER);
+        Cluster cluster = new Cluster();
 		cluster.setLibelle(libelle);
 		cluster.setDescription(description_tiet.getText().toString());
-		//TODO
-		FirebaddseFirestore.getInstance().collection(CLUSTER_PATH).document(SessionUtils.getUserUid()).collection(CLUSTER_DATA).add(cluster).addOnCompleteListener(task -> {
+
+        FirebaseFirestore.getInstance().collection(viewModel.getClusterCollectionPathMutableLiveData().getValue()).add(cluster).addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
-				NavHostFragment.findNavController(ClusterAddDialog.this).navigate(R.id.action_global_clusterListFragment);
+                NavHostFragment.findNavController(ClusterAddDialog.this).navigateUp();
 			} else {
 				AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
 			}

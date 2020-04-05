@@ -5,23 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.ClusterFils;
-import com.appli.nyx.formx.model.firebase.Enquete;
-import com.appli.nyx.formx.model.firebase.enumeration.TypeClusterFils;
-import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
-import com.appli.nyx.formx.ui.viewholder.EnqueteViewHolder;
-import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
-import com.appli.nyx.formx.utils.SessionUtils;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-
 import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Cluster;
+import com.appli.nyx.formx.model.firebase.Enquete;
+import com.appli.nyx.formx.model.firebase.enumeration.TypeCluster;
+import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
+import com.appli.nyx.formx.ui.viewholder.EnqueteViewHolder;
+import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
@@ -53,7 +56,9 @@ public class ClusterEnqueteFragment extends ViewModelFragment<ClusterViewModel> 
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-		Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA).orderBy("libelle");
+		CollectionReference enqueteCollectionRef = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA);
+
+		Query query = enqueteCollectionRef.orderBy("libelle");
 
 		FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
 			Enquete enquete = snapshot.toObject(Enquete.class);
@@ -71,18 +76,25 @@ public class ClusterEnqueteFragment extends ViewModelFragment<ClusterViewModel> 
 			}
 
 			@Override
-			protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete model) {
+			protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete enquete) {
 				holder.mItem = getItem(position);
-				holder.mLibelleView.setText(model.getLibelle());
-				holder.mDescriptionView.setText(model.getDescription());
+				holder.mLibelleView.setText(enquete.getLibelle());
+				holder.mDescriptionView.setText(enquete.getDescription());
 
 				holder.mView.setOnClickListener(v -> {
-					ClusterFils clusterFils = new ClusterFils(TypeClusterFils.ENQUETE);
-					clusterFils.setLibelle(model.getLibelle());
-					clusterFils.setDescription(model.getDescription());
-					clusterFils.path =
+					Cluster cluster = new Cluster();
+					cluster.setType(TypeCluster.ENQUETE);
+					cluster.setLibelle(enquete.getLibelle());
+					cluster.setDescription(enquete.getDescription());
+					cluster.setPath(enqueteCollectionRef.document(enquete.getId()).getPath());
 
-					//naviage
+					FirebaseFirestore.getInstance().collection(viewModel.getClusterCollectionPathMutableLiveData().getValue()).add(cluster).addOnCompleteListener(task -> {
+						if (task.isSuccessful()) {
+							NavHostFragment.findNavController(ClusterEnqueteFragment.this).navigateUp();
+						} else {
+							AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+						}
+					});
 
 				});
 

@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,12 +68,11 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        getDialog().setTitle(getResources().getString(R.string.select_section));
+
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH)
-                .document(SessionUtils.getUserUid())
-                .collection(FORM_DATA)
-                .document(viewModel.getFormMutableLiveData().getValue().getId())
-                .collection(SECTION_PATH);
+        //TODO restrict to own sections
+        Query query = FirebaseFirestore.getInstance().collectionGroup(SECTION_PATH);
 
         FirestoreRecyclerOptions<Section> options = new FirestoreRecyclerOptions.Builder<Section>().setQuery(query, snapshot -> {
             Section section = snapshot.toObject(Section.class);
@@ -194,14 +191,6 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
 
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        getDialog().setTitle(getResources().getString(R.string.select_section));
-    }
 
     @Override
     public void onStart() {

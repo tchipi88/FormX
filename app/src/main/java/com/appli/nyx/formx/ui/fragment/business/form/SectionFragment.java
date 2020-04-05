@@ -25,6 +25,7 @@ import com.appli.nyx.formx.model.firebase.fields.NumberQuestion;
 import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
+import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.QuestionViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
@@ -193,7 +194,7 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setAdapter(adapter);
 
         viewModel.getSectionMutableLiveData().observe(getViewLifecycleOwner(), section -> {
-            NavHostFragment.findNavController(SectionFragment.this).getCurrentDestination().setLabel(section.libelle);
+            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(section.getLibelle());
         });
 
 

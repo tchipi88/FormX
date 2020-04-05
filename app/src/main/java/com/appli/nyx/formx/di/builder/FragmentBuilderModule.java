@@ -7,8 +7,13 @@ import com.appli.nyx.formx.ui.fragment.account.ResetPasswordRequestFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignInFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
 import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ChooseClusterTypeDialog;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterEditDialog;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment;
+import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterStatsFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
@@ -27,9 +32,9 @@ import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.SelectFormDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.question.BooleanQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.question.ChooseQuestionTypeDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.question.DateQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.NumberQuestionFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.question.QuestionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TextQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TimeQuestionFragment;
@@ -97,7 +102,7 @@ public abstract class FragmentBuilderModule {
 	abstract SectionEditDialog sectionEditDialog();
 
 	@ContributesAndroidInjector
-	abstract QuestionAddDialog questionAddDialog();
+    abstract ChooseQuestionTypeDialog questionAddDialog();
 
 	@ContributesAndroidInjector
 	abstract BooleanQuestionFragment booleanDialog();
@@ -153,6 +158,21 @@ public abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract SelectUserFragment selectUserFragment();
+
+    @ContributesAndroidInjector
+    abstract ClusterAddDialog clusterAddDialog();
+
+    @ContributesAndroidInjector
+    abstract ClusterEditDialog clusterEditDialog();
+
+    @ContributesAndroidInjector
+    abstract ClusterEnqueteFragment clusterEnqueteFragment();
+
+    @ContributesAndroidInjector
+    abstract ClusterStatsFragment clusterStatsFragment();
+
+    @ContributesAndroidInjector
+    abstract ChooseClusterTypeDialog clusterFilsAddDialog();
 
 }
 

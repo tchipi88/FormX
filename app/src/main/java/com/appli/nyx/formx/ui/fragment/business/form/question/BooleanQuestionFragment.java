@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.BooleanQuestion;
+import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 
 import butterknife.OnClick;
@@ -35,7 +36,7 @@ public class BooleanQuestionFragment extends CommonQuestionFragment {
                     libelle_tiet.setText(question.getLibelle());
                     description_tiet.setText(question.getDescription());
 
-                    NavHostFragment.findNavController(BooleanQuestionFragment.this).getCurrentDestination().setLabel(question.getLibelle());
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(question.getLibelle());
                 });
         });
 
