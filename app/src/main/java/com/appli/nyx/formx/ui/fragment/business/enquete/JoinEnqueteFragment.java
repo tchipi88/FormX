@@ -70,13 +70,13 @@ public class JoinEnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete model) {
+            protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete enquete) {
                 holder.mItem = getItem(position);
-                holder.mLibelleView.setText(model.getLibelle());
-                holder.mDescriptionView.setText(model.getDescription());
+                holder.mLibelleView.setText(enquete.getLibelle());
+                holder.mDescriptionView.setText(enquete.getDescription());
 
                 holder.mView.setOnClickListener(v -> {
-
+                    //TODO
                 });
 
 
