@@ -3,12 +3,14 @@ package com.appli.nyx.formx.ui.adapter.multiselection;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 
-public class UserDetails extends ItemDetailsLookup.ItemDetails<String> {
+import com.google.firebase.firestore.DocumentSnapshot;
+
+public class UserDetails extends ItemDetailsLookup.ItemDetails<DocumentSnapshot> {
 
 	private final int adapterPosition;
-	private final String selectionKey;
+    private final DocumentSnapshot selectionKey;
 
-	public UserDetails(int adapterPosition, String selectionKey) {
+    public UserDetails(int adapterPosition, DocumentSnapshot selectionKey) {
 		this.adapterPosition = adapterPosition;
 		this.selectionKey = selectionKey;
 	}
@@ -20,7 +22,7 @@ public class UserDetails extends ItemDetailsLookup.ItemDetails<String> {
 
 	@Nullable
 	@Override
-	public String getSelectionKey() {
+    public DocumentSnapshot getSelectionKey() {
 		return selectionKey;
 	}
 }
