@@ -63,6 +63,7 @@ public class SectionAddDialog extends BaseDialogFragment<FormViewModel> {
         Section section = new Section();
         section.libelle = libelle_tiet.getText().toString();
         section.description = description_tiet.getText().toString();
+        section.setUserID(SessionUtils.getUserUid());
 
         FirebaseFirestore.getInstance()
                 .collection(FORM_PATH)

@@ -5,6 +5,7 @@ public class Section extends MyDocument {
     public String libelle;
     public String description;
     public String path;
+    public String userID;
 
     public Section(String libelle) {
         this.libelle = libelle;
@@ -36,5 +37,13 @@ public class Section extends MyDocument {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }
