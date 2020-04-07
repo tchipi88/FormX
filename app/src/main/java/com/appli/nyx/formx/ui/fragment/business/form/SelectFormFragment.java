@@ -7,12 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
-import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
+import com.appli.nyx.formx.ui.MainActivity;
+import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.SimpleViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.SessionUtils;
@@ -21,10 +24,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import static android.widget.LinearLayout.VERTICAL;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
-public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
+public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
 
     FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
@@ -44,12 +48,14 @@ public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        getDialog().setTitle(getResources().getString(R.string.select_form));
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.select_form));
 
         recyclerView = view.findViewById(R.id.items);
         emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(FORM_DATA).orderBy("libelle");
@@ -73,13 +79,7 @@ public class SelectFormDialog extends BaseDialogFragment<SelectFormViewModel> {
                 holder.mLibelleView.setText(model.getLibelle());
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setForm(model);
-                    int destination = getArguments().getInt("destination");
-                    if (destination == 0) {
-                        NavHostFragment.findNavController(SelectFormDialog.this).navigateUp();
-                    } else {
-                        NavHostFragment.findNavController(SelectFormDialog.this).navigate(destination);
-                    }
-
+                    NavHostFragment.findNavController(SelectFormFragment.this).navigateUp();
                 });
             }
 

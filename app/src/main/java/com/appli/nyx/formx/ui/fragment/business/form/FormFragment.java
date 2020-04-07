@@ -226,9 +226,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         });
 
         view.findViewById(R.id.import_section).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("destination", R.id.action_selectFormDialog_to_importSectionDialog);
-            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_selectFormDialog, bundle);
+            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_importSectionFragment);
         });
         
         return view;

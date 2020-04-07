@@ -20,17 +20,18 @@ import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteSharedFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteVisibilityDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.JoinEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormListFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormViewFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.ImportSectionDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.ImportSectionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.SelectFormDialog;
+import com.appli.nyx.formx.ui.fragment.business.form.SelectFormFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.BooleanQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.ChooseQuestionTypeDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.question.DateQuestionFragment;
@@ -138,10 +139,10 @@ public abstract class FragmentBuilderModule {
 	abstract EnqueteMenuFragment enqueteMenuFragment();
 
     @ContributesAndroidInjector
-    abstract ImportSectionDialog importSectionDialog();
+	abstract ImportSectionFragment importSectionDialog();
 
     @ContributesAndroidInjector
-    abstract SelectFormDialog selectFormDialog();
+	abstract SelectFormFragment selectFormDialog();
 
     @ContributesAndroidInjector
     abstract EnqueteAddDialog enqueteAddDialog();
@@ -174,6 +175,8 @@ public abstract class FragmentBuilderModule {
     @ContributesAndroidInjector
     abstract ChooseClusterTypeDialog clusterFilsAddDialog();
 
+	@ContributesAndroidInjector
+	abstract EnqueteVisibilityDialog enqueteVisibilityDialog();
 }
 
 

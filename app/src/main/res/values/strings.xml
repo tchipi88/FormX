@@ -142,4 +142,6 @@
     <string name="cancel">Cancel</string>
     <string name="search">Search</string>
     <string name="no_users">No Users</string>
+    <string name="draft">DRAFT</string>
+    <string name="enquete_visibility">Enquete  Visibility</string>
 </resources>

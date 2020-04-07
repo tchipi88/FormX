@@ -4,6 +4,7 @@ public class Section extends MyDocument {
 
     public String libelle;
     public String description;
+    public String path;
 
     public Section(String libelle) {
         this.libelle = libelle;
@@ -27,5 +28,13 @@ public class Section extends MyDocument {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

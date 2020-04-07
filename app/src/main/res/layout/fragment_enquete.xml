@@ -56,7 +56,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView style="@style/CardViewStyle">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_des"
+            style="@style/CardViewStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"

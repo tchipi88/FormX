@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,10 +23,10 @@ import com.appli.nyx.formx.model.firebase.fields.NumberQuestion;
 import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
-import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
+import com.appli.nyx.formx.ui.MainActivity;
+import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.SimpleViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
-import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -34,20 +35,21 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import static android.widget.LinearLayout.VERTICAL;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
-public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel> {
+public class ImportSectionFragment extends ViewModelFragment<FormViewModel> {
 
     FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View emptyView;
 
     @Override
-    protected Class<SelectFormViewModel> getViewModel() {
-        return SelectFormViewModel.class;
+    protected Class<FormViewModel> getViewModel() {
+        return FormViewModel.class;
     }
 
     @Override
@@ -67,8 +69,10 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
         emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
-        getDialog().setTitle(getResources().getString(R.string.select_section));
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.select_section));
 
         // Create the query and the FirestoreRecyclerOptions
         //TODO restrict to own sections
@@ -77,6 +81,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
         FirestoreRecyclerOptions<Section> options = new FirestoreRecyclerOptions.Builder<Section>().setQuery(query, snapshot -> {
             Section section = snapshot.toObject(Section.class);
             section.setId(snapshot.getId());
+            section.setPath(snapshot.getReference().getPath());
             return section;
         }).build();
 
@@ -90,28 +95,23 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull SimpleViewHolder holder, int position, @NonNull Section model) {
-                holder.mLibelleView.setText(model.getLibelle());
+            protected void onBindViewHolder(@NonNull SimpleViewHolder holder, int position, @NonNull Section section) {
+                holder.mLibelleView.setText(section.getLibelle());
 
                 holder.itemView.setOnClickListener(v -> {
-                    FormViewModel formViewModel = ViewModelProviders.of(requireActivity()).get(FormViewModel.class);
 
                     FirebaseFirestore.getInstance()
                             .collection(FORM_PATH)
                             .document(SessionUtils.getUserUid())
                             .collection(FORM_DATA)
-                            .document(formViewModel.getFormMutableLiveData().getValue().getId())
+                            .document(viewModel.getFormMutableLiveData().getValue().getId())
                             .collection(SECTION_PATH)
-                            .add(model).addOnCompleteListener(task -> {
+                            .add(section).addOnCompleteListener(task -> {
+
                         if (task.isSuccessful()) {
 
                             //add fields
-                            FirebaseFirestore.getInstance().collection(FORM_PATH)
-                                    .document(SessionUtils.getUserUid())
-                                    .collection(FORM_DATA)
-                                    .document(viewModel.getFormMutableLiveData().getValue().getId())
-                                    .collection(SECTION_PATH)
-                                    .document(model.getId())
+                            FirebaseFirestore.getInstance().document(section.getPath())
                                     .collection(FIELDS_PATH)
                                     .get()
                                     .addOnCompleteListener(fieldstask -> {
@@ -145,7 +145,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
                                                         .collection(FORM_PATH)
                                                         .document(SessionUtils.getUserUid())
                                                         .collection(FORM_DATA)
-                                                        .document(formViewModel.getFormMutableLiveData().getValue().getId())
+                                                        .document(viewModel.getFormMutableLiveData().getValue().getId())
                                                         .collection(SECTION_PATH)
                                                         .document(task.getResult().getId())
                                                         .collection(FIELDS_PATH)
@@ -155,7 +155,7 @@ public class ImportSectionDialog extends BaseDialogFragment<SelectFormViewModel>
                                             }
 
                                             Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
-                                            NavHostFragment.findNavController(ImportSectionDialog.this).navigateUp();
+                                            NavHostFragment.findNavController(ImportSectionFragment.this).navigateUp();
                                         }
                                     });
 

@@ -111,7 +111,12 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         viewModel.getEnqueteMutableLiveData().observe(getViewLifecycleOwner(), enquete -> {
 
             enquete_name.setText(enquete.getLibelle());
-            enquete_des.setText(enquete.getDescription());
+            if (TextUtils.isEmpty(enquete.getDescription())) {
+                rootView.findViewById(R.id.card_des).setVisibility(View.GONE);
+            } else {
+                enquete_des.setText(enquete.getDescription());
+            }
+
             if (enquete.getForm() != null) enquete_form.setText(enquete.getForm().getLibelle());
             if (enquete.getEnqueteVisibility() != null)
                 enquete_visibility.setText(enquete.getEnqueteVisibility().name());
@@ -127,12 +132,10 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         });
 
         rootView.findViewById(R.id.card_form).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("destination", 0);
-            NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_selectFormDialog, bundle);
+            NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_selectFormFragment);
         });
         rootView.findViewById(R.id.card_visibility).setOnClickListener(v -> {
-            //TODO
+            NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_enqueteVisibilityDialog);
         });
 
         selectFormViewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
