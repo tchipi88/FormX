@@ -20,6 +20,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.FileProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
@@ -35,12 +42,6 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.FileProvider;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -115,7 +116,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
                 user_profile_town.setText(user.town);
             }
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), profil_photo, ic_account_circle_white_128dp);
+            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()), "profil_photo.jpg", profil_photo, ic_account_circle_white_128dp);
 
         });
 
@@ -294,7 +295,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
 	private void removeImage() {
 		profil_photo.setBackgroundDrawable(ic_account_circle_white_128dp);
-
+        if (storageRef.child(SessionUtils.getUserUid()) == null) return;
 		StorageReference uploadeRef = storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg");
 
 		uploadeRef.delete().addOnSuccessListener(aVoid -> {

@@ -9,6 +9,9 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.widget.ImageView;
 
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+
 import com.appli.nyx.formx.di.module.GlideApp;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,9 +24,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-
 public class ImageUtils {
 
     // Prevent instantiation
@@ -31,10 +31,12 @@ public class ImageUtils {
 
     }
 
-    public static void displayRoundImageFromStorageReference(final Context context, final StorageReference storageReference, final ImageView imageView, Drawable errorDrawable) {
+    public static void displayRoundImageFromStorageReference(final Context context, final StorageReference storageReference, final String child, final ImageView imageView, Drawable errorDrawable) {
         RequestOptions myOptions = new RequestOptions().centerCrop().dontAnimate();
 
-        GlideApp.with(context).asBitmap().apply(myOptions).load(storageReference).error(errorDrawable).into(new BitmapImageViewTarget(imageView) {
+        if (storageReference == null) return;
+
+        GlideApp.with(context).asBitmap().apply(myOptions).load(storageReference.child(child)).error(errorDrawable).into(new BitmapImageViewTarget(imageView) {
 
             @Override
             protected void setResource(Bitmap resource) {

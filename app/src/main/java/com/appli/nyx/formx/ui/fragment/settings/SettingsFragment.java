@@ -7,18 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.navigation.Navigation;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.LoggedFragment;
-import com.appli.nyx.formx.utils.FileCompressor;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.appli.nyx.formx.utils.ShareUtils;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.navigation.Navigation;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -77,7 +76,7 @@ public class SettingsFragment extends LoggedFragment {
 				((AppCompatImageView) rootView.findViewById(R.id.profil_img)).setImageURI(firebaseUser.getPhotoUrl());
 			}
 
-			ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()).child("profil_photo.jpg"), ((AppCompatImageView) rootView.findViewById(R.id.profil_img)), ic_account_circle_black_24dp);
+			ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(SessionUtils.getUserUid()), "profil_photo.jpg", ((AppCompatImageView) rootView.findViewById(R.id.profil_img)), ic_account_circle_black_24dp);
 		}
 		return rootView;
 	}

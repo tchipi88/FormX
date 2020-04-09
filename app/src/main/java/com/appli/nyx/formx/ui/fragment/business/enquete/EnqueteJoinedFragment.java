@@ -96,7 +96,7 @@ public class EnqueteJoinedFragment extends ViewModelFragment<EnqueteViewModel> {
                 holder.mLibelleView.setText(enquete.getLibelle());
                 holder.mDescriptionView.setText(enquete.getDescription());
 
-                ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()).child(ENQUETE_PHOTO), holder.img, ic_assignment_black_24dp);
+                ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, holder.img, ic_assignment_black_24dp);
 
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setEnquete(holder.mItem);

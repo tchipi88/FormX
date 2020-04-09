@@ -270,7 +270,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
             holder.user_firstname.setText(model.firstName);
             holder.user = model;
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(model.getId()).child("profil_photo.jpg"), holder.user_img, ic_account_circle_black_24dp);
+            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(model.getId()), "profil_photo.jpg", holder.user_img, ic_account_circle_black_24dp);
 
             holder.mView.setOnClickListener(v -> {
 

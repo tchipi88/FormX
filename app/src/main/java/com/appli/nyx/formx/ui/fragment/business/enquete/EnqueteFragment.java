@@ -118,7 +118,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             if (enquete.getEnqueteVisibility() != null)
                 enquete_visibility.setText(enquete.getEnqueteVisibility().name());
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()).child(ENQUETE_PHOTO), enquete_photo, ic_assignment_black_128dp);
+            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, enquete_photo, ic_assignment_black_128dp);
 
             enqueteId = enquete.getId();
 
@@ -275,6 +275,8 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
     private void removeImage() {
         enquete_photo.setBackgroundDrawable(ic_assignment_black_128dp);
+
+        if (storageRef.child(enqueteId) == null) return;
 
         StorageReference uploadeRef = storageRef.child(enqueteId).child(ENQUETE_PHOTO);
 
