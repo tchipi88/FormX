@@ -144,4 +144,7 @@
     <string name="no_users">No Users</string>
     <string name="draft">DRAFT</string>
     <string name="enquete_visibility">Enquete  Visibility</string>
+    <string name="created_by">Created By Me</string>
+    <string name="enquete_joined">Joined</string>
+    <string name="accept">Accept</string>
 </resources>

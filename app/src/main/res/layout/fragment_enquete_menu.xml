@@ -21,7 +21,18 @@
             android:layout_height="match_parent"
             android:padding="16dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_enquete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_enquete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_assignment_black_64dp" />
+
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_enquete"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -31,7 +42,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/img_enquete" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -53,7 +64,18 @@
             android:layout_height="match_parent"
             android:padding="16dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_guest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_guest"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_share_black_64dp" />
+
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_guest"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -63,7 +85,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/img_guest" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -129,8 +151,18 @@
             android:layout_height="match_parent"
             android:padding="16dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_joinenquete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_joinenquete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_assignment_black_64dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_joinenquete"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -140,7 +172,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/img_joinenquete" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

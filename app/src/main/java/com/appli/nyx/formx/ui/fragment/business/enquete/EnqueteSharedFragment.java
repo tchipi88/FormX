@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
-import com.appli.nyx.formx.ui.viewholder.EnqueteSharedViewHolder;
+import com.appli.nyx.formx.ui.viewholder.EnqueteJoinedViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -58,29 +58,32 @@ public class EnqueteSharedFragment extends ViewModelFragment<EnqueteViewModel> {
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, Enquete.class).build();
 
-        adapter = new FirestoreRecyclerAdapter<Enquete, EnqueteSharedViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<Enquete, EnqueteJoinedViewHolder>(options) {
 
             @NonNull
             @Override
-            public EnqueteSharedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_enquete_shared, parent, false);
-                return new EnqueteSharedViewHolder(view);
+            public EnqueteJoinedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_enquete_joined, parent, false);
+                return new EnqueteJoinedViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull EnqueteSharedViewHolder holder, int position, @NonNull Enquete model) {
+            protected void onBindViewHolder(@NonNull EnqueteJoinedViewHolder holder, int position, @NonNull Enquete model) {
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(model.getLibelle());
                 holder.mDescriptionView.setText(model.getDescription());
 
-                holder.mView.setOnClickListener(v -> {
-                    viewModel.setEnquete(holder.mItem);
-                    //TODO NavHostFragment.findNavController(EnqueteSharedFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
+                holder.quit.setOnClickListener(v -> {
+
+
                 });
 
-                holder.delete.setOnClickListener(v -> {
-                    //TODO
+                holder.reply.setOnClickListener(v -> {
+
+
                 });
+
+                holder.reply.setText(R.string.accept);
             }
 
             @Override

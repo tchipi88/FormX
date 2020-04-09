@@ -17,11 +17,13 @@ import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterStatsFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteJoinedFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteSharedFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteVisibilityDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.JoinEnqueteFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.MyEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
@@ -177,6 +179,12 @@ public abstract class FragmentBuilderModule {
 
 	@ContributesAndroidInjector
 	abstract EnqueteVisibilityDialog enqueteVisibilityDialog();
+
+    @ContributesAndroidInjector
+    abstract EnqueteJoinedFragment enqueteJoinedFragment();
+
+    @ContributesAndroidInjector
+    abstract MyEnqueteFragment myEnqueteFragment();
 }
 
 
