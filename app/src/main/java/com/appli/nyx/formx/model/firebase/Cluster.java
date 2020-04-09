@@ -7,6 +7,8 @@ public class Cluster extends MyDocument {
     public String libelle;
     public String description;
 
+    public String authorId;
+
     public TypeCluster type;
 
     public String path;
@@ -59,5 +61,13 @@ public class Cluster extends MyDocument {
 
     public void setLibelleParent(String libelleParent) {
         this.libelleParent = libelleParent;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }

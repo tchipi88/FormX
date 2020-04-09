@@ -5,7 +5,7 @@ public class Form extends MyDocument {
 	private String libelle;
 	private String description;
 
-
+    public String authorId;
 
     public Form(String libelle) {
         this.libelle = libelle;
@@ -30,4 +30,11 @@ public class Form extends MyDocument {
 		this.description = description;
 	}
 
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
 }

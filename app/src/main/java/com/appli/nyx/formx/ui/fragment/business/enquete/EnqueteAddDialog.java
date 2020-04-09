@@ -54,6 +54,7 @@ public class EnqueteAddDialog extends BaseDialogFragment<EnqueteViewModel> {
         enquete.setLibelle(libelle);
         enquete.setDescription(description_tiet.getText().toString());
         enquete.setEnqueteVisibility(EnqueteVisibility.DRAFT);
+        enquete.setAuthorId(SessionUtils.getUserUid());
 
         FirebaseFirestore.getInstance()
                 .collection(ENQUETE_PATH)

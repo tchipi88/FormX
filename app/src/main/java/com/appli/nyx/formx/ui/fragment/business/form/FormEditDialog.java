@@ -69,6 +69,7 @@ public class FormEditDialog extends BaseDialogFragment<FormViewModel> {
         Form form = new Form();
         form.setLibelle(libelle);
         form.setDescription(description_tiet.getText().toString());
+        form.setAuthorId(SessionUtils.getUserUid());
 
         FirebaseFirestore.getInstance()
                 .collection(FORM_PATH)

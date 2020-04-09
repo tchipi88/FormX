@@ -147,4 +147,6 @@
     <string name="created_by">Created By Me</string>
     <string name="enquete_joined">Joined</string>
     <string name="accept">Accept</string>
+    <string name="edit_report">Edit Report</string>
+    <string name="add_report">Add Report</string>
 </resources>

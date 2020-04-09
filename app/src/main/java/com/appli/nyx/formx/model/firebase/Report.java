@@ -1,12 +1,11 @@
 package com.appli.nyx.formx.model.firebase;
 
-import java.io.Serializable;
-
 public class Report extends MyDocument {
 
     public String libelle;
     public String description;
 
+	public String authorId;
 
     public Report(String libelle) {
         this.libelle = libelle;
@@ -29,5 +28,13 @@ public class Report extends MyDocument {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
 	}
 }

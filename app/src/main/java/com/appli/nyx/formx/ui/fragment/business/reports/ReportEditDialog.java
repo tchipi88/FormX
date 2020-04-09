@@ -1,4 +1,4 @@
-package com.appli.nyx.formx.ui.fragment.business.form;
+package com.appli.nyx.formx.ui.fragment.business.reports;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,9 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.Form;
+import com.appli.nyx.formx.model.firebase.Report;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
-import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
+import com.appli.nyx.formx.ui.viewmodel.ReportViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,35 +22,39 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
-import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
-public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
-
-    @Override
-    protected Class<FormViewModel> getViewModel() {
-        return FormViewModel.class;
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.dialog_form_add;
-    }
-
+public class ReportEditDialog extends BaseDialogFragment<ReportViewModel> {
 
     @BindView(R.id.libelle_tiet)
     TextInputEditText libelle_tiet;
     @BindView(R.id.libelle_til)
     TextInputLayout libelle_til;
-
     @BindView(R.id.description_tiet)
     TextInputEditText description_tiet;
     @BindView(R.id.description_til)
     TextInputLayout description_til;
 
     @Override
+    protected Class<ReportViewModel> getViewModel() {
+        return ReportViewModel.class;
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.dialog_enquete_add;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        viewModel.getReportMutableLiveData().observe(getViewLifecycleOwner(), form -> {
+            libelle_tiet.setText(form.getLibelle());
+            description_tiet.setText(form.getDescription());
+        });
+
 
         return view;
     }
@@ -60,23 +64,23 @@ public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
         if (!validate()) {
             return;
         }
-        String libelle = libelle_tiet.getText().toString();
-        Form form = new Form();
-        form.setLibelle(libelle);
-        form.setDescription(description_tiet.getText().toString());
-        form.setAuthorId(SessionUtils.getUserUid());
 
-        FirebaseFirestore.getInstance()
-                .collection(FORM_PATH)
-                .document(SessionUtils.getUserUid())
-                .collection(FORM_DATA)
-                .add(form).addOnCompleteListener(task -> {
+        String libelle = libelle_tiet.getText().toString();
+        Report report = new Report();
+        report.setLibelle(libelle);
+        report.setDescription(description_tiet.getText().toString());
+        report.setAuthorId(SessionUtils.getUserUid());
+
+        FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                .document(SessionUtils.getUserUid()).collection(ENQUETE_DATA)
+                .document(viewModel.getReportMutableLiveData().getValue().getId()).set(report).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                NavHostFragment.findNavController(FormAddDialog.this).navigateUp();
+                NavHostFragment.findNavController(ReportEditDialog.this).navigateUp();
             } else {
                 AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
             }
         });
+
 
     }
 
@@ -89,7 +93,7 @@ public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
 
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        getDialog().setTitle(getResources().getString(R.string.add_form));
+        getDialog().setTitle(getResources().getString(R.string.edit_report));
     }
 
     public boolean validate() {

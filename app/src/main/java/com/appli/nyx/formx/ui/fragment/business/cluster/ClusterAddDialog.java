@@ -12,6 +12,7 @@ import com.appli.nyx.formx.model.firebase.Cluster;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.ClusterViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,6 +50,7 @@ public class ClusterAddDialog extends BaseDialogFragment<ClusterViewModel> {
         Cluster cluster = new Cluster();
 		cluster.setLibelle(libelle);
 		cluster.setDescription(description_tiet.getText().toString());
+		cluster.setAuthorId(SessionUtils.getUserUid());
 
         FirebaseFirestore.getInstance().collection(viewModel.getClusterCollectionPathMutableLiveData().getValue()).add(cluster).addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {

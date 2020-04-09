@@ -41,6 +41,8 @@ import com.appli.nyx.formx.ui.fragment.business.form.question.NumberQuestionFrag
 import com.appli.nyx.formx.ui.fragment.business.form.question.SpinnerQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TextQuestionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.question.TimeQuestionFragment;
+import com.appli.nyx.formx.ui.fragment.business.reports.ReportAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.reports.ReportEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.reports.ReportsFragment;
 import com.appli.nyx.formx.ui.fragment.business.reports.ReportsListFragment;
 import com.appli.nyx.formx.ui.fragment.settings.SettingsFragment;
@@ -185,6 +187,12 @@ public abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract MyEnqueteFragment myEnqueteFragment();
+
+    @ContributesAndroidInjector
+    abstract ReportAddDialog reportAddDialog();
+
+    @ContributesAndroidInjector
+    abstract ReportEditDialog reportEditDialog();
 }
 
 

@@ -9,6 +9,8 @@ public class Enquete extends MyDocument {
 
 	private EnqueteVisibility enqueteVisibility;
 
+    public String authorId;
+
     private Form form;
 
 	private String formPath;
@@ -59,4 +61,12 @@ public class Enquete extends MyDocument {
 	public void setFormPath(String formPath) {
 		this.formPath = formPath;
 	}
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
 }
