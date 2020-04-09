@@ -25,8 +25,8 @@ public class ClusterUtils {
 
     public static boolean isParentIsROOT(String path) {
         String[] rawSegments = path.split("/");
-        // .collection(CLUSTER_PATH).document(SessionUtils.getUserUid()).collection(CLUSTER_DATA)
-        return rawSegments.length == 3;
+        // .collection(CLUSTER_PATH)
+        return rawSegments.length == 1;
     }
 
     public static String getParentPath(String path) {

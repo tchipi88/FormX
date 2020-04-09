@@ -16,7 +16,6 @@ import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
 import com.appli.nyx.formx.ui.fragment.BaseDialogFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -24,7 +23,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class EnqueteVisibilityDialog extends BaseDialogFragment<EnqueteViewModel> {
@@ -59,7 +57,6 @@ public class EnqueteVisibilityDialog extends BaseDialogFragment<EnqueteViewModel
             }
 
             FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                    .document(SessionUtils.getUserUid()).collection(ENQUETE_DATA)
                     .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
                     .update(updatedObject)
                     .addOnCompleteListener(task -> {

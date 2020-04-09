@@ -23,6 +23,7 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -49,6 +50,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Iterator;
 
 import butterknife.BindDrawable;
+
+import static android.widget.LinearLayout.VERTICAL;
 
 public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> implements SearchView.OnQueryTextListener {
 
@@ -109,6 +112,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
         // Refresh Action on Swipe Refresh Layout
         mSwipeRefreshLayout.setOnRefreshListener(() -> adapter.refresh());

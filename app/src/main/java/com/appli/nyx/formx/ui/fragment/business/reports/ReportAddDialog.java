@@ -20,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class ReportAddDialog extends BaseDialogFragment<ReportViewModel> {
@@ -56,8 +55,6 @@ public class ReportAddDialog extends BaseDialogFragment<ReportViewModel> {
 
         FirebaseFirestore.getInstance()
                 .collection(ENQUETE_PATH)
-                .document(SessionUtils.getUserUid())
-                .collection(ENQUETE_DATA)
                 .add(report).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 NavHostFragment.findNavController(ReportAddDialog.this).navigate(R.id.action_global_reportsListFragment);

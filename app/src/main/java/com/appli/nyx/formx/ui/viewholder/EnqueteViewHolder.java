@@ -16,6 +16,7 @@ public class EnqueteViewHolder extends RecyclerView.ViewHolder {
 	public final AppCompatImageView delete;
 	public final AppCompatImageView share;
 	public final AppCompatImageView edit;
+    public final AppCompatImageView img;
 	public TextView mDescriptionView;
 
 	public Enquete mItem;
@@ -29,6 +30,7 @@ public class EnqueteViewHolder extends RecyclerView.ViewHolder {
 		delete = itemView.findViewById(R.id.delete);
 		share = itemView.findViewById(R.id.share);
 		edit = itemView.findViewById(R.id.edit);
+        img = itemView.findViewById(R.id.img);
 
 	}
 

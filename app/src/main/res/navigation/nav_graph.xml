@@ -394,7 +394,7 @@
     <fragment
         android:id="@+id/enqueteSharedFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteSharedFragment"
-        android:label="EnqueteSharedFragment" />
+        android:label="@string/my_invitations" />
     <fragment
         android:id="@+id/selectUserFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.SelectUserFragment"
@@ -416,7 +416,7 @@
         app:destination="@id/clusterEditDialog" />
     <fragment
         android:id="@+id/clusterEnqueteFragment"
-        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.ClusterEnqueteFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.cluster.SelectEnqueteFragment"
         android:label="ClusterEnqueteFragment" />
     <fragment
         android:id="@+id/selectFormFragment"

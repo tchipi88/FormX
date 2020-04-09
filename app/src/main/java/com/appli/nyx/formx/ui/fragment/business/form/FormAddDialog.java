@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
@@ -68,8 +67,6 @@ public class FormAddDialog extends BaseDialogFragment<FormViewModel> {
 
         FirebaseFirestore.getInstance()
                 .collection(FORM_PATH)
-                .document(SessionUtils.getUserUid())
-                .collection(FORM_DATA)
                 .add(form).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 NavHostFragment.findNavController(FormAddDialog.this).navigateUp();

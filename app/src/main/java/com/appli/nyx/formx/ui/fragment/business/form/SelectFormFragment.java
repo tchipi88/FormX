@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import static android.widget.LinearLayout.VERTICAL;
-import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
+import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 
 public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
@@ -58,7 +58,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).document(SessionUtils.getUserUid()).collection(FORM_DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
 
         FirestoreRecyclerOptions<Form> options = new FirestoreRecyclerOptions.Builder<Form>().setQuery(query, snapshot -> {
             Form form = snapshot.toObject(Form.class);

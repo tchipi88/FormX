@@ -33,7 +33,6 @@ import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.FileCompressor;
 import com.appli.nyx.formx.utils.ImageUtils;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
@@ -47,10 +46,8 @@ import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
-import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
-import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
 
 public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
@@ -121,7 +118,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             if (enquete.getEnqueteVisibility() != null)
                 enquete_visibility.setText(enquete.getEnqueteVisibility().name());
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()).child("enquete_photo.jpg"), enquete_photo, ic_assignment_black_128dp);
+            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()).child(ENQUETE_PHOTO), enquete_photo, ic_assignment_black_128dp);
 
             enqueteId = enquete.getId();
 
@@ -141,13 +138,8 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         selectFormViewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
             Map<String, Object> updatedObject = new HashMap<>();
             updatedObject.put("form", form);
-            updatedObject.put("formPath", FirebaseFirestore.getInstance().collection(FORM_PATH)
-                    .document(SessionUtils.getUserUid())
-                    .collection(FORM_DATA)
-                    .document(form.getId()).getPath());
 
             FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                    .document(SessionUtils.getUserUid()).collection(ENQUETE_DATA)
                     .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
                     .update(updatedObject)
                     .addOnCompleteListener(task -> {
@@ -194,7 +186,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         if (!TextUtils.isEmpty(enqueteId)) {
             Uri picUri = Uri.fromFile(f);
 
-            StorageReference uploadeRef = storageRef.child(enqueteId).child("enquete_photo.jpg");
+            StorageReference uploadeRef = storageRef.child(enqueteId).child(ENQUETE_PHOTO);
 
             uploadeRef.putFile(picUri).addOnFailureListener(exception -> Log.e("Profil Fragment", "Failed to upload picture to cloud storage"));
         }
@@ -284,7 +276,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     private void removeImage() {
         enquete_photo.setBackgroundDrawable(ic_assignment_black_128dp);
 
-        StorageReference uploadeRef = storageRef.child(enqueteId).child("enquete_photo.jpg");
+        StorageReference uploadeRef = storageRef.child(enqueteId).child(ENQUETE_PHOTO);
 
         uploadeRef.delete().addOnSuccessListener(aVoid -> {
             Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_SHORT).show();

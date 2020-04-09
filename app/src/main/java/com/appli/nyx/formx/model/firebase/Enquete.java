@@ -13,8 +13,6 @@ public class Enquete extends MyDocument {
 
     private Form form;
 
-	private String formPath;
-
     public Enquete(String libelle) {
         this.libelle = libelle;
     }
@@ -54,13 +52,6 @@ public class Enquete extends MyDocument {
 		this.enqueteVisibility = enqueteVisibility;
 	}
 
-	public String getFormPath() {
-		return formPath;
-	}
-
-	public void setFormPath(String formPath) {
-		this.formPath = formPath;
-	}
 
     public String getAuthorId() {
         return authorId;

@@ -18,10 +18,10 @@ import com.appli.nyx.formx.model.firebase.fields.NumberQuestion;
 import com.appli.nyx.formx.model.firebase.fields.SpinnerQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TextQuestion;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
+import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.ui.fields.FieldsGenerator;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,7 +33,6 @@ import butterknife.BindView;
 
 import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
-import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -63,12 +62,11 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-            NavHostFragment.findNavController(FormViewFragment.this).getCurrentDestination().setLabel(form.getLibelle());
+
+            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(form.getLibelle());
 
             //get all sections
             FirebaseFirestore.getInstance().collection(FORM_PATH)
-                    .document(SessionUtils.getUserUid())
-                    .collection(FORM_DATA)
                     .document(form.getId())
                     .collection(SECTION_PATH).get().addOnCompleteListener(sectiontask -> {
                 if (sectiontask.isSuccessful()) {
@@ -136,8 +134,6 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         fieldsContainer.removeAllViews();
         //get all fields for section
         FirebaseFirestore.getInstance().collection(FORM_PATH)
-                .document(SessionUtils.getUserUid())
-                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH).document(section.getId())
                 .collection(FIELDS_PATH).get().addOnCompleteListener(fieldsTask -> {

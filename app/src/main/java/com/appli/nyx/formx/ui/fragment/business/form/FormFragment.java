@@ -30,7 +30,6 @@ import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.SectionViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
-import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -39,7 +38,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
-import static com.appli.nyx.formx.utils.MyConstant.FORM_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
 
@@ -101,8 +99,6 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH)
-                .document(SessionUtils.getUserUid())
-                .collection(FORM_DATA)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH);
 
@@ -126,8 +122,8 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(model.getLibelle());
 
-                CollectionReference sectionCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH).
-                        document(SessionUtils.getUserUid()).collection(FORM_DATA).document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH);
+                CollectionReference sectionCollectionRef = FirebaseFirestore.getInstance().collection(FORM_PATH)
+                        .document(viewModel.getFormMutableLiveData().getValue().getId()).collection(SECTION_PATH);
 
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setSection(holder.mItem);

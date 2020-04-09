@@ -10,10 +10,10 @@ import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ChooseClusterTypeDialog;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterEditDialog;
-import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterStatsFragment;
+import com.appli.nyx.formx.ui.fragment.business.cluster.SelectEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
@@ -171,7 +171,7 @@ public abstract class FragmentBuilderModule {
     abstract ClusterEditDialog clusterEditDialog();
 
     @ContributesAndroidInjector
-    abstract ClusterEnqueteFragment clusterEnqueteFragment();
+    abstract SelectEnqueteFragment clusterEnqueteFragment();
 
     @ContributesAndroidInjector
     abstract ClusterStatsFragment clusterStatsFragment();

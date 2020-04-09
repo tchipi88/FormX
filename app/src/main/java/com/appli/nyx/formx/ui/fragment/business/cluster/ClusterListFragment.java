@@ -25,7 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_DATA;
+import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_PATH;
 
 public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
@@ -58,8 +58,8 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        CollectionReference collectionReferenceParent = FirebaseFirestore.getInstance().collection(CLUSTER_PATH).document(SessionUtils.getUserUid()).collection(CLUSTER_DATA);
-        Query query = collectionReferenceParent.orderBy("libelle");
+        CollectionReference collectionReferenceParent = FirebaseFirestore.getInstance().collection(CLUSTER_PATH);
+        Query query = collectionReferenceParent.whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
 
         FirestoreRecyclerOptions<Cluster> options = new FirestoreRecyclerOptions.Builder<Cluster>().setQuery(query, snapshot -> {
             Cluster cluster = snapshot.toObject(Cluster.class);

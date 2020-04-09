@@ -21,7 +21,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
+import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class EnqueteSharedFragment extends ViewModelFragment<EnqueteViewModel> {
@@ -54,7 +54,7 @@ public class EnqueteSharedFragment extends ViewModelFragment<EnqueteViewModel> {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, Enquete.class).build();
 

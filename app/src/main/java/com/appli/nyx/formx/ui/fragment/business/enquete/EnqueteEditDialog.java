@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 
 public class EnqueteEditDialog extends BaseDialogFragment<EnqueteViewModel> {
@@ -72,7 +71,6 @@ public class EnqueteEditDialog extends BaseDialogFragment<EnqueteViewModel> {
         enquete.setAuthorId(SessionUtils.getUserUid());
 
         FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                .document(SessionUtils.getUserUid()).collection(ENQUETE_DATA)
                 .document(viewModel.getEnqueteMutableLiveData().getValue().getId()).set(enquete).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 NavHostFragment.findNavController(EnqueteEditDialog.this).navigateUp();

@@ -1,11 +1,13 @@
 package com.appli.nyx.formx.ui.fragment.business.enquete;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,20 +18,30 @@ import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.EnqueteJoinedViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
+import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.StorageReference;
 
-import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_DATA;
+import butterknife.BindDrawable;
+
+import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
 
 public class EnqueteJoinedFragment extends ViewModelFragment<EnqueteViewModel> {
 
     FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View emptyView;
+
+    StorageReference storageRef;
+
+    @BindDrawable(R.drawable.ic_assignment_black_24dp)
+    Drawable ic_assignment_black_24dp;
 
     @Override
     protected Class<EnqueteViewModel> getViewModel() {
@@ -39,6 +51,12 @@ public class EnqueteJoinedFragment extends ViewModelFragment<EnqueteViewModel> {
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_enquete_list;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        storageRef = firebaseStorage.getReference();
     }
 
     @Override
@@ -55,7 +73,7 @@ public class EnqueteJoinedFragment extends ViewModelFragment<EnqueteViewModel> {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(SessionUtils.getUserUid()).collection(ENQUETE_DATA).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
             Enquete enquete = snapshot.toObject(Enquete.class);
@@ -77,6 +95,8 @@ public class EnqueteJoinedFragment extends ViewModelFragment<EnqueteViewModel> {
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(enquete.getLibelle());
                 holder.mDescriptionView.setText(enquete.getDescription());
+
+                ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()).child(ENQUETE_PHOTO), holder.img, ic_assignment_black_24dp);
 
                 holder.mView.setOnClickListener(v -> {
                     viewModel.setEnquete(holder.mItem);

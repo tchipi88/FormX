@@ -149,4 +149,7 @@
     <string name="accept">Accept</string>
     <string name="edit_report">Edit Report</string>
     <string name="add_report">Add Report</string>
+    <string name="select_enquete">Select Enquete</string>
+    <string name="join_survey">Join Survey</string>
+    <string name="my_invitations">My Invitations</string>
 </resources>
