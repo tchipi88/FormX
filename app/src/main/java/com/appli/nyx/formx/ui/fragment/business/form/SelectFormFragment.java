@@ -16,7 +16,7 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
 import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
-import com.appli.nyx.formx.ui.viewholder.SimpleViewHolder;
+import com.appli.nyx.formx.ui.viewholder.FormSelectViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -65,20 +65,22 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
             form.setId(snapshot.getId());
             return form;
         }).build();
-        adapter = new FirestoreRecyclerAdapter<Form, SimpleViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<Form, FormSelectViewHolder>(options) {
 
             @NonNull
             @Override
-            public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_simple, parent, false);
-                return new SimpleViewHolder(view);
+            public FormSelectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_form_select, parent, false);
+                return new FormSelectViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull SimpleViewHolder holder, int position, @NonNull Form model) {
-                holder.mLibelleView.setText(model.getLibelle());
+            protected void onBindViewHolder(@NonNull FormSelectViewHolder holder, int position, @NonNull Form form) {
+                holder.mLibelleView.setText(form.getLibelle());
+                holder.mDescriptionView.setText(form.getDescription());
+
                 holder.mView.setOnClickListener(v -> {
-                    viewModel.setForm(model);
+                    viewModel.setForm(form);
                     NavHostFragment.findNavController(SelectFormFragment.this).navigateUp();
                 });
             }

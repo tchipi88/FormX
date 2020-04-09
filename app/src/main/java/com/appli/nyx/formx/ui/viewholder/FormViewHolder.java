@@ -1,32 +1,23 @@
 package com.appli.nyx.formx.ui.viewholder;
 
 import android.view.View;
-import android.widget.TextView;
-
-import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.Form;
 
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.recyclerview.widget.RecyclerView;
 
-public class FormViewHolder extends RecyclerView.ViewHolder {
+import com.appli.nyx.formx.R;
 
-	public final View mView;
-	public final TextView mLibelleView;
-	public final TextView mDescriptionView;
+public class FormViewHolder extends FormSelectViewHolder {
+
+
 
 	public final AppCompatImageView delete;
 	public final AppCompatImageView voir;
 	public final AppCompatImageView edit;
 	public final AppCompatImageView duplicate;
 
-	public Form mItem;
 
 	public FormViewHolder(View view) {
 		super(view);
-		mView = view;
-		mLibelleView = view.findViewById(R.id.libelle);
-		mDescriptionView = view.findViewById(R.id.description);
 
 		delete = view.findViewById(R.id.delete);
 		voir = view.findViewById(R.id.voir);

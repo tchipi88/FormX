@@ -86,18 +86,17 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
             @Override
             protected void onBindViewHolder(@NonNull FormViewHolder holder, int position, @NonNull Form form) {
-                holder.mItem = getItem(position);
                 holder.mLibelleView.setText(form.getLibelle());
                 holder.mDescriptionView.setText(form.getDescription());
 
                 holder.mView.setOnClickListener(v -> {
-                    viewModel.setForm(holder.mItem);
+                    viewModel.setForm(form);
                     NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_formListFragment_to_formFragment);
                 });
 
                 holder.delete.setOnClickListener(v -> {
                     AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
-                        FirebaseFirestore.getInstance().collection(FORM_PATH).document(holder.mItem.getId()).delete().addOnCompleteListener(task -> {
+                        FirebaseFirestore.getInstance().collection(FORM_PATH).document(form.getId()).delete().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                             } else {
@@ -108,12 +107,12 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.voir.setOnClickListener(v -> {
-                    viewModel.setForm(holder.mItem);
+                    viewModel.setForm(form);
                     NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_global_formViewFragment);
                 });
 
                 holder.edit.setOnClickListener(v -> {
-                    viewModel.setForm(holder.mItem);
+                    viewModel.setForm(form);
                     NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_global_formEditDialog);
                 });
 

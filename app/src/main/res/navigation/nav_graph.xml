@@ -316,7 +316,7 @@
             android:id="@+id/action_enqueteFragment_to_enqueteVisibilityDialog"
             app:destination="@id/enqueteVisibilityDialog"
             app:popUpTo="@id/enqueteFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/formViewFragment"
