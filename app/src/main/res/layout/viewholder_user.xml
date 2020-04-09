@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,23 +10,34 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/user_img"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="18dp"
-        android:src="@drawable/ic_account_circle_black_64dp" />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="@dimen/_8dp"
+        android:src="@drawable/ic_account_circle_black_64dp"
+        app:layout_constraintEnd_toStartOf="@id/user_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/user_name"
         style="@style/TextCardViewBold"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/user_img"
-        tools:text="@string/sign_in" />
+        android:layout_width="0dp"
+        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+        android:drawablePadding="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/user_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_img"
+        app:layout_constraintTop_toTopOf="@id/user_img"
+        tools:text="QUESTIONNN  45" />
 
     <TextView
         android:id="@+id/user_firstname"
         style="@style/TextAppearance.MaterialComponents.Caption"
-        android:layout_below="@+id/user_name"
-        android:layout_toRightOf="@+id/user_img"
-        tools:text="Fullnamm" />
-</RelativeLayout>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_8dp"
+        app:layout_constraintStart_toEndOf="@id/user_img"
+        app:layout_constraintTop_toBottomOf="@id/user_name"
+        tools:text="Loreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeem" />
+</androidx.constraintlayout.widget.ConstraintLayout>
