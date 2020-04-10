@@ -19,10 +19,10 @@ public class AbstractQuestion implements Serializable {
     protected String libelle;
     protected String description;
 
-    @Exclude
+
     private View fieldView;
 
-    @Exclude
+
     private ValidationError validationError;
 
     public AbstractQuestion(QuestionType questionType) {
@@ -59,6 +59,7 @@ public class AbstractQuestion implements Serializable {
         this.description = description;
     }
 
+    @Exclude
     public View getFieldView() {
         return fieldView;
     }
@@ -67,6 +68,7 @@ public class AbstractQuestion implements Serializable {
         this.fieldView = fieldView;
     }
 
+    @Exclude
     public ValidationError getValidationError() {
         return validationError;
     }

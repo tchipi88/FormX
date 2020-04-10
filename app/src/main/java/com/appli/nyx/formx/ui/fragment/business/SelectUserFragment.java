@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,31 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SearchView;
-import androidx.paging.PagedList;
-import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.adapter.ActionModeController;
-import com.appli.nyx.formx.ui.adapter.multiselection.UserDetails;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserKeyProvider;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserLookup;
-import com.appli.nyx.formx.ui.adapter.multiselection.ViewHolderWithDetails;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.MyConstant;
 import com.appli.nyx.formx.utils.ShareUtils;
-import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
-import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.StorageReference;
@@ -60,10 +54,8 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
     UserFirebaseAdapter adapter;
     RecyclerView recyclerView;
     View emptyView;
-    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-    PagedList.Config config;
 
     @BindDrawable(R.drawable.ic_account_circle_black_24dp)
     Drawable ic_account_circle_black_24dp;
@@ -92,10 +84,6 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         storageRef = firebaseStorage.getReference();
-
-        // This configuration comes from the Paging Support Library
-        // https://developer.android.com/reference/android/arch/paging/PagedList.Config.html
-        config = new PagedList.Config.Builder().setEnablePlaceholders(false).setPrefetchDistance(10).setPageSize(20).build();
     }
 
     @Override
@@ -107,19 +95,17 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
         recyclerView = view.findViewById(R.id.users);
         emptyView = view.findViewById(R.id.emptyView);
-        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         assert recyclerView != null;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
-        // Refresh Action on Swipe Refresh Layout
-        mSwipeRefreshLayout.setOnRefreshListener(() -> adapter.refresh());
+
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(MyConstant.USER_PATH).orderBy("name");
 
-        FirestorePagingOptions<User> options = new FirestorePagingOptions.Builder<User>().setQuery(query, config, snapshot -> {
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>().setQuery(query, snapshot -> {
             User user = snapshot.toObject(User.class);
             user.setId(snapshot.getId());
             return user;
@@ -132,7 +118,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
                 recyclerView,
                 new UserKeyProvider(adapter),
                 new UserLookup(recyclerView),
-                StorageStrategy.createLongStorage())
+                StorageStrategy.createStringStorage())
                 .withOnItemActivatedListener((item, e) -> true).withOnDragInitiatedListener(e -> {
             Log.d(TAG, "onDragInitiated");
             return true;
@@ -224,19 +210,8 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         action_share = menu.findItem(R.id.action_share);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
-    public class UserFirebaseAdapter extends FirestorePagingAdapter<User, UserFirebaseAdapter.UserViewHolder> {
+    public class UserFirebaseAdapter extends FirestoreRecyclerAdapter<User, UserFirebaseAdapter.UserViewHolder> {
 
         private SelectionTracker selectionTracker;
 
@@ -245,7 +220,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
          *
          * @param options
          */
-        public UserFirebaseAdapter(@NonNull FirestorePagingOptions<User> options) {
+        public UserFirebaseAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
             super(options);
         }
 
@@ -280,43 +255,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         }
 
         @Override
-        protected void onError(@NonNull Exception e) {
-            super.onError(e);
-            Log.e(SelectUserFragment.class.getSimpleName(), e.getMessage());
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        protected void onLoadingStateChanged(@NonNull LoadingState state) {
-            switch (state) {
-                case LOADING_INITIAL:
-                    // The initial load has begun
-                case LOADING_MORE:
-                    // The adapter has started to load an additional page
-                    // ...
-                    mSwipeRefreshLayout.setRefreshing(true);
-                    break;
-                case LOADED:
-
-                case FINISHED:
-                    // The previous load (either initial or additional) completed
-                    // ...
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    break;
-                case ERROR:
-                    // The previous load (either initial or additional) failed. Call
-                    // the retry() method in order to retry the load operation.
-                    // ...
-
-                    Toast.makeText(getContext(), "Error Occurred!", Toast.LENGTH_SHORT).show();
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    break;
-            }
-
+        public void onDataChanged() {
             if (getItemCount() == 0) {
                 emptyView.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
@@ -327,7 +266,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         }
 
 
-        public class UserViewHolder extends RecyclerView.ViewHolder implements ViewHolderWithDetails {
+        public class UserViewHolder extends RecyclerView.ViewHolder {
 
             public final View mView;
             public TextView user_name;
@@ -350,10 +289,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
                 return super.toString() + " '" + user_name.getText() + "'";
             }
 
-            @Override
-            public ItemDetailsLookup.ItemDetails getItemDetails() {
-                return new UserDetails(getAdapterPosition(), getCurrentList().get(getAdapterPosition()));
-            }
+
         }
     }
 }

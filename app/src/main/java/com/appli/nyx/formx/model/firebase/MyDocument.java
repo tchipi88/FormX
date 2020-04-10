@@ -8,12 +8,13 @@ import java.util.Date;
 
 public class MyDocument implements Serializable {
 
-    @Exclude
+
     private String id;
 
     @ServerTimestamp
     private Date dateCreated;
 
+    @Exclude
     public String getId() {
         return id;
     }

@@ -9,6 +9,7 @@ import androidx.recyclerview.selection.ItemKeyProvider;
 import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserKeyProvider extends ItemKeyProvider {
@@ -18,7 +19,7 @@ public class UserKeyProvider extends ItemKeyProvider {
 	@SuppressLint("WrongConstant")
 	public UserKeyProvider(SelectUserFragment.UserFirebaseAdapter adapter) {
         super(1);
-		itemList = adapter.getCurrentList();
+		itemList = new ArrayList<>();
 	}
 
 	@Nullable
