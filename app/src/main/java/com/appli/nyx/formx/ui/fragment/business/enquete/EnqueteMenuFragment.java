@@ -30,7 +30,7 @@ public class EnqueteMenuFragment extends ViewModelFragment<EnqueteViewModel> {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         view.findViewById(R.id.card_myenquetes).setOnClickListener(v -> NavHostFragment.findNavController(EnqueteMenuFragment.this).navigate(R.id.action_enqueteMenuFragment_to_enqueteListFragment));
-        view.findViewById(R.id.card_joinenquete).setOnClickListener(v -> NavHostFragment.findNavController(EnqueteMenuFragment.this).navigate(R.id.action_enqueteMenuFragment_to_joinEnqueteFragment));
+        view.findViewById(R.id.card_joinenquete).setOnClickListener(v -> NavHostFragment.findNavController(EnqueteMenuFragment.this).navigate(R.id.action_global_joinEnqueteFragment));
         view.findViewById(R.id.card_newenquete).setOnClickListener(v -> NavHostFragment.findNavController(EnqueteMenuFragment.this).navigate(R.id.action_global_enqueteAddDialog));
         view.findViewById(R.id.card_myinvitations).setOnClickListener(v -> NavHostFragment.findNavController(EnqueteMenuFragment.this).navigate(R.id.action_enqueteMenuFragment_to_enqueteSharedFragment));
 

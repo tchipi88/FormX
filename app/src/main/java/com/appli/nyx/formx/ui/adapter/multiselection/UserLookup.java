@@ -25,7 +25,7 @@ public class UserLookup extends ItemDetailsLookup {
 		if (view != null) {
 			RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
             if (viewHolder instanceof SelectUserFragment.UserFirebaseAdapter.UserViewHolder) {
-                return ((SelectUserFragment.UserFirebaseAdapter.UserViewHolder) viewHolder).getItemDetails();
+                //return ((SelectUserFragment.UserFirebaseAdapter.UserViewHolder) viewHolder).getItemDetails();
 			}
 		}
 

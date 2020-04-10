@@ -15,11 +15,13 @@ import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterListFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterStatsFragment;
 import com.appli.nyx.formx.ui.fragment.business.cluster.SelectEnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteAddDialog;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteCreatedFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteJoinedFragment;
-import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteReplyFragment;
+import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteReplyIntroFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteSharedFragment;
 import com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteVisibilityDialog;
 import com.appli.nyx.formx.ui.fragment.business.enquete.JoinEnqueteFragment;
@@ -53,100 +55,99 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class FragmentBuilderModule {
 
-	@ContributesAndroidInjector
-	abstract SignInFragment signInFragment();
+    @ContributesAndroidInjector
+    abstract SignInFragment signInFragment();
 
-	@ContributesAndroidInjector
-	abstract SignUpFragment signUpFragment();
+    @ContributesAndroidInjector
+    abstract SignUpFragment signUpFragment();
 
-	@ContributesAndroidInjector
-	abstract ProfilEditFragment signUpEndFragment();
+    @ContributesAndroidInjector
+    abstract ProfilEditFragment signUpEndFragment();
 
-	@ContributesAndroidInjector
-	abstract ResetPasswordRequestFragment resetPasswordRequestFragment();
+    @ContributesAndroidInjector
+    abstract ResetPasswordRequestFragment resetPasswordRequestFragment();
 
-	@ContributesAndroidInjector
-	abstract ChangePasswordFragment changePasswordFragment();
+    @ContributesAndroidInjector
+    abstract ChangePasswordFragment changePasswordFragment();
 
-	@ContributesAndroidInjector
-	abstract ProfilFragment profilFragment();
+    @ContributesAndroidInjector
+    abstract ProfilFragment profilFragment();
 
-	@ContributesAndroidInjector
-	abstract SettingsFragment settingsFragment();
+    @ContributesAndroidInjector
+    abstract SettingsFragment settingsFragment();
 
-	@ContributesAndroidInjector
-	abstract ClusterFragment clusterFragment();
+    @ContributesAndroidInjector
+    abstract ClusterFragment clusterFragment();
 
 
+    @ContributesAndroidInjector
+    abstract FormListFragment formListFragment();
 
-	@ContributesAndroidInjector
-	abstract FormListFragment formListFragment();
+    @ContributesAndroidInjector
+    abstract FormFragment formFragment();
 
-	@ContributesAndroidInjector
-	abstract FormFragment formFragment();
+    @ContributesAndroidInjector
+    abstract SectionFragment sectionFragment();
 
-	@ContributesAndroidInjector
-	abstract SectionFragment sectionFragment();
+    @ContributesAndroidInjector
+    abstract ReportsFragment reportsFragment();
 
-	@ContributesAndroidInjector
-	abstract ReportsFragment reportsFragment();
+    @ContributesAndroidInjector
+    abstract FormViewFragment formViewFragment();
 
-	@ContributesAndroidInjector
-	abstract FormViewFragment formViewFragment();
+    @ContributesAndroidInjector
+    abstract FormAddDialog formAddDialog();
 
-	@ContributesAndroidInjector
-	abstract FormAddDialog formAddDialog();
+    @ContributesAndroidInjector
+    abstract FormEditDialog formEditDialog();
 
-	@ContributesAndroidInjector
-	abstract FormEditDialog formEditDialog();
+    @ContributesAndroidInjector
+    abstract SectionAddDialog sectionAddDialog();
 
-	@ContributesAndroidInjector
-	abstract SectionAddDialog sectionAddDialog();
+    @ContributesAndroidInjector
+    abstract SectionEditDialog sectionEditDialog();
 
-	@ContributesAndroidInjector
-	abstract SectionEditDialog sectionEditDialog();
-
-	@ContributesAndroidInjector
+    @ContributesAndroidInjector
     abstract ChooseQuestionTypeDialog questionAddDialog();
 
-	@ContributesAndroidInjector
-	abstract BooleanQuestionFragment booleanDialog();
-
-	@ContributesAndroidInjector
-	abstract TimeQuestionFragment timeDialog();
-
-	@ContributesAndroidInjector
-	abstract DateQuestionFragment dateDialog();
-
-	@ContributesAndroidInjector
-	abstract SpinnerQuestionFragment spinnerDialog();
-
-	@ContributesAndroidInjector
-	abstract TextQuestionFragment textDialog();
-
-	@ContributesAndroidInjector
-	abstract NumberQuestionFragment numberDialog();
-
-	@ContributesAndroidInjector
-	abstract EnqueteListFragment enqueteListFragment();
-
-	@ContributesAndroidInjector
-	abstract EnqueteFragment enqueteFragment();
-
-	@ContributesAndroidInjector
-	abstract ReportsListFragment reportsListFragment();
-
-	@ContributesAndroidInjector
-	abstract ClusterListFragment clusterListFragment();
-
-	@ContributesAndroidInjector
-	abstract EnqueteMenuFragment enqueteMenuFragment();
+    @ContributesAndroidInjector
+    abstract BooleanQuestionFragment booleanDialog();
 
     @ContributesAndroidInjector
-	abstract ImportSectionFragment importSectionDialog();
+    abstract TimeQuestionFragment timeDialog();
 
     @ContributesAndroidInjector
-	abstract SelectFormFragment selectFormDialog();
+    abstract DateQuestionFragment dateDialog();
+
+    @ContributesAndroidInjector
+    abstract SpinnerQuestionFragment spinnerDialog();
+
+    @ContributesAndroidInjector
+    abstract TextQuestionFragment textDialog();
+
+    @ContributesAndroidInjector
+    abstract NumberQuestionFragment numberDialog();
+
+    @ContributesAndroidInjector
+    abstract MyEnqueteFragment enqueteListFragment();
+
+    @ContributesAndroidInjector
+    abstract EnqueteFragment enqueteFragment();
+
+    @ContributesAndroidInjector
+    abstract ReportsListFragment reportsListFragment();
+
+    @ContributesAndroidInjector
+    abstract ClusterListFragment clusterListFragment();
+
+    @ContributesAndroidInjector
+    abstract EnqueteMenuFragment enqueteMenuFragment();
+
+    @ContributesAndroidInjector
+    abstract ImportSectionFragment importSectionDialog();
+
+    @ContributesAndroidInjector
+    abstract SelectFormFragment selectFormDialog();
 
     @ContributesAndroidInjector
     abstract EnqueteAddDialog enqueteAddDialog();
@@ -179,20 +180,26 @@ public abstract class FragmentBuilderModule {
     @ContributesAndroidInjector
     abstract ChooseClusterTypeDialog clusterFilsAddDialog();
 
-	@ContributesAndroidInjector
-	abstract EnqueteVisibilityDialog enqueteVisibilityDialog();
+    @ContributesAndroidInjector
+    abstract EnqueteVisibilityDialog enqueteVisibilityDialog();
 
     @ContributesAndroidInjector
     abstract EnqueteJoinedFragment enqueteJoinedFragment();
 
     @ContributesAndroidInjector
-    abstract MyEnqueteFragment myEnqueteFragment();
+    abstract EnqueteCreatedFragment myEnqueteFragment();
 
     @ContributesAndroidInjector
     abstract ReportAddDialog reportAddDialog();
 
     @ContributesAndroidInjector
     abstract ReportEditDialog reportEditDialog();
+
+    @ContributesAndroidInjector
+    abstract EnqueteReplyFragment enqueteReplyFragment();
+
+    @ContributesAndroidInjector
+    abstract EnqueteReplyIntroFragment enqueteReplyIntroFragment();
 }
 
 

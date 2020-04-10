@@ -41,7 +41,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.recyclerview_simple;
+        return R.layout.fragment_form_list;
     }
 
     @Override

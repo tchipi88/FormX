@@ -4,13 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
-import com.appli.nyx.formx.ui.viewholder.EnqueteJoinedViewHolder;
+import com.appli.nyx.formx.ui.viewholder.EnqueteViewHolder;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -22,8 +24,7 @@ import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
 
-public class EnqueteJoinedFragment extends EnqueteListFragment {
-
+public class EnqueteCreatedFragment extends EnqueteListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,35 +41,51 @@ public class EnqueteJoinedFragment extends EnqueteListFragment {
             return enquete;
         }).build();
 
-        adapter = new FirestoreRecyclerAdapter<Enquete, EnqueteJoinedViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<Enquete, EnqueteViewHolder>(options) {
 
             @NonNull
             @Override
-            public EnqueteJoinedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_enquete_joined, parent, false);
-                return new EnqueteJoinedViewHolder(view);
+            public EnqueteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_enquete, parent, false);
+                return new EnqueteViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull EnqueteJoinedViewHolder holder, int position, @NonNull Enquete enquete) {
+            protected void onBindViewHolder(@NonNull EnqueteViewHolder holder, int position, @NonNull Enquete enquete) {
                 holder.mItem = getItem(position);
                 holder.mLibelleView.setText(enquete.getLibelle());
                 holder.mDescriptionView.setText(enquete.getDescription());
 
                 ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, holder.img, ic_assignment_black_24dp);
 
-
-                holder.quit.setOnClickListener(v -> {
-
-
-                });
-
-                holder.reply.setOnClickListener(v -> {
+                holder.mView.setOnClickListener(v -> {
                     viewModel.setEnquete(holder.mItem);
-                    NavHostFragment.findNavController(EnqueteJoinedFragment.this).navigate(R.id.action_global_enqueteReplyIntroFragment);
+                    NavHostFragment.findNavController(EnqueteCreatedFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteFragment);
                 });
 
+                holder.delete.setOnClickListener(v -> {
 
+                    AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
+                        FirebaseFirestore.getInstance().collection(ENQUETE_PATH).document(enquete.getId()).delete().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
+                    });
+
+                });
+
+                holder.share.setOnClickListener(v -> {
+                    viewModel.setEnquete(holder.mItem);
+                    NavHostFragment.findNavController(EnqueteCreatedFragment.this).navigate(R.id.action_enqueteListFragment_to_selectUserFragment);
+                });
+
+                holder.edit.setOnClickListener(v -> {
+                    viewModel.setEnquete(holder.mItem);
+                    NavHostFragment.findNavController(EnqueteCreatedFragment.this).navigate(R.id.action_enqueteListFragment_to_enqueteEditDialog);
+                });
             }
 
             @Override
@@ -87,13 +104,11 @@ public class EnqueteJoinedFragment extends EnqueteListFragment {
         recyclerView.setAdapter(adapter);
 
         view.findViewById(R.id.add_enquete).setOnClickListener(v -> {
-            NavHostFragment.findNavController(EnqueteJoinedFragment.this).navigate(R.id.action_global_joinEnqueteFragment);
+            NavHostFragment.findNavController(EnqueteCreatedFragment.this).navigate(R.id.action_global_enqueteAddDialog);
         });
 
         return view;
     }
-
-
 
 
 }

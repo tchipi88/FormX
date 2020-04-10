@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,6 +67,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");

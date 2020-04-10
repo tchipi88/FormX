@@ -1,51 +1,77 @@
 package com.appli.nyx.formx.ui.fragment.business.enquete;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.ui.adapter.ViewPagerAdapter;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
-import com.google.android.material.tabs.TabLayout;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.google.firebase.storage.StorageReference;
 
-import butterknife.BindView;
+import butterknife.BindDrawable;
 
-public class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
+public abstract class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
-	@Override
-	protected Class<EnqueteViewModel> getViewModel() {
-		return EnqueteViewModel.class;
-	}
+    protected FirestoreRecyclerAdapter adapter;
+    protected RecyclerView recyclerView;
+    protected View emptyView;
 
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
+    protected StorageReference storageRef;
 
-	@Override
-	protected int getLayoutRes() {
-        return R.layout.fragment_myenquete;
-	}
+    @BindDrawable(R.drawable.ic_assignment_black_24dp)
+    protected Drawable ic_assignment_black_24dp;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+    @Override
+    protected Class<EnqueteViewModel> getViewModel() {
+        return EnqueteViewModel.class;
+    }
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EnqueteJoinedFragment(), getString(R.string.enquete_joined));
-        adapter.addFragment(new MyEnqueteFragment(), getString(R.string.created_by));
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_enquete_list;
+    }
 
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        storageRef = firebaseStorage.getReference();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.enquetes);
+        emptyView = view.findViewById(R.id.emptyView);
+        assert recyclerView != null;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        return view;
+    }
 
 
-        return rootView;
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
 }

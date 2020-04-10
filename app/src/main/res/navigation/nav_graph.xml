@@ -290,7 +290,7 @@
         app:destination="@id/timeDialog" />
     <fragment
         android:id="@+id/enqueteListFragment"
-        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteListFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.MyEnqueteFragment"
         android:label="@string/enquetes">
         <action
             android:id="@+id/action_enqueteListFragment_to_enqueteFragment"
@@ -352,13 +352,15 @@
         <action
             android:id="@+id/action_enqueteMenuFragment_to_enqueteListFragment"
             app:destination="@id/enqueteListFragment" />
-        <action
-            android:id="@+id/action_enqueteMenuFragment_to_joinEnqueteFragment"
-            app:destination="@id/joinEnqueteFragment" />
+
         <action
             android:id="@+id/action_enqueteMenuFragment_to_enqueteSharedFragment"
             app:destination="@id/enqueteSharedFragment" />
     </fragment>
+
+    <action
+        android:id="@+id/action_global_joinEnqueteFragment"
+        app:destination="@id/joinEnqueteFragment" />
     <action
         android:id="@+id/action_global_enqueteMenuFragment"
         app:destination="@id/enqueteMenuFragment" />
@@ -426,6 +428,21 @@
         android:id="@+id/enqueteVisibilityDialog"
         android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteVisibilityDialog"
         android:label="EnqueteVisibilityDialog" />
+    <fragment
+        android:id="@+id/enqueteReplyIntroFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteReplyIntroFragment"
+        android:label="EnqueteReplyIntroFragment">
+        <action
+            android:id="@+id/action_enqueteReplyIntroFragment_to_enqueteReplyFragment"
+            app:destination="@id/enqueteReplyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enqueteReplyFragment"
+        android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteReplyFragment"
+        android:label="EnqueteReplyFragment" />
+    <action
+        android:id="@+id/action_global_enqueteReplyIntroFragment"
+        app:destination="@id/enqueteReplyIntroFragment" />
 
 
 </navigation>

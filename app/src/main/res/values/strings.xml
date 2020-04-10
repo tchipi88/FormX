@@ -152,4 +152,5 @@
     <string name="select_enquete">Select Enquete</string>
     <string name="join_survey">Join Survey</string>
     <string name="my_invitations">My Invitations</string>
+    <string name="start">Start</string>
 </resources>

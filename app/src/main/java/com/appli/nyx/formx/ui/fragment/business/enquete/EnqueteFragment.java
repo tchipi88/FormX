@@ -56,7 +56,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     static final int ALL_PERMISSIONS_RESULT = 100;
 
 
-    @BindDrawable(R.drawable.ic_assignment_black_128dp)
+    @BindDrawable(R.drawable.ic_assignment_white_128dp)
     Drawable ic_assignment_black_128dp;
 
     @BindView(R.id.enquete_photo)
