@@ -2,11 +2,9 @@ package com.appli.nyx.formx.ui.fragment.account;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -47,6 +45,7 @@ import butterknife.BindView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
+import static com.appli.nyx.formx.utils.ImageUtils.getPictureFile;
 
 public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
@@ -72,8 +71,6 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
 
     @BindDrawable(R.drawable.ic_account_circle_white_128dp)
     Drawable ic_account_circle_white_128dp;
-
-
 
     StorageReference storageRef;
 
@@ -172,34 +169,6 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
         }
     }
 
-
-    private File getPictureFile() throws IOException {
-        String pictureFile = "profil_photo";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(pictureFile, ".jpg", storageDir);
-        return image;
-    }
-
-    /**
-     * Get real file path from URI
-     */
-    public String getRealPathFromUri(Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
-            assert cursor != null;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
-
-
     private void addToCloudStorage(File f) {
         Uri picUri = Uri.fromFile(f);
 
@@ -227,7 +196,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
             } else if (requestCode == REQUEST_GALLERY_PHOTO) {
                 Uri selectedImage = data.getData();
                 try {
-                    mPhotoFile = mCompressor.compressToFile(new File(getRealPathFromUri(selectedImage)));
+                    mPhotoFile = mCompressor.compressToFile(new File(ImageUtils.getRealPathFromUri(getContext(), selectedImage)));
                     ImageUtils.displayRoundImageFromUrl(getContext(), mPhotoFile.getAbsolutePath(), profil_photo);
                     addToCloudStorage(mPhotoFile);
                 } catch (IOException e) {
@@ -345,7 +314,7 @@ public class ProfilFragment extends ViewModelFragment<UserViewModel> {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = getPictureFile();
+                photoFile = getPictureFile(getContext(), "profil_photo");
             } catch (IOException ex) {
                 ex.printStackTrace();
                 // Error occurred while creating the File

@@ -23,6 +23,7 @@ import com.appli.nyx.formx.ui.fields.FieldsGenerator;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -104,7 +105,13 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
                 }
                 ;
             } else {
-                NavHostFragment.findNavController(FormViewFragment.this).navigateUp();
+                if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
+                    new MaterialAlertDialogBuilder(getContext()).setIcon(R.drawable.ic_info_black_24dp)
+                            .setTitle("INFO").setMessage(getString(R.string.operation_completes_successfully)).setPositiveButton("OK", (dialog, which) -> {
+                        NavHostFragment.findNavController(FormViewFragment.this).navigateUp();
+                    }).setCancelable(false).show();
+                }
+
             }
         });
 
@@ -162,7 +169,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
                             break;
                     }
 
-					View fieldView = generateLayoutField(getContext(), question);
+                    View fieldView = generateLayoutField(getFragmentManager(), getContext(), question);
 					question.setFieldView(fieldView);
 					fieldsContainer.addView(fieldView);
 					viewModel.addQuestion(question);

@@ -11,7 +11,8 @@ public class Enquete extends MyDocument {
 
     public String authorId;
 
-    private Form form;
+    private String formId;
+    private String formLibelle;
 
     public Enquete(String libelle) {
         this.libelle = libelle;
@@ -36,14 +37,6 @@ public class Enquete extends MyDocument {
 		this.description = description;
 	}
 
-    public Form getForm() {
-        return form;
-    }
-
-    public void setForm(Form form) {
-        this.form = form;
-	}
-
 	public EnqueteVisibility getEnqueteVisibility() {
 		return enqueteVisibility;
 	}
@@ -52,6 +45,21 @@ public class Enquete extends MyDocument {
 		this.enqueteVisibility = enqueteVisibility;
 	}
 
+    public String getFormId() {
+        return formId;
+    }
+
+    public void setFormId(String formId) {
+        this.formId = formId;
+    }
+
+    public String getFormLibelle() {
+        return formLibelle;
+    }
+
+    public void setFormLibelle(String formLibelle) {
+        this.formLibelle = formLibelle;
+    }
 
     public String getAuthorId() {
         return authorId;
@@ -60,4 +68,6 @@ public class Enquete extends MyDocument {
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
+
+
 }

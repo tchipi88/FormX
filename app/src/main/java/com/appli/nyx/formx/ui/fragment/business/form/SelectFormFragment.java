@@ -50,7 +50,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
 
         ((MainActivity) requireActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.select_form));
 
-        recyclerView = view.findViewById(R.id.items);
+        recyclerView = view.findViewById(R.id.forms);
         emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

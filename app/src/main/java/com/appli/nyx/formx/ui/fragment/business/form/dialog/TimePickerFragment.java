@@ -3,25 +3,23 @@ package com.appli.nyx.formx.ui.fragment.business.form.dialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.utils.DateUtils;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.joda.time.LocalTime;
 
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    LinearLayout parentLayout;
+    final TextInputEditText edtInput;
 
-    public TimePickerFragment() {
-    }
-
-    public void setParentLayout(LinearLayout parentLayout) {
-        this.parentLayout = parentLayout;
+    public TimePickerFragment(TextInputEditText edtInput) {
+        this.edtInput = edtInput;
     }
 
     @Override
@@ -34,7 +32,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public void onTimeSet(TimePicker view, int hour, int minute) {
-        TextView textView = (TextView) parentLayout.findViewWithTag("time");
-        textView.setText(getString(R.string.bf_chosen_time, hour + ":" + minute));
+        edtInput.setText(DateUtils.getStringTime(new LocalTime(hour, minute)));
     }
 }

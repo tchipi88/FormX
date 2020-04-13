@@ -1,12 +1,15 @@
 package com.appli.nyx.formx.utils;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -263,6 +266,31 @@ public class ImageUtils {
             }
         }
         return inSampleSize;
+    }
+
+    public static File getPictureFile(Context context, String pictureFile) throws IOException {
+        File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(pictureFile, ".jpg", storageDir);
+        return image;
+    }
+
+    /**
+     * Get real file path from URI
+     */
+    public static String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            assert cursor != null;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
 }

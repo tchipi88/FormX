@@ -34,6 +34,11 @@ public class DateUtils {
 		return localDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy"));
 	}
 
+
+	public static String getStringTime(LocalTime localTime) {
+		return localTime.toString(DateTimeFormat.forPattern("HH:mm"));
+	}
+
 	public static Long getLongDate(LocalDate localDate) {
 		return localDate.toDate().getTime();
 	}

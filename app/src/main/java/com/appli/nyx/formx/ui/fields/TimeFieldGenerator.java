@@ -5,8 +5,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.TimePickerFragment;
 import com.appli.nyx.formx.utils.DateUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -16,8 +19,7 @@ import org.joda.time.LocalTime;
 public class TimeFieldGenerator implements IFieldGenerator<TimeQuestion> {
 
 
-    @Override
-    public View generateLayout(Context context, TimeQuestion field) {
+    public View generateLayout(FragmentManager fragmentManager, Context context, TimeQuestion field) {
         if (field == null || context == null) {
             // Aucun champ à générer
             return null;
@@ -48,8 +50,17 @@ public class TimeFieldGenerator implements IFieldGenerator<TimeQuestion> {
             tilInput.setHelperText("");
         }
 
+        edtInput.setOnClickListener(v -> {
+            TimePickerFragment newFragment = new TimePickerFragment(edtInput);
+            newFragment.show(fragmentManager, "timePicker");
+        });
 
         return fieldView;
+    }
+
+    @Override
+    public View generateLayout(Context context, TimeQuestion field) {
+        return null;
     }
 
     @Override

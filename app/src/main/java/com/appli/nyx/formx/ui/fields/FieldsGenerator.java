@@ -3,6 +3,8 @@ package com.appli.nyx.formx.ui.fields;
 import android.content.Context;
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
 import com.appli.nyx.formx.model.firebase.fields.BooleanQuestion;
@@ -14,7 +16,7 @@ import com.appli.nyx.formx.model.firebase.fields.TimeQuestion;
 
 public class FieldsGenerator {
 
-    public static View generateLayoutField(Context context, AbstractQuestion field) {
+    public static View generateLayoutField(FragmentManager fragmentManager, Context context, AbstractQuestion field) {
         QuestionType questionType = field.getQuestionType();
         IFieldGenerator fieldGenerator;
         switch (questionType) {
@@ -36,12 +38,12 @@ public class FieldsGenerator {
                 return fieldGenerator.generateLayout(context, spinnerField);
             case DATE_PICKER:
                 DateQuestion dateField = (DateQuestion) field;
-                fieldGenerator=new DateFieldGenerator();
-                return fieldGenerator.generateLayout(context, dateField);
+                DateFieldGenerator dateFieldGenerator = new DateFieldGenerator();
+                return dateFieldGenerator.generateLayout(fragmentManager, context, dateField);
             case TIME_PICKER:
                 TimeQuestion timeField = (TimeQuestion) field;
-                fieldGenerator=new TimeFieldGenerator();
-                return fieldGenerator.generateLayout(context, timeField);
+                TimeFieldGenerator timeFieldGenerator = new TimeFieldGenerator();
+                return timeFieldGenerator.generateLayout(fragmentManager, context, timeField);
 
         }
         return null;

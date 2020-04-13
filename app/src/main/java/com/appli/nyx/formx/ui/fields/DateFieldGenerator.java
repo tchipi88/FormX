@@ -5,8 +5,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.fields.DateQuestion;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.DatePickerFragment;
 import com.appli.nyx.formx.utils.DateUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -17,6 +20,10 @@ public class DateFieldGenerator implements IFieldGenerator<DateQuestion> {
 
     @Override
     public View generateLayout(Context context, DateQuestion field) {
+        return null;
+    }
+
+    public View generateLayout(FragmentManager fragmentManager, Context context, DateQuestion field) {
         if (field == null || context == null) {
             // Aucun champ à générer
             return null;
@@ -46,6 +53,11 @@ public class DateFieldGenerator implements IFieldGenerator<DateQuestion> {
             // Supprimer une éventuelle information sur le champ
             tilInput.setHelperText("");
         }
+
+        edtInput.setOnClickListener(v -> {
+            DatePickerFragment newFragment = new DatePickerFragment(edtInput);
+            newFragment.show(fragmentManager, "datePicker");
+        });
 
         return fieldView;
     }

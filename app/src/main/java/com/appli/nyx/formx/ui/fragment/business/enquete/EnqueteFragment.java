@@ -2,11 +2,9 @@ package com.appli.nyx.formx.ui.fragment.business.enquete;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -114,7 +112,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
                 enquete_des.setText(enquete.getDescription());
             }
 
-            if (enquete.getForm() != null) enquete_form.setText(enquete.getForm().getLibelle());
+            enquete_form.setText(enquete.getFormLibelle());
             if (enquete.getEnqueteVisibility() != null)
                 enquete_visibility.setText(enquete.getEnqueteVisibility().name());
 
@@ -137,7 +135,8 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
         selectFormViewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
             Map<String, Object> updatedObject = new HashMap<>();
-            updatedObject.put("form", form);
+            updatedObject.put("formId", form.getId());
+            updatedObject.put("formLibelle", form.getLibelle());
 
             FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
                     .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
@@ -153,32 +152,6 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         });
 
         return rootView;
-    }
-
-    private File getPictureFile() throws IOException {
-        String pictureFile = "enquete_photo";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(pictureFile, ".jpg", storageDir);
-        return image;
-    }
-
-    /**
-     * Get real file path from URI
-     */
-    public String getRealPathFromUri(Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
-            assert cursor != null;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
     }
 
 
@@ -207,7 +180,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             } else if (requestCode == REQUEST_GALLERY_PHOTO) {
                 Uri selectedImage = data.getData();
                 try {
-                    mPhotoFile = mCompressor.compressToFile(new File(getRealPathFromUri(selectedImage)));
+                    mPhotoFile = mCompressor.compressToFile(new File(ImageUtils.getRealPathFromUri(getContext(), selectedImage)));
                     ImageUtils.displayRoundImageFromUrl(getContext(), mPhotoFile.getAbsolutePath(), enquete_photo);
                     addToCloudStorage(mPhotoFile);
                 } catch (IOException e) {
@@ -328,7 +301,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = getPictureFile();
+                photoFile = ImageUtils.getPictureFile(getContext(), "enquete_photo");
             } catch (IOException ex) {
                 ex.printStackTrace();
                 // Error occurred while creating the File

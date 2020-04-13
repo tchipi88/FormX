@@ -21,9 +21,8 @@
             android:drawableLeft="@drawable/ic_access_time_black_24dp"
             android:drawablePadding="8dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:saveEnabled="false"
-            android:singleLine="true" />
+            android:focusable="false"
+            android:inputType="datetime" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

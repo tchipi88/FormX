@@ -4,27 +4,24 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.utils.DateUtils;
+import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.LocalDate;
+
 import java.util.Calendar;
-import java.util.Locale;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    LinearLayout parentLayout;
+    final TextInputEditText edtInput;
 
-    public DatePickerFragment() {
+    public DatePickerFragment(TextInputEditText edtInput) {
+        this.edtInput = edtInput;
     }
 
-    public void setParentLayout(LinearLayout parentLayout) {
-        this.parentLayout = parentLayout;
-    }
 
     @Override
     @NonNull
@@ -36,11 +33,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        Calendar newDate = Calendar.getInstance();
-        newDate.set(year, month, day);
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        TextView textView = (TextView) parentLayout.findViewWithTag("date");
-        textView.setText(getString(R.string.bf_chosen_date, dateFormatter.format(newDate.getTime())));
+        edtInput.setText(DateUtils.getStringDate(new LocalDate(year, month + 1, day)));
     }
 }

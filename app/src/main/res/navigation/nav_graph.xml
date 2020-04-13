@@ -434,7 +434,9 @@
         android:label="EnqueteReplyIntroFragment">
         <action
             android:id="@+id/action_enqueteReplyIntroFragment_to_enqueteReplyFragment"
-            app:destination="@id/enqueteReplyFragment" />
+            app:destination="@id/enqueteReplyFragment"
+            app:popUpTo="@id/enqueteListFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/enqueteReplyFragment"
