@@ -64,10 +64,11 @@ public class TimeFieldGenerator implements IFieldGenerator<TimeQuestion> {
     }
 
     @Override
-    public void loadValues(TimeQuestion field) {
-
+    public String getValue(Context context, TimeQuestion field) {
+        final View fieldView = field.getFieldView();
+        final TextInputEditText textfield_tiet = fieldView.findViewById(R.id.timefield_tiet);
+        return textfield_tiet.getText().toString();
     }
-
     @Override
     public boolean generateError(Context context, TimeQuestion field) {
         if (field == null || field.getFieldView() == null) {

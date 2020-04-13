@@ -63,10 +63,11 @@ public class DateFieldGenerator implements IFieldGenerator<DateQuestion> {
     }
 
     @Override
-    public void loadValues(DateQuestion field) {
-
+    public String getValue(Context context, DateQuestion field) {
+        final View fieldView = field.getFieldView();
+        final TextInputEditText edtInput = fieldView.findViewById(R.id.datefield_tiet);
+        return edtInput.getText().toString();
     }
-
     @Override
     public boolean generateError(Context context, DateQuestion field) {
         if (field == null || field.getFieldView() == null) {

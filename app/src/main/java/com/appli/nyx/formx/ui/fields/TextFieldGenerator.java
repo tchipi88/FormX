@@ -62,8 +62,10 @@ public class TextFieldGenerator implements  IFieldGenerator<TextQuestion>{
     }
 
     @Override
-    public void loadValues(TextQuestion field) {
-
+    public String getValue(Context context, TextQuestion field) {
+        final View fieldView = field.getFieldView();
+        final TextInputEditText textfield_tiet = fieldView.findViewById(R.id.textfield_tiet);
+        return textfield_tiet.getText().toString();
     }
 
     @Override

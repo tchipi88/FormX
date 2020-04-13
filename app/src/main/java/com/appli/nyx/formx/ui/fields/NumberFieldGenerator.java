@@ -63,8 +63,10 @@ public class NumberFieldGenerator implements  IFieldGenerator<NumberQuestion>{
     }
 
     @Override
-    public void loadValues(NumberQuestion field) {
-
+    public String getValue(Context context, NumberQuestion field) {
+        final View fieldView = field.getFieldView();
+        final TextInputEditText edtInput = fieldView.findViewById(R.id.numberfield_tiet);
+        return edtInput.getText().toString();
     }
 
     @Override

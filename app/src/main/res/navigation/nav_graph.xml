@@ -349,9 +349,6 @@
         android:id="@+id/enqueteMenuFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.enquete.EnqueteMenuFragment"
         android:label="@string/home">
-        <action
-            android:id="@+id/action_enqueteMenuFragment_to_enqueteListFragment"
-            app:destination="@id/enqueteListFragment" />
 
         <action
             android:id="@+id/action_enqueteMenuFragment_to_enqueteSharedFragment"

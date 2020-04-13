@@ -45,8 +45,10 @@ public class BooleanFieldGenerator implements IFieldGenerator<BooleanQuestion> {
     }
 
     @Override
-    public void loadValues(BooleanQuestion field) {
-
+    public String getValue(Context context, BooleanQuestion field) {
+        final View fieldView = field.getFieldView();
+        final SwitchMaterial switchCompat = fieldView.findViewById(R.id.booleanfield_swithcompat);
+        return switchCompat.isChecked() ? Boolean.TRUE.toString() : Boolean.FALSE.toString();
     }
 
     @Override

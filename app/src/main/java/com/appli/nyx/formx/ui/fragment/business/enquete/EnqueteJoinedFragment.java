@@ -11,16 +11,19 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.ui.viewholder.EnqueteJoinedViewHolder;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
+import static com.appli.nyx.formx.utils.MyConstant.JOIN_USER_ID;
 
 public class EnqueteJoinedFragment extends EnqueteListFragment {
 
@@ -32,7 +35,7 @@ public class EnqueteJoinedFragment extends EnqueteListFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).whereArrayContains(JOIN_USER_ID, SessionUtils.getUserUid()).orderBy("libelle");
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
             Enquete enquete = snapshot.toObject(Enquete.class);
@@ -60,6 +63,17 @@ public class EnqueteJoinedFragment extends EnqueteListFragment {
 
                 holder.quit.setOnClickListener(v -> {
 
+                    FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                            .document(enquete.getId()).update(JOIN_USER_ID, FieldValue.arrayRemove(SessionUtils.getUserUid()))
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    new MaterialAlertDialogBuilder(getContext()).setIcon(R.drawable.ic_info_black_24dp)
+                                            .setTitle("INFO").setMessage(getString(R.string.operation_completes_successfully)).setPositiveButton("OK", (dialog, which) -> {
+                                    }).setCancelable(false).show();
+                                } else {
+                                    AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                                }
+                            });
 
                 });
 

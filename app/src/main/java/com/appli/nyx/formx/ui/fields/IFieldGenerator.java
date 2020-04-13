@@ -9,7 +9,7 @@ public  interface IFieldGenerator<V extends AbstractQuestion> {
 
     public  View generateLayout(Context context,  V field);
 
-    public  void loadValues(final V field);
+    public String getValue(Context context, V field);
 
     public boolean generateError(Context context, V field);
 }

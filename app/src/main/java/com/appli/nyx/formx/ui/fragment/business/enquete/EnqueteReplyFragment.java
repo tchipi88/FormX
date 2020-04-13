@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Enquete;
+import com.appli.nyx.formx.model.firebase.EnqueteAnswer;
+import com.appli.nyx.formx.model.firebase.EnqueteAnswerSection;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
@@ -22,8 +25,10 @@ import com.appli.nyx.formx.ui.MainActivity;
 import com.appli.nyx.formx.ui.fields.FieldsGenerator;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,6 +38,8 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_ANSWER;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
@@ -47,6 +54,9 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
 
     List<Section> sections = new ArrayList<>();
 
+    Enquete enquete;
+
+    EnqueteAnswer enqueteAnswer;
 
     @Override
     protected Class<EnqueteViewModel> getViewModel() {
@@ -62,35 +72,40 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-        viewModel.getEnqueteMutableLiveData().observe(getViewLifecycleOwner(), enquete -> {
-            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(enquete.getLibelle());
+        enquete = viewModel.getEnqueteMutableLiveData().getValue();
 
-            //get all sections
-            FirebaseFirestore.getInstance().collection(FORM_PATH)
-                    .document(enquete.getFormId())
-                    .collection(SECTION_PATH).get().addOnCompleteListener(sectiontask -> {
-                if (sectiontask.isSuccessful()) {
+        enqueteAnswer = new EnqueteAnswer();
 
-                    for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
+        CollectionReference answerRef = FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                .document(enquete.getId()).collection(ENQUETE_ANSWER);
 
-                        Section section = new Section();
-                        section.setId(sectionSnapshot.getId());
-                        section.libelle = (String) sectionSnapshot.get("libelle");
-                        section.description = (String) sectionSnapshot.get("description");
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(enquete.getLibelle());
 
-                        sections.add(section);
-                    }
+        //get all sections
+        FirebaseFirestore.getInstance().collection(FORM_PATH)
+                .document(enquete.getFormId())
+                .collection(SECTION_PATH).get().addOnCompleteListener(sectiontask -> {
+            if (sectiontask.isSuccessful()) {
 
-                    if (!sections.isEmpty()) {
-                        generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
-                        rootView.findViewById(R.id.no_section).setVisibility(View.GONE);
-                    } else {
-                        btn_next.setVisibility(View.GONE);
-                    }
+                for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
 
+                    Section section = new Section();
+                    section.setId(sectionSnapshot.getId());
+                    section.libelle = (String) sectionSnapshot.get("libelle");
+                    section.description = (String) sectionSnapshot.get("description");
 
+                    sections.add(section);
                 }
-            });
+
+                if (!sections.isEmpty()) {
+                    generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
+                    rootView.findViewById(R.id.no_section).setVisibility(View.GONE);
+                } else {
+                    btn_next.setVisibility(View.GONE);
+                }
+
+
+            }
         });
 
         btn_next.setOnClickListener(view1 -> {
@@ -98,17 +113,25 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
 
                 //validate questions of section
                 if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
+                    saveSection(sections.get(viewModel.getsectionViewIndex().getValue()));
                     generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue() + 1));
                     viewModel.setsectionViewIndex();
                 }
                 ;
             } else {
                 if (validateSection(sections.get(viewModel.getsectionViewIndex().getValue()))) {
+                    saveSection(sections.get(viewModel.getsectionViewIndex().getValue()));
 
-                    new MaterialAlertDialogBuilder(getContext()).setIcon(R.drawable.ic_info_black_24dp)
-                            .setTitle("INFO").setMessage(getString(R.string.thanks_for_your_reply)).setPositiveButton("OK", (dialog, which) -> {
-                        NavHostFragment.findNavController(EnqueteReplyFragment.this).navigateUp();
-                    }).setCancelable(false).show();
+                    answerRef.add(enqueteAnswer).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            new MaterialAlertDialogBuilder(getContext()).setIcon(R.drawable.ic_info_black_24dp)
+                                    .setTitle("INFO").setMessage(getString(R.string.thanks_for_your_reply)).setPositiveButton("OK", (dialog, which) -> {
+                                NavHostFragment.findNavController(EnqueteReplyFragment.this).navigateUp();
+                            }).setCancelable(false).show();
+                        } else {
+                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                        }
+                    });
 
                 }
 
@@ -133,6 +156,18 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
             }
         }
         return valid;
+    }
+
+    private void saveSection(Section section) {
+        EnqueteAnswerSection enqueteAnswerSection = new EnqueteAnswerSection();
+        enqueteAnswerSection.setLibelle(section.getLibelle());
+        enqueteAnswerSection.setDescription(section.getDescription());
+
+        for (AbstractQuestion question : viewModel.getQuestionsListMutableLiveData().getValue()) {
+            question.setValue(FieldsGenerator.getValue(getContext(), question));
+            enqueteAnswerSection.addQuestion(question);
+        }
+        enqueteAnswer.addSection(enqueteAnswerSection);
     }
 
     private void generateLayoutSection(Section section) {

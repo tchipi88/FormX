@@ -2,6 +2,8 @@ package com.appli.nyx.formx.model.firebase;
 
 import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
 
+import java.util.List;
+
 public class Enquete extends MyDocument {
 
 	private String libelle;
@@ -13,6 +15,9 @@ public class Enquete extends MyDocument {
 
     private String formId;
     private String formLibelle;
+
+    private List<String> joinUserId;
+    private List<String> shareUserId;
 
     public Enquete(String libelle) {
         this.libelle = libelle;
@@ -69,5 +74,19 @@ public class Enquete extends MyDocument {
         this.authorId = authorId;
     }
 
+    public List<String> getJoinUserId() {
+        return joinUserId;
+    }
 
+    public void setJoinUserId(List<String> joinUserId) {
+        this.joinUserId = joinUserId;
+    }
+
+    public List<String> getShareUserId() {
+        return shareUserId;
+    }
+
+    public void setShareUserId(List<String> shareUserId) {
+        this.shareUserId = shareUserId;
+    }
 }

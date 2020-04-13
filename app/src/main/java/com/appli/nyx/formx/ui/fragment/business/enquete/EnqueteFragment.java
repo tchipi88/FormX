@@ -24,6 +24,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
+import com.appli.nyx.formx.model.firebase.Enquete;
+import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.fragment.account.ProfilFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
@@ -75,7 +77,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     File mPhotoFile;
     FileCompressor mCompressor;
 
-    String enqueteId;
+    Enquete enquete;
 
     SelectFormViewModel selectFormViewModel;
 
@@ -103,24 +105,21 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-        viewModel.getEnqueteMutableLiveData().observe(getViewLifecycleOwner(), enquete -> {
+        enquete = viewModel.getEnqueteMutableLiveData().getValue();
 
-            enquete_name.setText(enquete.getLibelle());
-            if (TextUtils.isEmpty(enquete.getDescription())) {
-                rootView.findViewById(R.id.card_des).setVisibility(View.GONE);
-            } else {
-                enquete_des.setText(enquete.getDescription());
-            }
+        enquete_name.setText(enquete.getLibelle());
+        if (TextUtils.isEmpty(enquete.getDescription())) {
+            rootView.findViewById(R.id.card_des).setVisibility(View.GONE);
+        } else {
+            enquete_des.setText(enquete.getDescription());
+        }
 
-            enquete_form.setText(enquete.getFormLibelle());
-            if (enquete.getEnqueteVisibility() != null)
-                enquete_visibility.setText(enquete.getEnqueteVisibility().name());
+        enquete_form.setText(enquete.getFormLibelle());
+        if (enquete.getEnqueteVisibility() != null)
+            enquete_visibility.setText(enquete.getEnqueteVisibility().name());
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, enquete_photo, ic_assignment_black_128dp);
+        ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, enquete_photo, ic_assignment_black_128dp);
 
-            enqueteId = enquete.getId();
-
-        });
 
         enquete_photo.setOnClickListener(v -> {
             selectImage();
@@ -130,13 +129,15 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_selectFormFragment);
         });
         rootView.findViewById(R.id.card_visibility).setOnClickListener(v -> {
-            NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_enqueteVisibilityDialog);
+            if (EnqueteVisibility.PUBLIC.equals(enquete.getEnqueteVisibility()))
+                NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_enqueteVisibilityDialog);
         });
 
         selectFormViewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
             Map<String, Object> updatedObject = new HashMap<>();
             updatedObject.put("formId", form.getId());
             updatedObject.put("formLibelle", form.getLibelle());
+            updatedObject.put("enqueteVisibility", EnqueteVisibility.PUBLIC);
 
             FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
                     .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
@@ -156,10 +157,10 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
 
     private void addToCloudStorage(File f) {
-        if (!TextUtils.isEmpty(enqueteId)) {
+        if (!TextUtils.isEmpty(enquete.getId())) {
             Uri picUri = Uri.fromFile(f);
 
-            StorageReference uploadeRef = storageRef.child(enqueteId).child(ENQUETE_PHOTO);
+            StorageReference uploadeRef = storageRef.child(enquete.getId()).child(ENQUETE_PHOTO);
 
             uploadeRef.putFile(picUri).addOnFailureListener(exception -> Log.e("Profil Fragment", "Failed to upload picture to cloud storage"));
         }
@@ -228,7 +229,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
      * Alert dialog for capture or select from galley
      */
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library", "Remove Photo",
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Remove Photo",
                 "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -249,9 +250,9 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     private void removeImage() {
         enquete_photo.setBackgroundDrawable(ic_assignment_black_128dp);
 
-        if (storageRef.child(enqueteId) == null) return;
+        if (storageRef.child(enquete.getId()) == null) return;
 
-        StorageReference uploadeRef = storageRef.child(enqueteId).child(ENQUETE_PHOTO);
+        StorageReference uploadeRef = storageRef.child(enquete.getId()).child(ENQUETE_PHOTO);
 
         uploadeRef.delete().addOnSuccessListener(aVoid -> {
             Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_SHORT).show();

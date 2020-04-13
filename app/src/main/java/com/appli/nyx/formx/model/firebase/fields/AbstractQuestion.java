@@ -19,6 +19,8 @@ public class AbstractQuestion implements Serializable {
     protected String libelle;
     protected String description;
 
+    protected String value;
+
 
     private View fieldView;
 
@@ -75,5 +77,13 @@ public class AbstractQuestion implements Serializable {
 
     public void setValidationError(ValidationError validationError) {
         this.validationError = validationError;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

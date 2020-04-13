@@ -1,5 +1,7 @@
 package com.appli.nyx.formx.model.firebase;
 
+import com.appli.nyx.formx.utils.SessionUtils;
+
 public class Section extends MyDocument {
 
     public String libelle;
@@ -8,10 +10,12 @@ public class Section extends MyDocument {
     public String authorId;
 
     public Section(String libelle) {
+        this.authorId = SessionUtils.getUserUid();
         this.libelle = libelle;
     }
 
     public Section() {
+        this.authorId = SessionUtils.getUserUid();
     }
 
 

@@ -54,10 +54,11 @@ public class SpinnerFieldGenerator implements  IFieldGenerator<SpinnerQuestion>{
     }
 
     @Override
-    public void loadValues(SpinnerQuestion field) {
-
+    public String getValue(Context context, SpinnerQuestion field) {
+        final View fieldView = field.getFieldView();
+        final MaterialSpinner spiSpinner = fieldView.findViewById(R.id.spinnerfield_spi);
+        return (String) spiSpinner.getSelectedItem();
     }
-
     @Override
     public boolean generateError(Context context, SpinnerQuestion field) {
         if (field == null || field.getFieldView() == null ) {

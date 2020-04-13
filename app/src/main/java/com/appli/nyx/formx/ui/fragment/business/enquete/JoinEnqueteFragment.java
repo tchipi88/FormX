@@ -6,18 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
+import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
 import com.appli.nyx.formx.ui.viewholder.EnqueteSimpleViewHolder;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.ImageUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
+import static com.appli.nyx.formx.utils.MyConstant.JOIN_USER_ID;
 
 public class JoinEnqueteFragment extends EnqueteListFragment {
 
@@ -29,7 +35,8 @@ public class JoinEnqueteFragment extends EnqueteListFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                .whereEqualTo("enqueteVisibility", EnqueteVisibility.PUBLIC).orderBy("libelle");
 
         FirestoreRecyclerOptions<Enquete> options = new FirestoreRecyclerOptions.Builder<Enquete>().setQuery(query, snapshot -> {
             Enquete enquete = snapshot.toObject(Enquete.class);
@@ -55,7 +62,16 @@ public class JoinEnqueteFragment extends EnqueteListFragment {
                 ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, holder.img, ic_assignment_black_24dp);
 
                 holder.mView.setOnClickListener(v -> {
-                    //TODO
+                    FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                            .document(enquete.getId()).update(JOIN_USER_ID, FieldValue.arrayUnion(SessionUtils.getUserUid()))
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    NavHostFragment.findNavController(JoinEnqueteFragment.this).navigate(R.id.action_global_enqueteListFragment);
+                                } else {
+                                    AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                                }
+                            });
+
                 });
 
 
@@ -81,7 +97,6 @@ public class JoinEnqueteFragment extends EnqueteListFragment {
 
         return view;
     }
-
 
 
 }

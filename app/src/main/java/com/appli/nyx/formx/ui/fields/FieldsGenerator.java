@@ -91,4 +91,37 @@ public class FieldsGenerator {
 
     }
 
+
+    public static String getValue(Context context, AbstractQuestion field) {
+        QuestionType questionType = field.getQuestionType();
+        IFieldGenerator fieldGenerator;
+        switch (questionType) {
+            case TEXT:
+                TextQuestion textField = (TextQuestion) field;
+                fieldGenerator = new TextFieldGenerator();
+                return fieldGenerator.getValue(context, textField);
+            case NUMBER:
+                NumberQuestion numberField = (NumberQuestion) field;
+                fieldGenerator = new NumberFieldGenerator();
+                return fieldGenerator.getValue(context, numberField);
+            case BOOLEAN:
+                BooleanQuestion booleanField = (BooleanQuestion) field;
+                fieldGenerator = new BooleanFieldGenerator();
+                return fieldGenerator.getValue(context, booleanField);
+            case SPINNER:
+                SpinnerQuestion spinnerField = (SpinnerQuestion) field;
+                fieldGenerator = new SpinnerFieldGenerator();
+                return fieldGenerator.getValue(context, spinnerField);
+            case DATE_PICKER:
+                DateQuestion dateField = (DateQuestion) field;
+                fieldGenerator = new DateFieldGenerator();
+                return fieldGenerator.getValue(context, dateField);
+            case TIME_PICKER:
+                TimeQuestion timeField = (TimeQuestion) field;
+                fieldGenerator = new TimeFieldGenerator();
+                return fieldGenerator.getValue(context, timeField);
+        }
+
+        return null;
+    }
 }
