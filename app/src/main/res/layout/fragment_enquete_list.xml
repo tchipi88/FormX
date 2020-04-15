@@ -5,13 +5,17 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.mikelau.views.shimmer.ShimmerRecyclerViewX
         android:id="@+id/enquetes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/viewholder_enquete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="5"
+        app:shimmer_demo_layout="@layout/data_placeholder_layout"
+        app:shimmer_demo_layout_manager_type="linear_vertical" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/emptyView"

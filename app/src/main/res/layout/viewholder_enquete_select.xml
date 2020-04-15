@@ -24,7 +24,6 @@
         android:layout_width="0dp"
         android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
         android:drawablePadding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/img"
         app:layout_constraintTop_toTopOf="@id/img"

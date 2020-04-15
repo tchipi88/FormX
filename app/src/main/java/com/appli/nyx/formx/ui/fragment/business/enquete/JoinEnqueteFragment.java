@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import static android.widget.LinearLayout.VERTICAL;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
 import static com.appli.nyx.formx.utils.MyConstant.JOIN_USER_ID;
@@ -33,6 +35,8 @@ public class JoinEnqueteFragment extends EnqueteListFragment {
                              Bundle savedInstanceState) {
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(ENQUETE_PATH)

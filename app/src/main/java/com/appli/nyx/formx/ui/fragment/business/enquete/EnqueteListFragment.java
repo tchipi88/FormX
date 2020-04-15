@@ -9,20 +9,20 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.firebase.storage.StorageReference;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 import butterknife.BindDrawable;
 
 public abstract class EnqueteListFragment extends ViewModelFragment<EnqueteViewModel> {
 
     protected FirestoreRecyclerAdapter adapter;
-    protected RecyclerView recyclerView;
+    protected ShimmerRecyclerViewX recyclerView;
     protected View emptyView;
 
     protected StorageReference storageRef;
@@ -57,6 +57,7 @@ public abstract class EnqueteListFragment extends ViewModelFragment<EnqueteViewM
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.showShimmerAdapter();
 
         return view;
     }

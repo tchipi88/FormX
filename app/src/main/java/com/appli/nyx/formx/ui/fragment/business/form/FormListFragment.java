@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
@@ -34,6 +33,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
@@ -48,7 +48,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
     }
 
     FirestoreRecyclerAdapter adapter;
-    private RecyclerView recyclerView;
+    private ShimmerRecyclerViewX recyclerView;
     private View emptyView;
 
     @Override
@@ -68,6 +68,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.showShimmerAdapter();
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");

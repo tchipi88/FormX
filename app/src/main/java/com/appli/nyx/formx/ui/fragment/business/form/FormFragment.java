@@ -12,8 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Section;
@@ -36,6 +36,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
@@ -50,7 +51,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
 
     FirestoreRecyclerAdapter adapter;
-    private RecyclerView recyclerView;
+    private ShimmerRecyclerViewX recyclerView;
     private View emptyView;
 
 
@@ -96,6 +97,9 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         emptyView = view.findViewById(R.id.emptyView);
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.showShimmerAdapter();
+
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH)

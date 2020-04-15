@@ -10,7 +10,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Form;
@@ -23,6 +22,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 import static android.widget.LinearLayout.VERTICAL;
 import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
@@ -31,7 +31,7 @@ import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
 
     FirestoreRecyclerAdapter adapter;
-    private RecyclerView recyclerView;
+    private ShimmerRecyclerViewX recyclerView;
     private View emptyView;
 
     @Override
@@ -56,6 +56,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
+        recyclerView.showShimmerAdapter();
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");

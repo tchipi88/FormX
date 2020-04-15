@@ -40,6 +40,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.StorageReference;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 import java.util.Iterator;
 
@@ -52,7 +53,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
     private static final String TAG = "SelectUserFragment";
 
     UserFirebaseAdapter adapter;
-    RecyclerView recyclerView;
+    ShimmerRecyclerViewX recyclerView;
     View emptyView;
 
 
@@ -100,6 +101,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
+        recyclerView.showShimmerAdapter();
 
 
         // Create the query and the FirestoreRecyclerOptions

@@ -26,7 +26,6 @@
             android:id="@+id/libelle"
             style="@style/TextCardViewBold"
             android:layout_width="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img"
             app:layout_constraintTop_toTopOf="@id/img"

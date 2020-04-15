@@ -12,4 +12,9 @@
     <dimen name="_8dp">8dp</dimen>
     <dimen name="unit_margin_bottom">8dp</dimen>
     <dimen name="unit_margin_left">8dp</dimen>
+
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="placeholderImage">60dp</dimen>
+    <dimen name="placeholderTextHeight">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
 </resources>
