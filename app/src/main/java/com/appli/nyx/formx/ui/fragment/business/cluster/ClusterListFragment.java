@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Cluster;
@@ -24,6 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_PATH;
@@ -31,7 +31,7 @@ import static com.appli.nyx.formx.utils.MyConstant.CLUSTER_PATH;
 public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
 
     FirestoreRecyclerAdapter adapter;
-    private RecyclerView recyclerView;
+    private ShimmerRecyclerViewX recyclerView;
     private View emptyView;
 
 
@@ -57,6 +57,7 @@ public class ClusterListFragment extends ViewModelFragment<ClusterViewModel> {
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.showShimmerAdapter();
 
         CollectionReference collectionReferenceParent = FirebaseFirestore.getInstance().collection(CLUSTER_PATH);
         Query query = collectionReferenceParent.whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");

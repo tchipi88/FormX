@@ -26,11 +26,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
 public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
 
     FirestoreRecyclerAdapter adapter;
-    private RecyclerView recyclerView;
+    private ShimmerRecyclerViewX recyclerView;
     private View emptyView;
 
     @Override
@@ -75,6 +76,7 @@ public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.showShimmerAdapter();
 
         CollectionReference collectionReferenceParent = FirebaseFirestore.getInstance().collection(viewModel.getClusterCollectionPathMutableLiveData().getValue());
         Query query = collectionReferenceParent.orderBy("type");
