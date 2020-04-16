@@ -5,31 +5,27 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.selection.ItemKeyProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
-import com.google.firebase.firestore.DocumentSnapshot;
+public class UserKeyProvider extends ItemKeyProvider<Long> {
 
-import java.util.ArrayList;
-import java.util.List;
+    private final RecyclerView mRecyclerView;
 
-public class UserKeyProvider extends ItemKeyProvider {
+    @SuppressLint("WrongConstant")
+    public UserKeyProvider(@NonNull RecyclerView recyclerView) {
+        super(SCOPE_MAPPED);
+        mRecyclerView = recyclerView;
+    }
 
-	private final List<DocumentSnapshot> itemList;
+    @Nullable
+    @Override
+    public Long getKey(int position) {
+        return mRecyclerView.getAdapter().getItemId(position);
+    }
 
-	@SuppressLint("WrongConstant")
-	public UserKeyProvider(SelectUserFragment.UserFirebaseAdapter adapter) {
-        super(1);
-		itemList = new ArrayList<>();
-	}
-
-	@Nullable
-	@Override
-    public Object getKey(int position) {
-        return itemList.get(position);
-	}
-
-	@Override
-    public int getPosition(@NonNull Object key) {
-		return itemList.indexOf(key);
-	}
+    @Override
+    public int getPosition(@NonNull Long key) {
+        RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForItemId(key);
+        return holder != null ? holder.getLayoutPosition() : RecyclerView.NO_POSITION;
+    }
 }

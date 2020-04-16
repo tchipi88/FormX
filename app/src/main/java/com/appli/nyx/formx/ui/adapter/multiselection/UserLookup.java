@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
 
-public class UserLookup extends ItemDetailsLookup {
+public class UserLookup extends ItemDetailsLookup<Long> {
 
 	private final RecyclerView recyclerView;
 
@@ -25,7 +25,7 @@ public class UserLookup extends ItemDetailsLookup {
 		if (view != null) {
 			RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
             if (viewHolder instanceof SelectUserFragment.UserFirebaseAdapter.UserViewHolder) {
-                //return ((SelectUserFragment.UserFirebaseAdapter.UserViewHolder) viewHolder).getItemDetails();
+				return ((SelectUserFragment.UserFirebaseAdapter.UserViewHolder) viewHolder).getItemDetails();
 			}
 		}
 

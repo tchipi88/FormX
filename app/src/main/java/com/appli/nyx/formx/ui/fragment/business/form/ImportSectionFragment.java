@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -71,6 +72,9 @@ public class ImportSectionFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
+
+
+        ((TextView) emptyView).setText(R.string.no_section);
 
         ((MainActivity) requireActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.select_section));
 

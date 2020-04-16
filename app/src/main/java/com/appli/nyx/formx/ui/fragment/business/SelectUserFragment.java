@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -27,8 +28,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.adapter.ActionModeController;
+import com.appli.nyx.formx.ui.adapter.multiselection.UserDetails;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserKeyProvider;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserLookup;
+import com.appli.nyx.formx.ui.adapter.multiselection.ViewHolderWithDetails;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.utils.ImageUtils;
@@ -118,9 +121,9 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
         selectionTracker = new SelectionTracker.Builder<>("my-user-id",
                 recyclerView,
-                new UserKeyProvider(adapter),
+                new UserKeyProvider(recyclerView),
                 new UserLookup(recyclerView),
-                StorageStrategy.createStringStorage())
+                StorageStrategy.createLongStorage())
                 .withOnItemActivatedListener((item, e) -> true).withOnDragInitiatedListener(e -> {
             Log.d(TAG, "onDragInitiated");
             return true;
@@ -132,10 +135,10 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
         adapter.setSelectionTracker(selectionTracker);
 
-        selectionTracker.addObserver(new SelectionTracker.SelectionObserver() {
+        selectionTracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
 
             @Override
-            public void onItemStateChanged(@NonNull Object key, boolean selected) {
+            public void onItemStateChanged(@NonNull Long key, boolean selected) {
                 super.onItemStateChanged(key, selected);
             }
 
@@ -167,6 +170,18 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     public void setMenuItemTitle(int selectedItemSize) {
@@ -224,6 +239,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
          */
         public UserFirebaseAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
             super(options);
+            setHasStableIds(true);
         }
 
         public SelectionTracker getSelectionTracker() {
@@ -242,18 +258,13 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         }
 
         @Override
-        protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
-            holder.user_name.setText(model.name);
-            holder.user_firstname.setText(model.firstName);
-            holder.user = model;
+        protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User user) {
+            holder.user_name.setText(user.name);
+            holder.user_firstname.setText(user.firstName);
 
-            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(model.getId()), "profil_photo.jpg", holder.user_img, ic_account_circle_black_24dp);
+            ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(user.getId()), "profil_photo.jpg", holder.user_img, ic_account_circle_black_24dp);
 
-            holder.mView.setOnClickListener(v -> {
-
-            });
-
-            holder.mView.setActivated(selectionTracker.isSelected(model));
+            holder.mView.setActivated(selectionTracker.isSelected(position));
         }
 
         @Override
@@ -267,15 +278,19 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
             }
         }
 
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
-        public class UserViewHolder extends RecyclerView.ViewHolder {
+
+        public class UserViewHolder extends RecyclerView.ViewHolder implements ViewHolderWithDetails {
 
             public final View mView;
             public TextView user_name;
             public TextView user_firstname;
             public AppCompatImageView user_img;
 
-            public User user;
 
             public UserViewHolder(View itemView) {
                 super(itemView);
@@ -292,6 +307,10 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
             }
 
 
+            @Override
+            public ItemDetailsLookup.ItemDetails getItemDetails() {
+                return new UserDetails(getAdapterPosition(), getItemId());
+            }
         }
     }
 }
