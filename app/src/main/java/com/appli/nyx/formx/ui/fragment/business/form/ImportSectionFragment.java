@@ -28,6 +28,7 @@ import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.SimpleViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import static android.widget.LinearLayout.VERTICAL;
+import static com.appli.nyx.formx.utils.MyConstant.AUTHOR_ID;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
@@ -73,8 +75,7 @@ public class ImportSectionFragment extends ViewModelFragment<FormViewModel> {
         ((MainActivity) requireActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.select_section));
 
         // Create the query and the FirestoreRecyclerOptions
-        Query query = FirebaseFirestore.getInstance().collectionGroup(SECTION_PATH);
-        //.whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
+        Query query = FirebaseFirestore.getInstance().collectionGroup(SECTION_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
 
         FirestoreRecyclerOptions<Section> options = new FirestoreRecyclerOptions.Builder<Section>().setQuery(query, snapshot -> {
             Section section = snapshot.toObject(Section.class);
