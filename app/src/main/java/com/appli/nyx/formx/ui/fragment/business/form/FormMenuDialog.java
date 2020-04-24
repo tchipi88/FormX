@@ -42,7 +42,7 @@ public class FormMenuDialog extends BaseDialogFragment<FormViewModel> {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        getDialog().setTitle("Menu");
+        getDialog().setTitle("Form: " + viewModel.getFormMutableLiveData().getValue().getLibelle());
         form_menu.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.add_section:

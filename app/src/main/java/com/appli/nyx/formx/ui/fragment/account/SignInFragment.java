@@ -230,6 +230,8 @@ public class SignInFragment extends NetworkFragment {
                 prefsManager.setCurrentUserName(user.name);
             }
         });
+
+        NavHostFragment.findNavController(SignInFragment.this).navigate(R.id.action_global_mainFragment);
     }
 
     @OnClick(R.id.link_forgetpassword)
@@ -282,7 +284,7 @@ public class SignInFragment extends NetworkFragment {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");
-                        setCurrentUser(task.getResult().getUser());
+
                         boolean newuser = task.getResult().getAdditionalUserInfo().isNewUser();
                         if (newuser) {
 
@@ -290,13 +292,26 @@ public class SignInFragment extends NetworkFragment {
                             user1.name = acct.getFamilyName();
                             user1.firstName = acct.getGivenName();
                             user1.email = acct.getEmail();
+                            user1.firebaseToken = prefsManager.getFirebaseToken();
 
                             mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid()).set(user1).addOnCompleteListener(task1 -> {
                                 if (!task1.isSuccessful()) {
                                     Log.w(TAG, "Error adding User", task1.getException());
+                                } else {
+                                    prefsManager.clearSessionPrefs();
+                                    signInViewModel.authenticated();
+                                    prefsManager.setCurrentUserEmail(task.getResult().getUser().getEmail());
+                                    prefsManager.setCurrentUserName(task.getResult().getUser().getDisplayName());
+
+                                    UserViewModel userViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
+                                    userViewModel.setUser(user1);
+
+                                    NavHostFragment.findNavController(SignInFragment.this).navigate(R.id.action_global_mainFragment);
                                 }
                             });
 
+                        } else {
+                            setCurrentUser(task.getResult().getUser());
                         }
                     } else {
                         // If sign in fails, display a message to the user.

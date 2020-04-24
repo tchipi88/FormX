@@ -6,7 +6,6 @@ import android.app.Application;
 import androidx.fragment.app.Fragment;
 
 import com.appli.nyx.formx.di.components.DaggerAppComponent;
-import com.appli.nyx.formx.exception.MyExceptionHandler;
 
 import javax.inject.Inject;
 
@@ -42,9 +41,6 @@ public class MyApplication extends Application implements HasActivityInjector, H
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
-
-		Thread.setDefaultUncaughtExceptionHandler(new MyExceptionHandler(this));
-
 		initializeComponent();
 	}
 

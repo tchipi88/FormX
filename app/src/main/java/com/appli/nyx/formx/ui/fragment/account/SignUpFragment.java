@@ -137,6 +137,7 @@ public class SignUpFragment extends NetworkFragment {
 				user1.firstName = surname.getText().toString();
 				user1.email = email.getText().toString();
 				user1.telephone = tel.getText().toString();
+				user1.firebaseToken = prefsManager.getFirebaseToken();
 
 				mFirestore.collection(USER_PATH).document(SessionUtils.getUserUid()).set(user1).addOnSuccessListener(aVoid -> {
 					prefsManager.clearSessionPrefs();
