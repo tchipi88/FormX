@@ -222,13 +222,10 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
 
         view.findViewById(R.id.add_section).setOnClickListener(v -> {
-            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionAddDialog);
+            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_formMenuDialog);
         });
 
-        view.findViewById(R.id.import_section).setOnClickListener(v -> {
-            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_importSectionFragment);
-        });
-        
+
         return view;
     }
 

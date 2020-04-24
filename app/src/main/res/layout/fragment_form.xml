@@ -40,14 +40,4 @@
         app:useCompatPadding="true" />
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/import_section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_section"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_file_download_black_24dp"
-        app:useCompatPadding="true" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -154,4 +154,6 @@
     <string name="my_invitations">My Invitations</string>
     <string name="start">Start</string>
     <string name="thanks_for_your_reply">Thanks for  your reply</string>
+    <string name="add_question">Add question</string>
+    <string name="import_section">Import Section</string>
 </resources>

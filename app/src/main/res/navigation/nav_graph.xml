@@ -184,19 +184,38 @@
             app:destination="@id/sectionFragment" />
 
         <action
-            android:id="@+id/action_formFragment_to_importSectionFragment"
-            app:destination="@id/importSectionFragment"
-            app:popUpTo="@id/formFragment"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_formFragment_to_formMenuDialog"
+            app:destination="@id/formMenuDialog" />
 
-        <action
-            android:id="@+id/action_formFragment_to_sectionAddDialog"
-            app:destination="@id/sectionAddDialog" />
+
         <action
             android:id="@+id/action_formFragment_to_sectionEditDialog"
             app:destination="@id/sectionEditDialog" />
 
     </fragment>
+
+    <dialog
+        android:id="@+id/formMenuDialog"
+        android:name="com.appli.nyx.formx.ui.fragment.business.form.FormMenuDialog"
+        android:label="Menu">
+        <action
+            android:id="@+id/action_formMenuDialog_to_importSectionFragment"
+            app:destination="@id/importSectionFragment"
+            app:popUpTo="@id/formFragment"
+            app:popUpToInclusive="false" />
+
+        <action
+            android:id="@+id/action_formMenuDialog_to_sectionAddDialog"
+            app:destination="@id/sectionAddDialog" />
+
+        <action
+            android:id="@+id/action_formMenuDialog_to_questionAddDialog"
+            app:destination="@id/questionAddDialog"
+            app:popUpTo="@id/sectionFragment"
+            app:popUpToInclusive="false" />
+
+    </dialog>
+
     <fragment
         android:id="@+id/sectionFragment"
         android:name="com.appli.nyx.formx.ui.fragment.business.form.SectionFragment">
