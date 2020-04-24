@@ -217,7 +217,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setAdapter(adapter);
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(form.getLibelle());
+            ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Form: " + form.getLibelle());
         });
 
 

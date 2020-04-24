@@ -83,7 +83,7 @@ public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
 
         collectionReferenceParent.getParent().get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                ((MainActivity) requireActivity()).getSupportActionBar().setTitle((String) task.getResult().get("libelle"));
+                ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Cluster: " + (String) task.getResult().get("libelle"));
             }
         });
 

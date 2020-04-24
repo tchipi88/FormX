@@ -103,6 +103,8 @@ public class ImportSectionFragment extends ViewModelFragment<FormViewModel> {
 
                 holder.itemView.setOnClickListener(v -> {
 
+                    section.setLibelle(section.getLibelle() + "__Copy");
+
                     FirebaseFirestore.getInstance()
                             .collection(FORM_PATH)
                             .document(viewModel.getFormMutableLiveData().getValue().getId())

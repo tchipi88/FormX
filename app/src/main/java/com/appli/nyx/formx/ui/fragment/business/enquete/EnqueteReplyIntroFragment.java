@@ -49,7 +49,7 @@ public class EnqueteReplyIntroFragment extends ViewModelFragment<EnqueteViewMode
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
         viewModel.getEnqueteMutableLiveData().observe(getViewLifecycleOwner(), enquete -> {
-            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(enquete.getLibelle());
+            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.enquetes + ": " + enquete.getLibelle());
             enquete_name.setText(enquete.getLibelle());
             enquete_des.setText(enquete.getDescription());
             ImageUtils.displayRoundImageFromStorageReference(getContext(), storageRef.child(enquete.getId()), ENQUETE_PHOTO, enquete_photo, ic_assignment_black_128dp);

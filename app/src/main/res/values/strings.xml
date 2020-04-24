@@ -156,4 +156,5 @@
     <string name="thanks_for_your_reply">Thanks for  your reply</string>
     <string name="add_question">Add question</string>
     <string name="import_section">Import Section</string>
+    <string name="options_values_isempty">Please  Add One Option</string>
 </resources>

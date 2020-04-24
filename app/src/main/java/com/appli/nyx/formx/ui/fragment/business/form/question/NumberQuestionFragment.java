@@ -42,7 +42,7 @@ public class NumberQuestionFragment extends CommonQuestionFragment {
                     description_tiet.setText(question.getDescription());
                     mandatory.setChecked(question.isMandatory());
 
-                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(question.getLibelle());
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Question: " + question.getLibelle());
                 });
         });
 

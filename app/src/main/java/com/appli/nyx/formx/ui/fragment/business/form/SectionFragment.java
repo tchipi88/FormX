@@ -37,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
+import static com.appli.nyx.formx.utils.MyConstant.DATE_CREATED;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
@@ -79,7 +80,7 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH)
                 .document(viewModel.getSectionMutableLiveData().getValue().getId())
-                .collection(FIELDS_PATH);
+                .collection(FIELDS_PATH).orderBy(DATE_CREATED);
 
         FirestoreRecyclerOptions<AbstractQuestion> options = new FirestoreRecyclerOptions.Builder<AbstractQuestion>().setQuery(query, snapshot -> {
             AbstractQuestion question = null;
@@ -193,7 +194,7 @@ public class SectionFragment extends ViewModelFragment<FormViewModel> {
         recyclerView.setAdapter(adapter);
 
         viewModel.getSectionMutableLiveData().observe(getViewLifecycleOwner(), section -> {
-            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(section.getLibelle());
+            ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Section: " + section.getLibelle());
         });
 
 

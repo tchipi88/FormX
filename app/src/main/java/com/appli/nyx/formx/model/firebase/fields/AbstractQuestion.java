@@ -6,8 +6,10 @@ import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.validation.ValidationError;
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class AbstractQuestion implements Serializable {
 
@@ -26,6 +28,17 @@ public class AbstractQuestion implements Serializable {
 
 
     private ValidationError validationError;
+
+    @ServerTimestamp
+    private Date dateCreated;
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public AbstractQuestion(QuestionType questionType) {
         this.questionType = questionType;

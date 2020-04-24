@@ -75,7 +75,7 @@ public class SpinnerQuestionFragment extends CommonQuestionFragment {
 
                     customAdapter.addAll(question.options);
 
-                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(question.getLibelle());
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Question: " + question.getLibelle());
                 });
         });
 
@@ -127,9 +127,10 @@ public class SpinnerQuestionFragment extends CommonQuestionFragment {
     public boolean validate() {
         boolean valid = super.validate();
 
-        if (customAdapter.getOptionsValues().isEmpty())
+        if (customAdapter.getOptionsValues().isEmpty()) {
+            Toast.makeText(getContext(), R.string.options_values_isempty, Toast.LENGTH_LONG).show();
             return false;
-
+        }
         return valid;
     }
 

@@ -16,6 +16,8 @@ public class MyConstant {
 	public static final String JOIN_USER_ID = "joinUserId";
 	public static final String SHARE_USER_ID = "shareUserId";
 
+    public static final String DATE_CREATED = "dateCreated";
+
 	private MyConstant() {
 	}
 }

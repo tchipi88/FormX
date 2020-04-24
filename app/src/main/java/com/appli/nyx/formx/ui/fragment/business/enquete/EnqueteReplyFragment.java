@@ -38,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
+import static com.appli.nyx.formx.utils.MyConstant.DATE_CREATED;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_ANSWER;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
@@ -79,12 +80,12 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
         CollectionReference answerRef = FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
                 .document(enquete.getId()).collection(ENQUETE_ANSWER);
 
-        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(enquete.getLibelle());
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.enquetes + ": " + enquete.getLibelle());
 
         //get all sections
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(enquete.getFormId())
-                .collection(SECTION_PATH).get().addOnCompleteListener(sectiontask -> {
+                .collection(SECTION_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(sectiontask -> {
             if (sectiontask.isSuccessful()) {
 
                 for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
@@ -177,7 +178,7 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(viewModel.getEnqueteMutableLiveData().getValue().getFormId())
                 .collection(SECTION_PATH).document(section.getId())
-                .collection(FIELDS_PATH).get().addOnCompleteListener(fieldsTask -> {
+                .collection(FIELDS_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(fieldsTask -> {
             if (fieldsTask.isSuccessful()) {
                 for (DocumentSnapshot fieldsSnapshot : fieldsTask.getResult().getDocuments()) {
                     AbstractQuestion question = null;

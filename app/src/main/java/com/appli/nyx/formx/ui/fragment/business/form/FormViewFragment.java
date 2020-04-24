@@ -33,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.appli.nyx.formx.ui.fields.FieldsGenerator.generateLayoutField;
+import static com.appli.nyx.formx.utils.MyConstant.DATE_CREATED;
 import static com.appli.nyx.formx.utils.MyConstant.FIELDS_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.FORM_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.SECTION_PATH;
@@ -64,12 +65,12 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
 
-            ((MainActivity) requireActivity()).getSupportActionBar().setTitle(form.getLibelle());
+            ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Form: " + form.getLibelle());
 
             //get all sections
             FirebaseFirestore.getInstance().collection(FORM_PATH)
                     .document(form.getId())
-                    .collection(SECTION_PATH).get().addOnCompleteListener(sectiontask -> {
+                    .collection(SECTION_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(sectiontask -> {
                 if (sectiontask.isSuccessful()) {
 
                     for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
@@ -143,7 +144,7 @@ public class FormViewFragment extends ViewModelFragment<FormViewModel> {
         FirebaseFirestore.getInstance().collection(FORM_PATH)
                 .document(viewModel.getFormMutableLiveData().getValue().getId())
                 .collection(SECTION_PATH).document(section.getId())
-                .collection(FIELDS_PATH).get().addOnCompleteListener(fieldsTask -> {
+                .collection(FIELDS_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(fieldsTask -> {
             if (fieldsTask.isSuccessful()) {
                 for (DocumentSnapshot fieldsSnapshot : fieldsTask.getResult().getDocuments()) {
                     AbstractQuestion question = null;

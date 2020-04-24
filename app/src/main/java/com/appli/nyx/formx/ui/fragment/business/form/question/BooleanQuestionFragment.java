@@ -36,7 +36,7 @@ public class BooleanQuestionFragment extends CommonQuestionFragment {
                     libelle_tiet.setText(question.getLibelle());
                     description_tiet.setText(question.getDescription());
 
-                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(question.getLibelle());
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Question: " + question.getLibelle());
                 });
         });
 
