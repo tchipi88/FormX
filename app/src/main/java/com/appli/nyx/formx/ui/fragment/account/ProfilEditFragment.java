@@ -12,9 +12,11 @@ import androidx.navigation.Navigation;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
+import com.appli.nyx.formx.ui.fragment.business.form.dialog.DatePickerFragment;
 import com.appli.nyx.formx.ui.viewmodel.UserViewModel;
 import com.appli.nyx.formx.utils.DateUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -40,7 +42,7 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 	@BindView(R.id.nameLayout)
 	TextInputLayout nameLayout;
 	@BindView(R.id.birthday)
-	EditText birthday;
+	TextInputEditText birthday;
 	@BindView(R.id.birthdayLayout)
 	TextInputLayout birthdayLayout;
 
@@ -77,6 +79,12 @@ public class ProfilEditFragment extends ViewModelFragment<UserViewModel> {
 
 
         });
+
+		birthday.setOnClickListener(v -> {
+			DatePickerFragment newFragment = new DatePickerFragment(birthday);
+			newFragment.show(getFragmentManager(), "datePicker");
+		});
+
 		return rootView;
 	}
 
