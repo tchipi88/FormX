@@ -6,6 +6,7 @@ import android.app.Application;
 import androidx.fragment.app.Fragment;
 
 import com.appli.nyx.formx.di.components.DaggerAppComponent;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import javax.inject.Inject;
 
@@ -42,6 +43,10 @@ public class MyApplication extends Application implements HasActivityInjector, H
 		super.onCreate();
 		mInstance = this;
 		initializeComponent();
+
+		if (!BuildConfig.DEBUG) {
+			FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+		}
 	}
 
 	private void initializeComponent() {

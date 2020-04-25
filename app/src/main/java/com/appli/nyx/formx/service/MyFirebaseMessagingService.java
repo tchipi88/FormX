@@ -16,8 +16,12 @@ import com.appli.nyx.formx.MyApplication;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.preference.PrefsManager_;
 import com.appli.nyx.formx.ui.MainActivity;
+import com.appli.nyx.formx.utils.SessionUtils;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import static com.appli.nyx.formx.utils.MyConstant.USER_PATH;
 
 
 /**
@@ -121,6 +125,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendRegistrationToServer(String token) {
         PrefsManager_ prefsManager_ = PrefsManager_.getInstance_(MyApplication.getInstance().getBaseContext());
         prefsManager_.setFirebaseToken(token);
+
+        if (SessionUtils.isUserSigned()) {
+            FirebaseFirestore.getInstance().collection(USER_PATH).document(SessionUtils.getUserUid()).update("firebaseToken", token).addOnCompleteListener(task1 -> {
+                if (!task1.isSuccessful()) {
+                    Log.w(TAG, "Error adding User", task1.getException());
+                }
+            });
+        }
 
     }
 
