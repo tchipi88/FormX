@@ -2,6 +2,7 @@ package com.appli.nyx.formx.ui.adapter;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,7 +77,10 @@ public class SpinnerOptionAdapter extends RecyclerView.Adapter<SpinnerOptionAdap
     public List<String> getOptionsValues() {
         List<String> result = new ArrayList<>();
         for (Option option : options) {
-            result.add(option.getEditTextValue());
+            if (!TextUtils.isEmpty(option.getEditTextValue())) {
+                result.add(option.getEditTextValue());
+            }
+
         }
 
         return result;

@@ -15,30 +15,40 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
+import com.appli.nyx.formx.model.firebase.EnqueteForm;
 import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
+import com.appli.nyx.formx.ui.components.EmptyRecyclerView;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.fragment.account.ProfilFragment;
+import com.appli.nyx.formx.ui.viewholder.EnqueteFormViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
 import com.appli.nyx.formx.ui.viewmodel.SelectFormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.FileCompressor;
 import com.appli.nyx.formx.utils.ImageUtils;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindDrawable;
@@ -69,9 +79,12 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
     @BindView(R.id.enquete_visibility)
     TextView enquete_visibility;
 
-    @BindView(R.id.enquete_form)
-    TextView enquete_form;
 
+    @BindView(R.id.forms)
+    EmptyRecyclerView recyclerViewForm;
+    @BindView(R.id.emptyView)
+    View emptyViewForm;
+    private FormAdapter formAdapter;
 
     StorageReference storageRef;
     File mPhotoFile;
@@ -107,6 +120,14 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
 
         enquete = viewModel.getEnqueteMutableLiveData().getValue();
 
+        recyclerViewForm.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewForm.setItemAnimator(new DefaultItemAnimator());
+
+        formAdapter = new FormAdapter(enquete.getForms());
+        recyclerViewForm.setAdapter(formAdapter);
+
+        recyclerViewForm.setEmptyView(emptyViewForm);
+
         enquete_name.setText(enquete.getLibelle());
         if (TextUtils.isEmpty(enquete.getDescription())) {
             rootView.findViewById(R.id.card_des).setVisibility(View.GONE);
@@ -114,7 +135,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             enquete_des.setText(enquete.getDescription());
         }
 
-        enquete_form.setText(enquete.getFormLibelle());
+
         if (enquete.getEnqueteVisibility() != null)
             enquete_visibility.setText(enquete.getEnqueteVisibility().name());
 
@@ -125,7 +146,7 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
             selectImage();
         });
 
-        rootView.findViewById(R.id.card_form).setOnClickListener(v -> {
+        rootView.findViewById(R.id.add_form).setOnClickListener(v -> {
             NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_selectFormFragment);
         });
         rootView.findViewById(R.id.card_visibility).setOnClickListener(v -> {
@@ -133,23 +154,25 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
                 NavHostFragment.findNavController(EnqueteFragment.this).navigate(R.id.action_enqueteFragment_to_enqueteVisibilityDialog);
         });
 
-        selectFormViewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
-            Map<String, Object> updatedObject = new HashMap<>();
-            updatedObject.put("formId", form.getId());
-            updatedObject.put("formLibelle", form.getLibelle());
-            updatedObject.put("enqueteVisibility", EnqueteVisibility.PUBLIC);
+        selectFormViewModel.getFormsMutableLiveData().observe(getViewLifecycleOwner(), forms -> {
+            if (!forms.isEmpty()) {
 
-            FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                    .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
-                    .update(updatedObject)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            enquete_form.setText(form.getLibelle());
-                        } else {
-                            AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
-                        }
-                    });
+                Map<String, Object> updatedObject = new HashMap<>();
+                updatedObject.put("forms", forms);
+                updatedObject.put("enqueteVisibility", EnqueteVisibility.PUBLIC);
 
+                FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                        .document(viewModel.getEnqueteMutableLiveData().getValue().getId())
+                        .update(updatedObject)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                formAdapter.addForms(forms);
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
+            }
         });
 
         return rootView;
@@ -327,4 +350,59 @@ public class EnqueteFragment extends ViewModelFragment<EnqueteViewModel> {
         pickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(pickPhoto, REQUEST_GALLERY_PHOTO);
     }
+
+    private class FormAdapter extends RecyclerView.Adapter<EnqueteFormViewHolder> {
+        private List<EnqueteForm> forms;
+
+        public FormAdapter(List<EnqueteForm> forms) {
+            this.forms = forms != null ? forms : new ArrayList<>();
+        }
+
+
+        @NonNull
+        @Override
+        public EnqueteFormViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_form_enquete, parent, false);
+            return new EnqueteFormViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull EnqueteFormViewHolder holder, int position) {
+            EnqueteForm enqueteForm = forms.get(position);
+            holder.mLibelleView.setText(enqueteForm.getLibelle());
+            holder.mDescriptionView.setText(enqueteForm.getDescription());
+
+            holder.delete.setOnClickListener(v -> {
+                FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                        .document(viewModel.getEnqueteMutableLiveData().getValue().getId()).update("forms", FieldValue.arrayRemove(enqueteForm))
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                removeForm(enqueteForm);
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return forms != null ? forms.size() : 0;
+        }
+
+        public void addForms(List<EnqueteForm> enqueteForms) {
+            this.forms.addAll(enqueteForms);
+            notifyDataSetChanged();
+        }
+
+        public void removeForm(EnqueteForm enqueteForm) {
+            this.forms.remove(enqueteForm);
+            notifyDataSetChanged();
+        }
+
+    }
+
+    ;
+
 }

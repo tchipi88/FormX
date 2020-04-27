@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SearchView;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
@@ -28,28 +30,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.User;
 import com.appli.nyx.formx.ui.adapter.ActionModeController;
+import com.appli.nyx.formx.ui.adapter.multiselection.MyKeyProvider;
+import com.appli.nyx.formx.ui.adapter.multiselection.MyLookup;
 import com.appli.nyx.formx.ui.adapter.multiselection.UserDetails;
-import com.appli.nyx.formx.ui.adapter.multiselection.UserKeyProvider;
-import com.appli.nyx.formx.ui.adapter.multiselection.UserLookup;
 import com.appli.nyx.formx.ui.adapter.multiselection.ViewHolderWithDetails;
 import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewmodel.EnqueteViewModel;
+import com.appli.nyx.formx.utils.AlertDialogUtils;
 import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.MyConstant;
-import com.appli.nyx.formx.utils.ShareUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.StorageReference;
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindDrawable;
 
 import static android.widget.LinearLayout.VERTICAL;
+import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
+import static com.appli.nyx.formx.utils.MyConstant.SHARE_USER_ID;
 
 public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> implements SearchView.OnQueryTextListener {
 
@@ -122,8 +129,8 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
         selectionTracker = new SelectionTracker.Builder<>("my-user-id",
                 recyclerView,
-                new UserKeyProvider(recyclerView),
-                new UserLookup(recyclerView),
+                new MyKeyProvider(recyclerView),
+                new MyLookup(recyclerView),
                 StorageStrategy.createLongStorage())
                 .withOnItemActivatedListener((item, e) -> true).withOnDragInitiatedListener(e -> {
             Log.d(TAG, "onDragInitiated");
@@ -195,13 +202,30 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Iterator<User> userIterator = selectionTracker.getSelection().iterator();
         switch (item.getItemId()) {
             case R.id.action_clear:
                 selectionTracker.clearSelection();
                 return true;
             case R.id.action_share:
-                ShareUtils.sendViaMail(userIterator, getContext());
+                Iterator<Long> selectedIds = selectionTracker.getSelection().iterator();
+                List<User> result = new ArrayList<>();
+                while (selectedIds.hasNext()) {
+                    User user = adapter.getItem(selectedIds.next().intValue());
+                    result.add(user);
+                }
+                FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
+                        .document(viewModel.getEnqueteMutableLiveData().getValue().getId()).update(SHARE_USER_ID, FieldValue.arrayUnion(result))
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                //TODO sent notification
+
+                                Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                                NavHostFragment.findNavController(SelectUserFragment.this).navigateUp();
+                            } else {
+                                AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                            }
+                        });
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

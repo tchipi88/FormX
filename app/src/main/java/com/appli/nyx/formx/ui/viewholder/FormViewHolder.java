@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.appli.nyx.formx.R;
 
-public class FormViewHolder extends FormSelectViewHolder {
+public class FormViewHolder extends SelectFormViewHolder {
 
 
 	public final androidx.appcompat.widget.AppCompatImageButton delete;

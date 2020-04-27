@@ -6,10 +6,7 @@ import android.net.Uri;
 
 import com.appli.nyx.formx.BuildConfig;
 import com.appli.nyx.formx.R;
-import com.appli.nyx.formx.model.firebase.User;
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
-
-import java.util.Iterator;
 
 public class ShareUtils {
 
@@ -40,7 +37,4 @@ public class ShareUtils {
 		context.startActivity(new Intent(context, OssLicensesMenuActivity.class));
 	}
 
-	public static void sendViaMail(Iterator<User> users, Context context) {
-
-	}
 }

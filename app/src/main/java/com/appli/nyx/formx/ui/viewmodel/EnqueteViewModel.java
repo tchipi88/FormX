@@ -22,6 +22,7 @@ public class EnqueteViewModel extends AndroidViewModel {
 
     //Form View
     private MutableLiveData<Integer> sectionViewIndex = new MutableLiveData<>();
+    private MutableLiveData<String> currentFormId = new MutableLiveData<>();
     private MutableLiveData<List<AbstractQuestion>> questionsListMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Section>> sectionsListMutableLiveData = new MutableLiveData<>();
 
@@ -68,5 +69,13 @@ public class EnqueteViewModel extends AndroidViewModel {
 
     public void clearSectionList() {
         sectionsListMutableLiveData.getValue().clear();
+    }
+
+    public MutableLiveData<String> getCurrentFormId() {
+        return currentFormId;
+    }
+
+    public void setCurrentFormId(String currentFormId) {
+        this.currentFormId.setValue(currentFormId);
     }
 }

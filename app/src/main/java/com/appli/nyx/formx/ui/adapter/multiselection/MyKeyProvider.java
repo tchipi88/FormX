@@ -7,12 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class UserKeyProvider extends ItemKeyProvider<Long> {
+public class MyKeyProvider extends ItemKeyProvider<Long> {
 
     private final RecyclerView mRecyclerView;
 
     @SuppressLint("WrongConstant")
-    public UserKeyProvider(@NonNull RecyclerView recyclerView) {
+    public MyKeyProvider(@NonNull RecyclerView recyclerView) {
         super(SCOPE_MAPPED);
         mRecyclerView = recyclerView;
     }

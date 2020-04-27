@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
@@ -16,10 +17,12 @@ import com.appli.nyx.formx.utils.ImageUtils;
 import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PATH;
 import static com.appli.nyx.formx.utils.MyConstant.ENQUETE_PHOTO;
@@ -66,9 +69,7 @@ public class EnqueteSharedFragment extends EnqueteListFragment {
                             .document(enquete.getId()).update(SHARE_USER_ID, FieldValue.arrayRemove(SessionUtils.getUserUid()))
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    new MaterialAlertDialogBuilder(getContext()).setIcon(R.drawable.ic_info_black_24dp)
-                                            .setTitle("INFO").setMessage(getString(R.string.operation_completes_successfully)).setPositiveButton("OK", (dialog, which) -> {
-                                    }).setCancelable(false).show();
+                                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
                                 } else {
                                     AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
                                 }
@@ -77,11 +78,16 @@ public class EnqueteSharedFragment extends EnqueteListFragment {
                 });
 
                 holder.reply.setOnClickListener(v -> {
+                    Map<String, Object> updatedObject = new HashMap<>();
+                    updatedObject.put(JOIN_USER_ID, FieldValue.arrayUnion(SessionUtils.getUserUid()));
+                    updatedObject.put(SHARE_USER_ID, FieldValue.arrayRemove(SessionUtils.getUserUid()));
+
                     FirebaseFirestore.getInstance().collection(ENQUETE_PATH)
-                            .document(enquete.getId()).update(JOIN_USER_ID, FieldValue.arrayUnion(SessionUtils.getUserUid()))
+                            .document(enquete.getId()).update(updatedObject)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    Navigation.findNavController(v).navigate(R.id.action_global_enqueteListFragment);
+                                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_LONG).show();
+                                    NavHostFragment.findNavController(EnqueteSharedFragment.this).navigate(R.id.action_global_enqueteListFragment);
                                 } else {
                                     AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
                                 }

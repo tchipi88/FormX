@@ -12,6 +12,7 @@ import com.appli.nyx.formx.R;
 import com.appli.nyx.formx.model.firebase.Enquete;
 import com.appli.nyx.formx.model.firebase.EnqueteAnswer;
 import com.appli.nyx.formx.model.firebase.EnqueteAnswerSection;
+import com.appli.nyx.formx.model.firebase.EnqueteForm;
 import com.appli.nyx.formx.model.firebase.Section;
 import com.appli.nyx.formx.model.firebase.enumeration.QuestionType;
 import com.appli.nyx.formx.model.firebase.fields.AbstractQuestion;
@@ -83,31 +84,34 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
         ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.enquetes + ": " + enquete.getLibelle());
 
         //get all sections
-        FirebaseFirestore.getInstance().collection(FORM_PATH)
-                .document(enquete.getFormId())
-                .collection(SECTION_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(sectiontask -> {
-            if (sectiontask.isSuccessful()) {
+        for (EnqueteForm enqueteForm : enquete.getForms()) {
+            viewModel.setCurrentFormId(enqueteForm.getId());  //TODO
+            FirebaseFirestore.getInstance().collection(FORM_PATH)
+                    .document(enqueteForm.getId())
+                    .collection(SECTION_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(sectiontask -> {
+                if (sectiontask.isSuccessful()) {
 
-                for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
+                    for (DocumentSnapshot sectionSnapshot : sectiontask.getResult().getDocuments()) {
 
-                    Section section = new Section();
-                    section.setId(sectionSnapshot.getId());
-                    section.libelle = (String) sectionSnapshot.get("libelle");
-                    section.description = (String) sectionSnapshot.get("description");
+                        Section section = new Section();
+                        section.setId(sectionSnapshot.getId());
+                        section.libelle = (String) sectionSnapshot.get("libelle");
+                        section.description = (String) sectionSnapshot.get("description");
 
-                    sections.add(section);
+                        sections.add(section);
+                    }
+
+                    if (!sections.isEmpty()) {
+                        generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
+                        rootView.findViewById(R.id.no_section).setVisibility(View.GONE);
+                    } else {
+                        btn_next.setVisibility(View.GONE);
+                    }
+
+
                 }
-
-                if (!sections.isEmpty()) {
-                    generateLayoutSection(sections.get(viewModel.getsectionViewIndex().getValue()));
-                    rootView.findViewById(R.id.no_section).setVisibility(View.GONE);
-                } else {
-                    btn_next.setVisibility(View.GONE);
-                }
-
-
-            }
-        });
+            });
+        }
 
         btn_next.setOnClickListener(view1 -> {
             if (viewModel.getsectionViewIndex().getValue() + 1 < sections.size()) {
@@ -176,7 +180,7 @@ public class EnqueteReplyFragment extends ViewModelFragment<EnqueteViewModel> {
         fieldsContainer.removeAllViews();
         //get all fields for section
         FirebaseFirestore.getInstance().collection(FORM_PATH)
-                .document(viewModel.getEnqueteMutableLiveData().getValue().getFormId())
+                .document(viewModel.getCurrentFormId().getValue())
                 .collection(SECTION_PATH).document(section.getId())
                 .collection(FIELDS_PATH).orderBy(DATE_CREATED).get().addOnCompleteListener(fieldsTask -> {
             if (fieldsTask.isSuccessful()) {

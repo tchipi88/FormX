@@ -2,6 +2,7 @@ package com.appli.nyx.formx.model.firebase;
 
 import com.appli.nyx.formx.model.firebase.enumeration.EnqueteVisibility;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Enquete extends MyDocument {
@@ -13,8 +14,7 @@ public class Enquete extends MyDocument {
 
     public String authorId;
 
-    private String formId;
-    private String formLibelle;
+    private List<EnqueteForm> forms;
 
     private List<String> joinUserId;
     private List<String> shareUserId;
@@ -50,20 +50,17 @@ public class Enquete extends MyDocument {
 		this.enqueteVisibility = enqueteVisibility;
 	}
 
-    public String getFormId() {
-        return formId;
+    public List<EnqueteForm> getForms() {
+        return forms;
     }
 
-    public void setFormId(String formId) {
-        this.formId = formId;
+    public void setForms(List<EnqueteForm> forms) {
+        this.forms = forms;
     }
 
-    public String getFormLibelle() {
-        return formLibelle;
-    }
-
-    public void setFormLibelle(String formLibelle) {
-        this.formLibelle = formLibelle;
+    public void addForm(EnqueteForm enqueteForm) {
+        if (this.forms == null) this.forms = new ArrayList<>();
+        this.forms.add(enqueteForm);
     }
 
     public String getAuthorId() {

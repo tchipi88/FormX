@@ -6,24 +6,26 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.appli.nyx.formx.model.firebase.Form;
+import com.appli.nyx.formx.model.firebase.EnqueteForm;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class SelectFormViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Form> formMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<EnqueteForm>> formMutableLiveData = new MutableLiveData<>();
 
     @Inject
     public SelectFormViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void setForm(Form form) {
-        formMutableLiveData.setValue(form);
+    public void setForms(List<EnqueteForm> enqueteForms) {
+        formMutableLiveData.setValue(enqueteForms);
     }
 
-    public MutableLiveData<Form> getFormMutableLiveData() {
+    public MutableLiveData<List<EnqueteForm>> getFormsMutableLiveData() {
         return formMutableLiveData;
     }
 }

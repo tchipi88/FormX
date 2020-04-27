@@ -6,6 +6,7 @@ public class EnqueteForm implements Serializable {
 
     private String id;
     private String libelle;
+    private String description;
 
     public String getId() {
         return id;
@@ -21,5 +22,22 @@ public class EnqueteForm implements Serializable {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    public EnqueteForm() {
+    }
+
+    public EnqueteForm(String id, String libelle, String description) {
+        this.id = id;
+        this.libelle = libelle;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
