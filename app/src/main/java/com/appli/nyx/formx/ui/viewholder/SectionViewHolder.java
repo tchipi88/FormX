@@ -3,7 +3,7 @@ package com.appli.nyx.formx.ui.viewholder;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
@@ -13,9 +13,9 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     public final View mView;
     public final TextView mLibelleView;
 
-    public final AppCompatImageView delete;
-    public final AppCompatImageView duplicate;
-    public final AppCompatImageView edit;
+    public final AppCompatImageButton delete;
+    public final AppCompatImageButton duplicate;
+    public final AppCompatImageButton edit;
 
     public Section mItem;
 

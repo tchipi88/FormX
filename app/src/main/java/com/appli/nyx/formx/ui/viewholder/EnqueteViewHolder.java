@@ -3,6 +3,7 @@ package com.appli.nyx.formx.ui.viewholder;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,9 +14,9 @@ public class EnqueteViewHolder extends RecyclerView.ViewHolder {
 
 	public final View mView;
 	public TextView mLibelleView;
-	public final AppCompatImageView delete;
-	public final AppCompatImageView share;
-	public final AppCompatImageView edit;
+	public final AppCompatImageButton delete;
+	public final AppCompatImageButton share;
+	public final AppCompatImageButton edit;
     public final AppCompatImageView img;
 	public TextView mDescriptionView;
 

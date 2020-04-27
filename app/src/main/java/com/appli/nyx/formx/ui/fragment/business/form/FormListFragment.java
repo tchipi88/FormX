@@ -125,6 +125,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                     Form duplicateform = new Form();
                     duplicateform.setLibelle(form.getLibelle() + "__Copy");
                     duplicateform.setDescription(form.getDescription());
+                    duplicateform.setAuthorId(SessionUtils.getUserUid());
 
                     formCollectionRef.add(duplicateform).addOnCompleteListener(addformTask -> {
                         if (!addformTask.isSuccessful()) {
@@ -175,6 +176,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                                             }
                                         });
                                     }
+                                    Toast.makeText(getContext(), R.string.operation_completes_successfully, Toast.LENGTH_SHORT).show();
                                 }
                             });
 

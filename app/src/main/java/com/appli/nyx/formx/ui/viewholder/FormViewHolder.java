@@ -2,18 +2,15 @@ package com.appli.nyx.formx.ui.viewholder;
 
 import android.view.View;
 
-import androidx.appcompat.widget.AppCompatImageView;
-
 import com.appli.nyx.formx.R;
 
 public class FormViewHolder extends FormSelectViewHolder {
 
 
-
-	public final AppCompatImageView delete;
-	public final AppCompatImageView voir;
-	public final AppCompatImageView edit;
-	public final AppCompatImageView duplicate;
+	public final androidx.appcompat.widget.AppCompatImageButton delete;
+	public final androidx.appcompat.widget.AppCompatImageButton voir;
+	public final androidx.appcompat.widget.AppCompatImageButton edit;
+	public final androidx.appcompat.widget.AppCompatImageButton duplicate;
 
 
 	public FormViewHolder(View view) {

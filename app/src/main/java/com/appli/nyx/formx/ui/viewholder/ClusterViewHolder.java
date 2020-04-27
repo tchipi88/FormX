@@ -3,7 +3,7 @@ package com.appli.nyx.formx.ui.viewholder;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appli.nyx.formx.R;
@@ -13,8 +13,8 @@ public class ClusterViewHolder extends RecyclerView.ViewHolder {
 
 	public final View mView;
 	public TextView mLibelleView;
-	public final AppCompatImageView delete;
-	public final AppCompatImageView edit;
+	public final AppCompatImageButton delete;
+	public final AppCompatImageButton edit;
 	public TextView mDescriptionView;
 
 
