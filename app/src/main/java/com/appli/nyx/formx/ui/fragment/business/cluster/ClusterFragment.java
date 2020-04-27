@@ -76,7 +76,7 @@ public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.showShimmerAdapter();
+
 
         CollectionReference collectionReferenceParent = FirebaseFirestore.getInstance().collection(viewModel.getClusterCollectionPathMutableLiveData().getValue());
         Query query = collectionReferenceParent.orderBy("type");
@@ -154,6 +154,7 @@ public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
 
             @Override
             public void onDataChanged() {
+                recyclerView.hideShimmerAdapter();
                 if (getItemCount() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -166,6 +167,7 @@ public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
         };
 
         recyclerView.setAdapter(adapter);
+        recyclerView.showShimmerAdapter();
 
         view.findViewById(R.id.add_cluster_fils).setOnClickListener(v -> {
             NavHostFragment.findNavController(ClusterFragment.this).navigate(R.id.action_clusterFragment_to_clusterFilsAddDialog);

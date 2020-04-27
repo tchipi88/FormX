@@ -56,7 +56,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
-        recyclerView.showShimmerAdapter();
+
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
@@ -88,6 +88,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
 
             @Override
             public void onDataChanged() {
+                recyclerView.hideShimmerAdapter();
                 if (getItemCount() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -100,6 +101,7 @@ public class SelectFormFragment extends ViewModelFragment<SelectFormViewModel> {
         };
 
         recyclerView.setAdapter(adapter);
+        recyclerView.showShimmerAdapter();
 
 
         return view;

@@ -98,7 +98,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.showShimmerAdapter();
+
 
 
         // Create the query and the FirestoreRecyclerOptions
@@ -205,6 +205,7 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
             @Override
             public void onDataChanged() {
+                recyclerView.hideShimmerAdapter();
                 if (getItemCount() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -215,6 +216,8 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
             }
         };
         recyclerView.setAdapter(adapter);
+
+        recyclerView.showShimmerAdapter();
 
         viewModel.getFormMutableLiveData().observe(getViewLifecycleOwner(), form -> {
             ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Form: " + form.getLibelle());

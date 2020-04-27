@@ -87,6 +87,7 @@ public class EnqueteJoinedFragment extends EnqueteListFragment {
 
             @Override
             public void onDataChanged() {
+                recyclerView.hideShimmerAdapter();
                 if (getItemCount() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -99,6 +100,7 @@ public class EnqueteJoinedFragment extends EnqueteListFragment {
 
 
         recyclerView.setAdapter(adapter);
+        recyclerView.showShimmerAdapter();
 
         view.findViewById(R.id.add_enquete).setOnClickListener(v -> {
             NavHostFragment.findNavController(EnqueteJoinedFragment.this).navigate(R.id.action_global_joinEnqueteFragment);

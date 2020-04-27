@@ -90,6 +90,7 @@ public class EnqueteCreatedFragment extends EnqueteListFragment {
 
             @Override
             public void onDataChanged() {
+                recyclerView.hideShimmerAdapter();
                 if (getItemCount() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -102,6 +103,7 @@ public class EnqueteCreatedFragment extends EnqueteListFragment {
 
 
         recyclerView.setAdapter(adapter);
+        recyclerView.showShimmerAdapter();
 
         view.findViewById(R.id.add_enquete).setOnClickListener(v -> {
             NavHostFragment.findNavController(EnqueteCreatedFragment.this).navigate(R.id.action_global_enqueteAddDialog);

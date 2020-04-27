@@ -104,7 +104,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), VERTICAL));
-        recyclerView.showShimmerAdapter();
+
 
 
         // Create the query and the FirestoreRecyclerOptions
@@ -118,6 +118,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
         adapter = new UserFirebaseAdapter(options);
         recyclerView.setAdapter(adapter);
+        recyclerView.showShimmerAdapter();
 
         selectionTracker = new SelectionTracker.Builder<>("my-user-id",
                 recyclerView,
@@ -269,6 +270,7 @@ public class SelectUserFragment extends ViewModelFragment<EnqueteViewModel> impl
 
         @Override
         public void onDataChanged() {
+            recyclerView.hideShimmerAdapter();
             if (getItemCount() == 0) {
                 emptyView.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);

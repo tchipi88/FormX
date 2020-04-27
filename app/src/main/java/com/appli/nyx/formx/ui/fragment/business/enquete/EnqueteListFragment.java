@@ -57,7 +57,7 @@ public abstract class EnqueteListFragment extends ViewModelFragment<EnqueteViewM
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.showShimmerAdapter();
+
 
         return view;
     }

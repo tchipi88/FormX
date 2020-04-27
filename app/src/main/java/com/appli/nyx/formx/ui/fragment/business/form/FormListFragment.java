@@ -68,7 +68,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
         assert recyclerView != null;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.showShimmerAdapter();
+
 
         // Create the query and the FirestoreRecyclerOptions
         Query query = FirebaseFirestore.getInstance().collection(FORM_PATH).whereEqualTo(AUTHOR_ID, SessionUtils.getUserUid()).orderBy("libelle");
@@ -185,6 +185,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
 
             @Override
             public void onDataChanged() {
+                recyclerView.hideShimmerAdapter();
                 if (getItemCount() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -195,6 +196,8 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
             }
         };
         recyclerView.setAdapter(adapter);
+
+        recyclerView.showShimmerAdapter();
 
         view.findViewById(R.id.add_form).setOnClickListener(v -> {
             NavHostFragment.findNavController(FormListFragment.this).navigate(R.id.action_formListFragment_to_formAddDialog);
