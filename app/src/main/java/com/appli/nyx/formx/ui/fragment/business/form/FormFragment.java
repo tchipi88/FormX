@@ -30,6 +30,7 @@ import com.appli.nyx.formx.ui.fragment.ViewModelFragment;
 import com.appli.nyx.formx.ui.viewholder.SectionViewHolder;
 import com.appli.nyx.formx.ui.viewmodel.FormViewModel;
 import com.appli.nyx.formx.utils.AlertDialogUtils;
+import com.appli.nyx.formx.utils.SessionUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -225,7 +226,32 @@ public class FormFragment extends ViewModelFragment<FormViewModel> {
 
 
         view.findViewById(R.id.add_section).setOnClickListener(v -> {
-            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_formMenuDialog);
+            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_sectionAddDialog);
+        });
+
+        view.findViewById(R.id.add_question).setOnClickListener(v -> {
+            Section section = new Section();
+            section.libelle = "DEFAULT";
+            section.setAuthorId(SessionUtils.getUserUid());
+
+            FirebaseFirestore.getInstance()
+                    .collection(FORM_PATH)
+                    .document(viewModel.getFormMutableLiveData().getValue().getId())
+                    .collection(SECTION_PATH)
+                    .add(section).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    section.setId(task.getResult().getId());
+                    viewModel.setSection(section);
+                    NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_questionAddDialog);
+                } else {
+                    AlertDialogUtils.showErrorDialog(getContext(), task.getException().getMessage());
+                }
+            });
+
+        });
+
+        view.findViewById(R.id.import_section).setOnClickListener(v -> {
+            NavHostFragment.findNavController(FormFragment.this).navigate(R.id.action_formFragment_to_importSectionFragment);
         });
 
 

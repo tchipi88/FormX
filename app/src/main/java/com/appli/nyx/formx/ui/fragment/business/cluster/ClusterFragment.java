@@ -169,8 +169,16 @@ public class ClusterFragment extends ViewModelFragment<ClusterViewModel> {
         recyclerView.setAdapter(adapter);
         recyclerView.showShimmerAdapter();
 
-        view.findViewById(R.id.add_cluster_fils).setOnClickListener(v -> {
-            NavHostFragment.findNavController(ClusterFragment.this).navigate(R.id.action_clusterFragment_to_clusterFilsAddDialog);
+        view.findViewById(R.id.clusterfils_type_cluster).setOnClickListener(v -> {
+            NavHostFragment.findNavController(ClusterFragment.this).navigate(R.id.action_global_clusterAddDialog);
+        });
+
+        view.findViewById(R.id.clusterfils_type_enquete).setOnClickListener(v -> {
+            NavHostFragment.findNavController(ClusterFragment.this).navigate(R.id.action_cclusterFragment_to_clusterEnqueteFragment);
+        });
+
+        view.findViewById(R.id.clusterfils_type_stat).setOnClickListener(v -> {
+
         });
 
         return view;

@@ -7,7 +7,6 @@ import com.appli.nyx.formx.ui.fragment.account.ResetPasswordRequestFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignInFragment;
 import com.appli.nyx.formx.ui.fragment.account.SignUpFragment;
 import com.appli.nyx.formx.ui.fragment.business.SelectUserFragment;
-import com.appli.nyx.formx.ui.fragment.business.cluster.ChooseClusterTypeDialog;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.cluster.ClusterFragment;
@@ -30,7 +29,6 @@ import com.appli.nyx.formx.ui.fragment.business.form.FormAddDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormEditDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.FormListFragment;
-import com.appli.nyx.formx.ui.fragment.business.form.FormMenuDialog;
 import com.appli.nyx.formx.ui.fragment.business.form.FormViewFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.ImportSectionFragment;
 import com.appli.nyx.formx.ui.fragment.business.form.SectionAddDialog;
@@ -178,8 +176,6 @@ public abstract class FragmentBuilderModule {
     @ContributesAndroidInjector
     abstract ClusterStatsFragment clusterStatsFragment();
 
-    @ContributesAndroidInjector
-    abstract ChooseClusterTypeDialog clusterFilsAddDialog();
 
     @ContributesAndroidInjector
     abstract EnqueteVisibilityDialog enqueteVisibilityDialog();
@@ -202,8 +198,7 @@ public abstract class FragmentBuilderModule {
     @ContributesAndroidInjector
     abstract EnqueteReplyIntroFragment enqueteReplyIntroFragment();
 
-    @ContributesAndroidInjector
-    abstract FormMenuDialog formMenuDialog();
+
 }
 
 
