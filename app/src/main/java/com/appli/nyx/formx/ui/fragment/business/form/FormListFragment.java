@@ -98,6 +98,7 @@ public class FormListFragment extends ViewModelFragment<FormViewModel> {
                 });
 
                 holder.delete.setOnClickListener(v -> {
+                    //todo supprimer dans enqueform
                     AlertDialogUtils.showConfirmDeleteDialog(getContext(), (dialog, which) -> {
                         FirebaseFirestore.getInstance().collection(FORM_PATH).document(form.getId()).delete().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
